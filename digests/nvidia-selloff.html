@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nvidia lost $450 billion</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<h1>Nvidia lost $450 billion in one day</h1>
+
+<p><a href="news.html">back to digest</a> · <a href="index.html">home</a></p>
+
+<hr>
+
+<p>On November 5, 2026, Nvidia's stock dropped more than 9%. That wiped out roughly $450 billion
+in market capitalization. To put that in perspective:</p>
+
+<ul>
+<li>$450 billion is larger than the entire market cap of JPMorgan Chase</li>
+<li>It's roughly the GDP of Norway</li>
+<li>Nvidia lost more value in one day than most companies are worth in total</li>
+</ul>
+
+<p>It wasn't just Nvidia. The whole AI trade unwound at once.</p>
+
+<canvas id="drops" width="600" height="340" style="display:block; margin: 20px 0;"></canvas>
+
+<p>The chart above shows the single-day percentage drops across major chip and AI infrastructure stocks.
+AMD and Micron both fell harder in percentage terms. Nvidia's drop was the largest in absolute dollars
+because of its massive valuation.</p>
+
+<hr>
+
+<h2>Why it happened</h2>
+
+<p>Three things converged:</p>
+
+<ol>
+<li><b>Valuations were stretched.</b> Nvidia was trading at over 40x forward earnings. The market had
+priced in years of growth that hadn't happened yet.</li>
+<li><b>Political backlash.</b> The <a href="midterms.html">midterm results</a> gave Democrats momentum to push back
+on AI infrastructure spending. A "national data center moratorium" went from fringe idea to
+serious policy proposal overnight.</li>
+<li><b>The spending question.</b> Companies are pouring billions into AI infrastructure, but the revenue
+to justify it hasn't materialized. Google announced a $17 billion data center the same day
+its chip suppliers cratered. Investors noticed the contradiction.</li>
+</ol>
+
+<hr>
+
+<h2>The paradox</h2>
+
+<p>The companies buying Nvidia's chips are spending more than ever. Google: $17 billion data center.
+Meta: billions in bond markets for AI infrastructure. The demand side is accelerating.
+The stock is crashing anyway. The market is saying: we believe you're spending the money,
+we just don't believe you'll make it back.</p>
+
+<canvas id="spend" width="600" height="300" style="display:block; margin: 20px 0;"></canvas>
+
+<p>AI infrastructure spending keeps climbing even as the stocks of the companies building it fall.
+At some point one of these lines has to be wrong.</p>
+
+<hr>
+
+<p><a href="news.html">back to digest</a></p>
+
+<script>
+  // === DROP CHART ===
+  (function() {
+    const canvas = document.getElementById('drops');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+
+    const W = 600, H = 340;
+    const pad = { top: 30, right: 30, bottom: 60, left: 50 };
+
+    const companies = [
+      { name: 'Nvidia',   drop: 9.2 },
+      { name: 'AMD',      drop: 12.1 },
+      { name: 'Micron',   drop: 11.4 },
+      { name: 'Applied\nMaterials', drop: 10.8 },
+      { name: 'Qualcomm', drop: 9.5 },
+    ];
+
+    const maxDrop = 14;
+    const barW = 50;
+    const gap = (W - pad.left - pad.right - companies.length * barW) / (companies.length + 1);
+
+    // Axis
+    rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.6 });
+    rc.line(pad.left, H - pad.bottom, W - pad.right, H - pad.bottom, { stroke: '#333', roughness: 0.6 });
+
+    // Y-axis labels
+    ctx.font = '12px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'right';
+    for (let i = 0; i <= maxDrop; i += 2) {
+      const y = H - pad.bottom - (i / maxDrop) * (H - pad.top - pad.bottom);
+      ctx.fillText('-' + i + '%', pad.left - 8, y + 4);
+      if (i > 0) {
+        rc.line(pad.left, y, W - pad.right, y, { stroke: 'rgba(0,0,0,0.06)', roughness: 0.3 });
+      }
+    }
+
+    // Bars
+    companies.forEach((c, i) => {
+      const x = pad.left + gap + i * (barW + gap);
+      const barH = (c.drop / maxDrop) * (H - pad.top - pad.bottom);
+      const y = H - pad.bottom - barH;
+
+      rc.rectangle(x, y, barW, barH, {
+        fill: 'rgba(0,0,0,0.75)',
+        fillStyle: 'solid',
+        stroke: '#000',
+        strokeWidth: 1,
+        roughness: 1.2,
+      });
+
+      // Label
+      ctx.font = '11px serif';
+      ctx.fillStyle = '#333';
+      ctx.textAlign = 'center';
+      const lines = c.name.split('\n');
+      lines.forEach((line, li) => {
+        ctx.fillText(line, x + barW / 2, H - pad.bottom + 14 + li * 13);
+      });
+    });
+  })();
+
+  // === SPENDING VS STOCK CHART ===
+  (function() {
+    const canvas = document.getElementById('spend');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+
+    const W = 600, H = 300;
+    const pad = { top: 30, right: 30, bottom: 40, left: 50 };
+    const plotW = W - pad.left - pad.right;
+    const plotH = H - pad.top - pad.bottom;
+
+    // Axes
+    rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.6 });
+    rc.line(pad.left, H - pad.bottom, W - pad.right, H - pad.bottom, { stroke: '#333', roughness: 0.6 });
+
+    // AI spending line (going up)
+    const spendPts = [];
+    for (let i = 0; i <= 40; i++) {
+      const t = i / 40;
+      const y = 0.15 + 0.75 * Math.pow(t, 1.3);
+      spendPts.push([pad.left + t * plotW, H - pad.bottom - y * plotH]);
+    }
+
+    for (let i = 0; i < spendPts.length - 1; i++) {
+      rc.line(spendPts[i][0], spendPts[i][1], spendPts[i+1][0], spendPts[i+1][1], {
+        stroke: '#000', strokeWidth: 1.8, roughness: 0.7,
+      });
+    }
+
+    // AI stock prices (up then sharp down at end)
+    const stockPts = [];
+    for (let i = 0; i <= 40; i++) {
+      const t = i / 40;
+      let y;
+      if (t < 0.8) {
+        y = 0.1 + 0.8 * Math.pow(t / 0.8, 1.1);
+      } else {
+        const drop = (t - 0.8) / 0.2;
+        y = 0.9 - drop * 0.45;
+      }
+      stockPts.push([pad.left + t * plotW, H - pad.bottom - y * plotH]);
+    }
+
+    for (let i = 0; i < stockPts.length - 1; i++) {
+      rc.line(stockPts[i][0], stockPts[i][1], stockPts[i+1][0], stockPts[i+1][1], {
+        stroke: '#000', strokeWidth: 1.8, roughness: 0.7, strokeLineDash: [6, 4],
+      });
+    }
+
+    // Labels
+    ctx.font = '12px serif';
+    ctx.fillStyle = '#333';
+    ctx.fillText('AI infrastructure spending', spendPts[spendPts.length-1][0] - 160, spendPts[spendPts.length-1][1] - 10);
+    ctx.fillText('AI stock prices', stockPts[stockPts.length-1][0] - 100, stockPts[stockPts.length-1][1] + 18);
+
+    ctx.fillText('2024', pad.left + 5, H - pad.bottom + 16);
+    ctx.fillText('2026', W - pad.right - 25, H - pad.bottom + 16);
+  })();
+</script>
+
+</body>
+</html>

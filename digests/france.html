@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>France protests</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<h1>France: 600,000 protested</h1>
+
+<p><a href="2026-11-05.html">back to digest</a> · <a href="index.html">home</a></p>
+
+<hr>
+
+<p>On November 5, roughly 600,000 people took part in nationwide strikes and protests across France.
+Riot police fired tear gas and charged demonstrators in Lyon.</p>
+
+<h2>Scale in context</h2>
+
+<p>France has a long history of mass protests. Here's how this one compares.</p>
+
+<canvas id="protests" width="650" height="300" style="display:block; margin: 20px 0;"></canvas>
+
+<p>600,000 is large but not unprecedented. The 2023 pension reform protests drew over a million at their peak.
+The gilets jaunes peaked around 300,000. France treats protest as a civic institution in a way
+most countries don't.</p>
+
+<hr>
+
+<p><a href="2026-11-05.html">back to digest</a></p>
+
+<script>
+  (function() {
+    const canvas = document.getElementById('protests');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+
+    const W = 650, H = 300;
+    const pad = { top: 20, right: 20, bottom: 65, left: 140 };
+
+    const events = [
+      { label: 'May 1968',               count: 10000000 },
+      { label: 'Pension reform 2023',     count: 1200000 },
+      { label: 'Nov 5 2026',              count: 600000 },
+      { label: 'Gilets jaunes peak 2018', count: 300000 },
+      { label: 'CPE protests 2006',       count: 700000 },
+    ];
+
+    events.sort((a, b) => b.count - a.count);
+
+    const maxCount = events[0].count;
+    const barH = 28;
+    const gap = 10;
+
+    rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+    events.forEach((e, i) => {
+      const y = pad.top + i * (barH + gap);
+      const barW = (e.count / maxCount) * (W - pad.left - pad.right);
+
+      const isCurrent = e.label.includes('2026');
+
+      rc.rectangle(pad.left, y, barW, barH, {
+        fill: isCurrent ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.35)',
+        fillStyle: 'solid',
+        stroke: '#333',
+        strokeWidth: 1,
+        roughness: 1,
+      });
+
+      ctx.font = '11px serif';
+      ctx.fillStyle = '#333';
+      ctx.textAlign = 'right';
+      ctx.fillText(e.label, pad.left - 6, y + barH - 8);
+
+      ctx.textAlign = 'left';
+      const formatted = e.count >= 1000000
+        ? (e.count / 1000000).toFixed(1) + 'M'
+        : (e.count / 1000).toFixed(0) + 'K';
+      ctx.fillText(formatted, pad.left + barW + 6, y + barH - 8);
+    });
+  })();
+</script>
+
+</body>
+</html>

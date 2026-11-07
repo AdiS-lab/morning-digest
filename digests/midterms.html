@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026 Midterms</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<h1>The 2026 midterms</h1>
+
+<p><a href="news.html">back to digest</a> · <a href="index.html">home</a></p>
+
+<hr>
+
+<p>Democrats won the Senate and the House. It was not close. Republicans entered with a 53-47 Senate majority.
+Democrats flipped seven seats and now hold 54-44, with Alaska and Mississippi still undecided.</p>
+
+<h2>Senate seat map</h2>
+
+<p>Each rectangle is a Senate seat. Dark = Democrat, light = Republican. The seven flips are marked.</p>
+
+<canvas id="senate" width="700" height="220" style="display:block; margin: 20px 0;"></canvas>
+
+<h2>The flips</h2>
+
+<p>Democrats flipped seats in states that haven't gone blue in decades.</p>
+
+<canvas id="flips" width="700" height="300" style="display:block; margin: 20px 0;"></canvas>
+
+<table>
+<tr><td><b>Texas</b></td><td>James Talarico beat Ken Paxton. First Democrat since 1988.</td></tr>
+<tr><td><b>Kansas</b></td><td>Adam Hamilton. First Democrat in nearly a century.</td></tr>
+<tr><td><b>Maine</b></td><td>Troy Jackson ousted Susan Collins after 30 years.</td></tr>
+<tr><td><b>Iowa</b></td><td>Josh Turek beat Ashley Hinson.</td></tr>
+<tr><td><b>South Carolina</b></td><td>Annie Andrews beat Darline Graham.</td></tr>
+<tr><td><b>Ohio</b></td><td>Flipped Democrat.</td></tr>
+<tr><td><b>North Carolina</b></td><td>Flipped Democrat.</td></tr>
+</table>
+
+<h2>Still undecided</h2>
+
+<ul>
+<li><b>Mississippi</b>. Too close to call. Democrats haven't won here since 1982.</li>
+<li><b>Alaska</b>. Undeclared.</li>
+</ul>
+
+<p>If both break Democrat, the final tally is 56-44.</p>
+
+<hr>
+
+<h2>Why it happened</h2>
+
+<p>JD Vance blamed the Iran conflict. "The reason we lost is the war." Voters cited cost of living,
+healthcare, and data center backlash. The <a href="nvidia-selloff.html">AI infrastructure story</a> played
+directly into the campaign. Towns promised jobs by data center developers got noise and water shortages instead.</p>
+
+<p>Schumer opened election night: "Against all odds, we Democrats have won the Senate."</p>
+
+<hr>
+
+<h2>What it means</h2>
+
+<p>Democrats now have the votes to push legislation on AI regulation, data center permitting,
+and tech antitrust. The "national data center moratorium" has real institutional backing.
+This is the context behind the <a href="nvidia-selloff.html">Nvidia selloff</a>.</p>
+
+<hr>
+
+<p><a href="news.html">back to digest</a></p>
+
+<script>
+  // === SENATE SEAT MAP ===
+  // 100 rectangles in a 20x5 grid. Dark = Dem, Light = Rep. Flips marked.
+  (function() {
+    const canvas = document.getElementById('senate');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+
+    const W = 700, H = 220;
+    const cols = 20, rows = 5;
+    const pad = 15;
+    const gap = 3;
+    const cellW = (W - pad * 2 - (cols - 1) * gap) / cols;
+    const cellH = (H - pad * 2 - (rows - 1) * gap - 30) / rows; // leave room for legend
+
+    // 54 Dem, 44 Rep, 2 undecided
+    // Arrange: Dems first, then flips highlighted, then undecided, then Rep
+    const demCount = 47; // held
+    const flipCount = 7;
+    const undecidedCount = 2;
+    const repCount = 44;
+
+    for (let i = 0; i < 100; i++) {
+      const col = i % cols;
+      const row = Math.floor(i / cols);
+      const x = pad + col * (cellW + gap);
+      const y = pad + row * (cellH + gap);
+
+      let fill, stroke;
+      if (i < demCount) {
+        // Dem hold
+        fill = 'rgba(30, 60, 120, 0.75)';
+        stroke = 'rgba(30, 60, 120, 0.9)';
+      } else if (i < demCount + flipCount) {
+        // Dem flip
+        fill = 'rgba(30, 60, 120, 0.9)';
+        stroke = '#000';
+      } else if (i < demCount + flipCount + undecidedCount) {
+        // Undecided
+        fill = 'rgba(150, 150, 150, 0.5)';
+        stroke = '#666';
+      } else {
+        // Rep
+        fill = 'rgba(180, 50, 50, 0.55)';
+        stroke = 'rgba(180, 50, 50, 0.7)';
+      }
+
+      rc.rectangle(x, y, cellW, cellH, {
+        fill: fill,
+        fillStyle: 'solid',
+        stroke: stroke,
+        strokeWidth: i >= demCount && i < demCount + flipCount ? 2 : 0.8,
+        roughness: 0.8,
+      });
+    }
+
+    // Legend
+    const ly = H - 22;
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+
+    rc.rectangle(pad, ly, 12, 12, { fill: 'rgba(30, 60, 120, 0.75)', fillStyle: 'solid', stroke: 'none', roughness: 0.4 });
+    ctx.fillText('Dem hold (47)', pad + 16, ly + 11);
+
+    rc.rectangle(pad + 120, ly, 12, 12, { fill: 'rgba(30, 60, 120, 0.9)', fillStyle: 'solid', stroke: '#000', strokeWidth: 2, roughness: 0.4 });
+    ctx.fillText('Dem flip (7)', pad + 136, ly + 11);
+
+    rc.rectangle(pad + 240, ly, 12, 12, { fill: 'rgba(150, 150, 150, 0.5)', fillStyle: 'solid', stroke: 'none', roughness: 0.4 });
+    ctx.fillText('Undecided (2)', pad + 256, ly + 11);
+
+    rc.rectangle(pad + 380, ly, 12, 12, { fill: 'rgba(180, 50, 50, 0.55)', fillStyle: 'solid', stroke: 'none', roughness: 0.4 });
+    ctx.fillText('Republican (44)', pad + 396, ly + 11);
+  })();
+
+  // === FLIP CHART ===
+  // Bar chart: years since last Democrat win for each flipped state
+  (function() {
+    const canvas = document.getElementById('flips');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+
+    const W = 700, H = 300;
+    const pad = { top: 30, right: 20, bottom: 60, left: 130 };
+
+    const flips = [
+      { state: 'Kansas',          years: 94 },
+      { state: 'Texas',           years: 38 },
+      { state: 'Maine',           years: 31 },
+      { state: 'South Carolina',  years: 28 },
+      { state: 'Iowa',            years: 18 },
+      { state: 'North Carolina',  years: 16 },
+      { state: 'Ohio',            years: 14 },
+    ];
+
+    const maxYears = 100;
+    const barH = 22;
+    const gap = 10;
+
+    // Axis
+    rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+    flips.forEach((f, i) => {
+      const y = pad.top + i * (barH + gap);
+      const barW = (f.years / maxYears) * (W - pad.left - pad.right);
+
+      rc.rectangle(pad.left, y, barW, barH, {
+        fill: 'rgba(30, 60, 120, 0.7)',
+        fillStyle: 'solid',
+        stroke: 'rgba(30, 60, 120, 0.9)',
+        strokeWidth: 1,
+        roughness: 1,
+      });
+
+      // State label
+      ctx.font = '12px serif';
+      ctx.fillStyle = '#333';
+      ctx.textAlign = 'right';
+      ctx.fillText(f.state, pad.left - 8, y + barH - 6);
+
+      // Year count
+      ctx.textAlign = 'left';
+      ctx.fillText(f.years + ' years', pad.left + barW + 6, y + barH - 6);
+    });
+
+    // Title
+    ctx.font = '12px serif';
+    ctx.fillStyle = '#666';
+    ctx.textAlign = 'left';
+    ctx.fillText('Years since last Democratic Senate win (before 2026)', pad.left, H - pad.bottom + 25);
+  })();
+</script>
+
+</body>
+</html>

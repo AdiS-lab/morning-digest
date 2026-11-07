@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Congressional investigations</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<h1>Democrats plan Trump investigations</h1>
+
+<p><a href="2026-11-06.html">back to digest</a> · <a href="index.html">home</a></p>
+
+<hr>
+
+<p>Democrats announced plans for comprehensive congressional investigations into the president's family
+and close associates, starting when they take control of both chambers in early 2027.</p>
+
+<h2>This is the pattern</h2>
+
+<p>The party that wins midterms uses subpoena power to investigate the president. It happens every time.</p>
+
+<canvas id="pattern" width="650" height="220" style="display:block; margin: 20px 0;"></canvas>
+
+<p>Every president since Clinton has faced this. The opposition wins the midterms, gains committee
+chairs, and launches investigations. Some produce results. Some are political theater. All of them
+consume enormous amounts of the administration's time and attention.</p>
+
+<h2>What's different this time</h2>
+
+<p>Democrats control both chambers. In 2018 they only had the House. Having the Senate means
+they also control confirmations, which gives them leverage over cabinet replacements and
+judicial appointments. The <a href="alito.html">Alito situation</a> is directly connected to this.</p>
+
+<hr>
+
+<p><a href="2026-11-06.html">back to digest</a></p>
+
+<script>
+  (function() {
+    const canvas = document.getElementById('pattern');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    const W = 650, H = 220;
+    const pad = { top: 30, right: 20, bottom: 30, left: 20 };
+
+    const cases = [
+      { year: '1994', president: 'Clinton (D)', winner: 'GOP wins House', investigation: 'Whitewater, Lewinsky' },
+      { year: '2006', president: 'Bush (R)',    winner: 'Dems win House', investigation: 'Iraq war, Katrina, DOJ firings' },
+      { year: '2010', president: 'Obama (D)',   winner: 'GOP wins House', investigation: 'Benghazi, IRS, Fast & Furious' },
+      { year: '2018', president: 'Trump (R)',   winner: 'Dems win House', investigation: 'Russia, impeachment I' },
+      { year: '2026', president: 'Trump (R)',   winner: 'Dems win both',  investigation: 'TBD' },
+    ];
+
+    const rowH = 30;
+    const startY = pad.top;
+    const colX = [pad.left + 10, 80, 220, 370, 520];
+
+    // Headers
+    ctx.font = 'bold 11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'left';
+    ctx.fillText('Year', colX[0], startY);
+    ctx.fillText('President', colX[1], startY);
+    ctx.fillText('Midterm result', colX[2], startY);
+    ctx.fillText('Investigations', colX[3], startY);
+
+    rc.line(pad.left, startY + 8, W - pad.right, startY + 8, { stroke: '#333', roughness: 0.5 });
+
+    ctx.font = '11px serif';
+    cases.forEach((c, i) => {
+      const y = startY + (i + 1) * rowH + 5;
+      const isCurrent = c.year === '2026';
+
+      if (isCurrent) {
+        rc.rectangle(pad.left, y - 14, W - pad.left - pad.right, rowH, {
+          fill: 'rgba(0,0,0,0.06)', fillStyle: 'solid', stroke: 'none', roughness: 0.3,
+        });
+      }
+
+      ctx.fillStyle = '#333';
+      ctx.font = isCurrent ? 'bold 11px serif' : '11px serif';
+      ctx.fillText(c.year, colX[0], y);
+      ctx.fillText(c.president, colX[1], y);
+      ctx.fillText(c.winner, colX[2], y);
+      ctx.fillText(c.investigation, colX[3], y);
+    });
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Everything else</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<h1>Everything else</h1>
+
+<p><a href="news.html">back to digest</a> · <a href="index.html">home</a></p>
+
+<hr>
+
+<h2>Tesla winding down Cybertruck</h2>
+
+<p>Production is being halted due to weak sales. The truck launched in late 2023 to massive hype.
+Sales never matched it. The angular design was polarizing. Build quality was inconsistent. Price was too high
+for most truck buyers. Tesla is quietly moving on.</p>
+
+<h2>RealPage: $360 million</h2>
+
+<p>RealPage made software that landlords used to coordinate rent prices. The DOJ argued this was
+algorithmic price-fixing. They settled for $360 million in restitution to tenants. The case matters
+because it sets a precedent: using an algorithm to coordinate prices is still price-fixing.</p>
+
+<h2>FAA ditching floppy disks</h2>
+
+<p>The Federal Aviation Administration still uses floppy disks in some air traffic control systems.
+They've announced a plan to phase them out by 2028. The systems work. They've worked for decades.
+The problem is finding replacement hardware. Nobody makes floppy drives anymore.</p>
+
+<canvas id="floppy" width="500" height="200" style="display:block; margin: 20px 0;"></canvas>
+
+<h2>The rest</h2>
+
+<ul>
+<li>Canva is cutting 20%+ of staff. The design tool market is saturated and AI is eating into their core product.</li>
+<li>SpaceX wants to build a 5G network. Direct satellite-to-phone. Would compete with AT&T, Verizon, T-Mobile.</li>
+<li>Amazon and Uber are partnering on restaurant delivery. Amazon gets delivery infrastructure. Uber gets Amazon's customer base.</li>
+<li>Apple Intelligence is coming to China in December with iOS 27.3. Late, but the Chinese market is too big to skip.</li>
+<li>42AI, an Israeli startup, raised $62.5 million to build models that predict human behavior. The pitch is marketing and risk assessment. The implications are broader.</li>
+<li>Google, Meta, and TikTok are suing to block a California law that would restrict addictive features aimed at children. The law passed. They want it overturned.</li>
+</ul>
+
+<hr>
+
+<p><a href="news.html">back to digest</a></p>
+
+<script>
+  // A little timeline: floppy disk era
+  (function() {
+    const canvas = document.getElementById('floppy');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+
+    const W = 500, H = 200;
+    const y = 90;
+    const padL = 30, padR = 30;
+    const lineW = W - padL - padR;
+
+    rc.line(padL, y, W - padR, y, { stroke: '#333', roughness: 0.6, strokeWidth: 1.5 });
+
+    const events = [
+      { t: 0.0,  above: '1971',     below: 'Floppy invented' },
+      { t: 0.28, above: '1990s',    below: 'FAA systems built' },
+      { t: 0.56, above: '2011',     below: 'Last floppy\nmanufacturer stops' },
+      { t: 0.78, above: '2026',     below: 'FAA announces\nphaseout' },
+      { t: 1.0,  above: '2028',     below: 'Target completion' },
+    ];
+
+    ctx.font = '11px serif';
+    ctx.textAlign = 'center';
+
+    events.forEach((e, i) => {
+      const x = padL + e.t * lineW;
+      rc.line(x, y - 6, x, y + 6, { stroke: '#333', roughness: 0.5 });
+      rc.circle(x, y, 7, { fill: 'rgba(0,0,0,0.5)', fillStyle: 'solid', stroke: 'none', roughness: 0.5 });
+
+      ctx.fillStyle = '#333';
+      ctx.font = 'bold 11px serif';
+      ctx.fillText(e.above, x, y - 20);
+
+      ctx.font = '11px serif';
+      const lines = e.below.split('\n');
+      lines.forEach((line, li) => {
+        ctx.fillText(line, x, y + 28 + li * 13);
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>

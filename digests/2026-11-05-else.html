@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>November 5 - Everything else</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<h1>November 5 - Everything else</h1>
+
+<p><a href="2026-11-05.html">back to digest</a> · <a href="index.html">home</a></p>
+
+<hr>
+
+<h2>Jordan: stabbing attack at embassy</h2>
+
+<p>A police officer was killed and another injured in a stabbing attack outside the Sri Lankan embassy
+in Amman, Jordan. The suspect was arrested. Jordanian authorities described it as a terrorist attack.
+No group has claimed responsibility.</p>
+
+<h2>Israel: new prime minister</h2>
+
+<p>President Isaac Herzog began consultations with party leaders to pick a prime minister-designate
+following the recent Knesset election. Opposition leader Gadi Eisenkot is the frontrunner.
+Netanyahu is fighting to hold on.</p>
+
+<h2>Markets</h2>
+
+<p>Global markets dropped on the U.S. election results. South Korea's KOSPI fell nearly 5% in early
+trading, led by semiconductor stocks. The reaction was driven by fears of tighter U.S. tech regulation
+under a Democratic Congress.</p>
+
+<canvas id="markets" width="500" height="200" style="display:block; margin: 20px 0;"></canvas>
+
+<hr>
+
+<p><a href="2026-11-05.html">back to digest</a></p>
+
+<script>
+  (function() {
+    const canvas = document.getElementById('markets');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    const W = 500, H = 200;
+    const pad = { top: 20, right: 20, bottom: 55, left: 100 };
+
+    const drops = [
+      { label: 'KOSPI (Korea)', drop: 4.8 },
+      { label: 'Nasdaq (US)',   drop: 5.5 },
+      { label: 'Nikkei (Japan)', drop: 3.2 },
+      { label: 'DAX (Germany)',  drop: 2.1 },
+    ];
+
+    const maxDrop = 7;
+    const barH = 22;
+    const gap = 10;
+
+    rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+    drops.forEach((d, i) => {
+      const y = pad.top + i * (barH + gap);
+      const barW = (d.drop / maxDrop) * (W - pad.left - pad.right);
+
+      rc.rectangle(pad.left, y, barW, barH, {
+        fill: 'rgba(0,0,0,0.55)', fillStyle: 'solid',
+        stroke: '#333', strokeWidth: 1, roughness: 1,
+      });
+
+      ctx.font = '11px serif';
+      ctx.fillStyle = '#333';
+      ctx.textAlign = 'right';
+      ctx.fillText(d.label, pad.left - 6, y + barH - 6);
+      ctx.textAlign = 'left';
+      ctx.fillText('-' + d.drop + '%', pad.left + barW + 6, y + barH - 6);
+    });
+
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#666';
+    ctx.textAlign = 'left';
+    ctx.fillText('Single-day drops on Nov 5, 2026', pad.left, H - pad.bottom + 20);
+  })();
+</script>
+
+</body>
+</html>

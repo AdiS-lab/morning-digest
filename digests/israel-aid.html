@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Israel aid cut</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<h1>Trump cuts $4 billion in Israel aid</h1>
+
+<p><a href="2026-11-06.html">back to digest</a> · <a href="index.html">home</a></p>
+
+<hr>
+
+<p>On election day, the administration announced it would end the annual $4 billion in U.S. aid to Israel.
+No explanation was given for the timing.</p>
+
+<h2>U.S. aid to Israel over time</h2>
+
+<canvas id="aid" width="600" height="260" style="display:block; margin: 20px 0;"></canvas>
+
+<p>The U.S. has provided military aid to Israel since the 1970s. The current $3.8 billion/year agreement
+was signed by Obama in 2016 as a 10-year memorandum of understanding. Additional aid packages
+during the 2023-2024 Gaza conflict pushed the annual figure above $4 billion.</p>
+
+<h2>What we don't know</h2>
+
+<ul>
+<li>Why it was announced on election day, when it would get the least coverage</li>
+<li>Whether it's connected to the Iran situation</li>
+<li>Whether this is a permanent policy change or a negotiating tactic</li>
+<li>How Israel's government has responded (no official statement yet)</li>
+<li>Whether Congress will try to override it, and whether the new Democratic majority would support or block the cut</li>
+</ul>
+
+<hr>
+
+<p><a href="2026-11-06.html">back to digest</a></p>
+
+<script>
+  (function() {
+    const canvas = document.getElementById('aid');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    const W = 600, H = 260;
+    const pad = { top: 20, right: 30, bottom: 40, left: 50 };
+    const plotW = W - pad.left - pad.right;
+    const plotH = H - pad.top - pad.bottom;
+
+    rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+    rc.line(pad.left, H - pad.bottom, W - pad.right, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+    // Simplified annual aid (billions, select years)
+    const data = [
+      { year: 1975, aid: 0.7 },
+      { year: 1980, aid: 1.8 },
+      { year: 1985, aid: 2.6 },
+      { year: 1990, aid: 1.8 },
+      { year: 1995, aid: 2.1 },
+      { year: 2000, aid: 2.4 },
+      { year: 2005, aid: 2.6 },
+      { year: 2010, aid: 2.8 },
+      { year: 2016, aid: 3.1 },
+      { year: 2020, aid: 3.8 },
+      { year: 2023, aid: 3.8 },
+      { year: 2024, aid: 4.1 },
+      { year: 2025, aid: 4.0 },
+      { year: 2026, aid: 4.0 },
+      { year: 2027, aid: 0.0 },
+    ];
+
+    const minYear = 1975, maxYear = 2027;
+    const maxAid = 5;
+
+    // Y labels
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'right';
+    for (let a = 0; a <= maxAid; a++) {
+      const y = pad.top + (1 - a / maxAid) * plotH;
+      ctx.fillText('$' + a + 'B', pad.left - 6, y + 4);
+      if (a > 0) rc.line(pad.left, y, W - pad.right, y, { stroke: 'rgba(0,0,0,0.06)', roughness: 0.3 });
+    }
+
+    const pts = data.map(d => {
+      const x = pad.left + ((d.year - minYear) / (maxYear - minYear)) * plotW;
+      const y = pad.top + (1 - d.aid / maxAid) * plotH;
+      return [x, y];
+    });
+
+    // Solid line up to 2026
+    for (let i = 0; i < pts.length - 2; i++) {
+      rc.line(pts[i][0], pts[i][1], pts[i+1][0], pts[i+1][1], {
+        stroke: '#000', strokeWidth: 1.5, roughness: 0.6,
+      });
+    }
+
+    // Dashed drop to zero
+    rc.line(pts[pts.length-2][0], pts[pts.length-2][1], pts[pts.length-1][0], pts[pts.length-1][1], {
+      stroke: '#000', strokeWidth: 2, roughness: 0.8, strokeLineDash: [6, 4],
+    });
+
+    // End dot
+    rc.circle(pts[pts.length-1][0], pts[pts.length-1][1], 8, {
+      fill: '#000', fillStyle: 'solid', stroke: 'none', roughness: 0.4,
+    });
+
+    ctx.font = '11px serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('1975', pad.left + 10, H - pad.bottom + 16);
+    ctx.fillText('2000', pad.left + plotW * 0.48, H - pad.bottom + 16);
+    ctx.fillText('2027', W - pad.right - 10, H - pad.bottom + 16);
+
+    ctx.fillText('$0', pts[pts.length-1][0] + 20, pts[pts.length-1][1] + 4);
+  })();
+</script>
+
+</body>
+</html>

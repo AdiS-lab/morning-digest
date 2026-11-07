@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Strait of Hormuz</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<h1>Strait of Hormuz</h1>
+
+<p><a href="2026-11-05.html">back to digest</a> · <a href="index.html">home</a></p>
+
+<hr>
+
+<p>Two oil tankers and a tugboat caught fire after attempting unauthorized routes through the Strait of Hormuz.
+One tanker struck a mine. Iran's Revolutionary Guard Corps confirmed the incidents.</p>
+
+<h2>Why this matters</h2>
+
+<canvas id="oil" width="600" height="260" style="display:block; margin: 20px 0;"></canvas>
+
+<p>The Strait of Hormuz is 21 miles wide at its narrowest. Roughly 20% of the world's oil supply
+passes through it daily. That's about 21 million barrels per day. If the strait is blocked or
+mined, global oil prices spike immediately.</p>
+
+<h2>Who controls it</h2>
+
+<p>Iran's coastline forms the northern shore. Oman and the UAE form the southern shore.
+The shipping lanes run through Omani waters, but Iran has the military capacity to
+threaten traffic from its side. Iran has mined the strait before, in 1988.</p>
+
+<h2>What Iran said</h2>
+
+<p>Supreme Leader Mojtaba Khamenei said Iran's control of the strait had shattered
+"the myth of America's invincibility." This is escalatory language.
+Whether it reflects actual policy or is rhetorical posturing aimed at domestic audiences
+is unclear.</p>
+
+<hr>
+
+<p><a href="2026-11-05.html">back to digest</a></p>
+
+<script>
+  // Oil transit chokepoints comparison
+  (function() {
+    const canvas = document.getElementById('oil');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+
+    const W = 600, H = 260;
+    const pad = { top: 20, right: 20, bottom: 60, left: 160 };
+
+    const chokepoints = [
+      { label: 'Strait of Hormuz',  barrels: 21 },
+      { label: 'Strait of Malacca', barrels: 16 },
+      { label: 'Suez Canal',        barrels: 5.5 },
+      { label: 'Bab el-Mandeb',     barrels: 4.8 },
+      { label: 'Panama Canal',      barrels: 0.9 },
+    ];
+
+    const maxB = 25;
+    const barH = 26;
+    const gap = 10;
+
+    rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+    chokepoints.forEach((c, i) => {
+      const y = pad.top + i * (barH + gap);
+      const barW = (c.barrels / maxB) * (W - pad.left - pad.right);
+
+      rc.rectangle(pad.left, y, barW, barH, {
+        fill: i === 0 ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.35)',
+        fillStyle: 'solid',
+        stroke: '#333',
+        strokeWidth: 1,
+        roughness: 1,
+      });
+
+      ctx.font = '11px serif';
+      ctx.fillStyle = '#333';
+      ctx.textAlign = 'right';
+      ctx.fillText(c.label, pad.left - 6, y + barH - 8);
+
+      ctx.textAlign = 'left';
+      ctx.fillText(c.barrels + 'M bbl/day', pad.left + barW + 6, y + barH - 8);
+    });
+
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#666';
+    ctx.textAlign = 'left';
+    ctx.fillText('Million barrels of oil per day through major chokepoints', pad.left, H - pad.bottom + 20);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>November 6 - Everything else</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<h1>November 6 - Everything else</h1>
+
+<p><a href="2026-11-06.html">back to digest</a> · <a href="index.html">home</a></p>
+
+<hr>
+
+<h2>DSA mayors</h2>
+
+<p>At least four members of the Democratic Socialists of America won mayor's races in major U.S. cities
+on election day. The DSA is the largest socialist organization in the U.S., with roughly 90,000 members.
+For context, that's about the population of Wilmington, Delaware.</p>
+
+<h2>Paraguay's president resigned</h2>
+
+<p>President Santiago Pena resigned following the collapse of Ueno Bank, a major digital lender.
+Pena had business ties to the bank. Paraguay's vice president assumes the presidency.
+Ueno Bank was one of the largest digital-first banks in South America.</p>
+
+<h2>Trump's triumphal arch blocked</h2>
+
+<p>A federal judge halted construction of President Trump's proposed Washington triumphal arch
+shortly after a federal panel approved it. The arch was intended as a monument to the
+administration's achievements. The injunction cites environmental review requirements.</p>
+
+<h2>Russell Brand convicted</h2>
+
+<p>Comedian Russell Brand was found guilty of rape and three sexual assaults. The charges were
+brought in the UK. Brand had denied all allegations.</p>
+
+<h2>ACA premiums rising</h2>
+
+<p>As the Affordable Care Act marketplace opened, millions of Americans face double-digit
+increases to health insurance premiums. The average increase varies by state.</p>
+
+<canvas id="premiums" width="500" height="200" style="display:block; margin: 20px 0;"></canvas>
+
+<hr>
+
+<p><a href="2026-11-06.html">back to digest</a></p>
+
+<script>
+  (function() {
+    const canvas = document.getElementById('premiums');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    const W = 500, H = 200;
+    const pad = { top: 30, right: 20, bottom: 40, left: 45 };
+    const plotW = W - pad.left - pad.right;
+    const plotH = H - pad.top - pad.bottom;
+
+    rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+    rc.line(pad.left, H - pad.bottom, W - pad.right, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+    // Average ACA premium increases by year (approximate)
+    const data = [
+      { year: '2020', pct: 4 },
+      { year: '2021', pct: 3 },
+      { year: '2022', pct: 5 },
+      { year: '2023', pct: 6 },
+      { year: '2024', pct: 7 },
+      { year: '2025', pct: 9 },
+      { year: '2026', pct: 14 },
+    ];
+
+    const maxPct = 18;
+    const barW = (plotW / data.length) - 8;
+
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'right';
+    for (let p = 0; p <= maxPct; p += 5) {
+      const y = pad.top + (1 - p / maxPct) * plotH;
+      ctx.fillText(p + '%', pad.left - 6, y + 4);
+    }
+
+    data.forEach((d, i) => {
+      const x = pad.left + i * (barW + 8) + 4;
+      const barH = (d.pct / maxPct) * plotH;
+      const y = H - pad.bottom - barH;
+
+      const isCurrent = d.year === '2026';
+
+      rc.rectangle(x, y, barW, barH, {
+        fill: isCurrent ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.35)',
+        fillStyle: 'solid', stroke: '#333', strokeWidth: 1, roughness: 1,
+      });
+
+      ctx.font = '11px serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(d.year, x + barW / 2, H - pad.bottom + 14);
+    });
+
+    ctx.fillText('Average ACA premium increase by year', pad.left + plotW / 2, H - pad.bottom + 32);
+  })();
+</script>
+
+</body>
+</html>

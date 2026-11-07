@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Morning Wire</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<br><br><br>
+
+<center>
+
+<canvas id="globe" width="260" height="260" style="display:block; margin: 0 auto;"></canvas>
+
+<br>
+
+<h1>The Morning Wire</h1>
+
+<p>A daily digest of what happened, described plainly.</p>
+
+<br>
+
+<p><a href="news.html">today</a></p>
+
+<br><br>
+
+<p>
+<a href="2026-11-05.html">nov 5</a> ·
+<a href="2026-11-06.html">nov 6</a> ·
+<a href="news.html">nov 7</a>
+</p>
+
+</center>
+
+<script>
+  (function() {
+    const canvas = document.getElementById('globe');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    const W = 260, H = 260;
+    const cx = W / 2, cy = H / 2;
+    const R = 100;
+
+    // Globe outline
+    rc.circle(cx, cy, R * 2, {
+      stroke: '#333', strokeWidth: 1.2, roughness: 1.2, fill: 'none',
+    });
+
+    // Latitude lines
+    for (let lat = -60; lat <= 60; lat += 30) {
+      const latRad = (lat * Math.PI) / 180;
+      const ry = Math.cos(latRad) * R;
+      const py = cy - Math.sin(latRad) * R;
+      rc.ellipse(cx, py, ry * 2, ry * 0.15 * 2, {
+        stroke: 'rgba(0,0,0,0.15)', strokeWidth: 0.8, roughness: 0.8,
+      });
+    }
+
+    // Longitude curves
+    for (let lon = -60; lon <= 60; lon += 40) {
+      const lonRad = (lon * Math.PI) / 180;
+      const rx = Math.cos(lonRad) * R * 0.15;
+      const px = cx + Math.sin(lonRad) * R;
+      const pts = [];
+      for (let i = 0; i <= 20; i++) {
+        const t = (i / 20) * Math.PI - Math.PI / 2;
+        const x = px + Math.cos(t) * rx * 0.5;
+        const y = cy + Math.sin(t) * R;
+        pts.push([x, y]);
+      }
+      for (let i = 0; i < pts.length - 1; i++) {
+        rc.line(pts[i][0], pts[i][1], pts[i+1][0], pts[i+1][1], {
+          stroke: 'rgba(0,0,0,0.15)', strokeWidth: 0.8, roughness: 0.8,
+        });
+      }
+    }
+
+    // Rough landmass suggestions (just a few sketchy shapes, not accurate)
+    // North America-ish
+    rc.ellipse(cx - 25, cy - 20, 40, 30, {
+      fill: 'rgba(0,0,0,0.08)', fillStyle: 'solid', stroke: 'rgba(0,0,0,0.12)',
+      strokeWidth: 0.8, roughness: 1.5,
+    });
+    // Europe/Africa-ish
+    rc.ellipse(cx + 30, cy - 5, 20, 50, {
+      fill: 'rgba(0,0,0,0.08)', fillStyle: 'solid', stroke: 'rgba(0,0,0,0.12)',
+      strokeWidth: 0.8, roughness: 1.5,
+    });
+    // South America-ish
+    rc.ellipse(cx - 10, cy + 30, 18, 28, {
+      fill: 'rgba(0,0,0,0.08)', fillStyle: 'solid', stroke: 'rgba(0,0,0,0.12)',
+      strokeWidth: 0.8, roughness: 1.5,
+    });
+  })();
+</script>
+
+</body>
+</html>

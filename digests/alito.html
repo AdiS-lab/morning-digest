@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alito</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<h1>Alito won't retire</h1>
+
+<p><a href="2026-11-06.html">back to digest</a> · <a href="index.html">home</a></p>
+
+<hr>
+
+<p>Supreme Court Justice Samuel Alito announced he will not retire until at least the end of the
+current court term. With Democrats taking the Senate, any vacancy would mean a Democratic-controlled
+confirmation process.</p>
+
+<h2>Current court by age and appointing president</h2>
+
+<canvas id="court" width="650" height="320" style="display:block; margin: 20px 0;"></canvas>
+
+<p>The court is 6-3 conservative. Alito (76) and Thomas (78) are the oldest conservative justices.
+If either retires or dies while Democrats control the Senate, the balance shifts. That's why
+Alito is staying.</p>
+
+<h2>Strategic retirements</h2>
+
+<p>Justices time their retirements to let ideologically aligned presidents pick their replacements.
+Breyer retired under Biden. Kennedy retired under Trump. Ginsburg tried to wait for a Democratic
+president and died during Trump's term. Alito is not making Ginsburg's mistake.</p>
+
+<hr>
+
+<p><a href="2026-11-06.html">back to digest</a></p>
+
+<script>
+  (function() {
+    const canvas = document.getElementById('court');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    const W = 650, H = 320;
+    const pad = { top: 30, right: 20, bottom: 40, left: 20 };
+
+    const justices = [
+      { name: 'Thomas',        age: 78, appointed: 'H.W. Bush',  lean: 'conservative' },
+      { name: 'Alito',         age: 76, appointed: 'W. Bush',    lean: 'conservative' },
+      { name: 'Roberts',       age: 71, appointed: 'W. Bush',    lean: 'conservative' },
+      { name: 'Sotomayor',     age: 72, appointed: 'Obama',      lean: 'liberal' },
+      { name: 'Kagan',         age: 66, appointed: 'Obama',      lean: 'liberal' },
+      { name: 'Gorsuch',       age: 59, appointed: 'Trump',      lean: 'conservative' },
+      { name: 'Kavanaugh',     age: 61, appointed: 'Trump',      lean: 'conservative' },
+      { name: 'Barrett',       age: 54, appointed: 'Trump',      lean: 'conservative' },
+      { name: 'Jackson',       age: 56, appointed: 'Biden',      lean: 'liberal' },
+    ];
+
+    justices.sort((a, b) => b.age - a.age);
+
+    const barMaxAge = 85;
+    const barMinAge = 45;
+    const barH = 24;
+    const gap = 6;
+    const nameColW = 100;
+    const barAreaW = W - pad.left - pad.right - nameColW - 80;
+
+    justices.forEach((j, i) => {
+      const y = pad.top + i * (barH + gap);
+      const barW = ((j.age - barMinAge) / (barMaxAge - barMinAge)) * barAreaW;
+      const barX = pad.left + nameColW;
+
+      const isLib = j.lean === 'liberal';
+      const isAlito = j.name === 'Alito';
+
+      rc.rectangle(barX, y, barW, barH, {
+        fill: isLib ? 'rgba(30, 60, 120, 0.5)' : 'rgba(180, 50, 50, 0.4)',
+        fillStyle: 'solid',
+        stroke: isAlito ? '#000' : 'rgba(0,0,0,0.2)',
+        strokeWidth: isAlito ? 2 : 0.8,
+        roughness: 0.8,
+      });
+
+      // Name
+      ctx.font = isAlito ? 'bold 12px serif' : '12px serif';
+      ctx.fillStyle = '#333';
+      ctx.textAlign = 'right';
+      ctx.fillText(j.name, barX - 8, y + barH - 7);
+
+      // Age + appointer
+      ctx.font = '11px serif';
+      ctx.textAlign = 'left';
+      ctx.fillText(j.age + ' (' + j.appointed + ')', barX + barW + 6, y + barH - 7);
+    });
+
+    // Legend
+    const ly = H - 25;
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'left';
+    rc.rectangle(pad.left + nameColW, ly, 12, 12, { fill: 'rgba(180, 50, 50, 0.4)', fillStyle: 'solid', stroke: 'none', roughness: 0.3 });
+    ctx.fillText('Conservative', pad.left + nameColW + 16, ly + 11);
+    rc.rectangle(pad.left + nameColW + 120, ly, 12, 12, { fill: 'rgba(30, 60, 120, 0.5)', fillStyle: 'solid', stroke: 'none', roughness: 0.3 });
+    ctx.fillText('Liberal', pad.left + nameColW + 136, ly + 11);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hegseth impeachment</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<h1>Hegseth impeachment effort</h1>
+
+<p><a href="2026-11-06.html">back to digest</a> · <a href="index.html">home</a></p>
+
+<hr>
+
+<p>The House is preparing to vote on articles of impeachment against Defense Secretary Pete Hegseth
+as early as next week. The effort is led by outgoing Kentucky Republican Thomas Massie.
+Hegseth defended the Iran war and demanded $350 billion in additional military funding.</p>
+
+<h2>Cabinet impeachments in U.S. history</h2>
+
+<canvas id="timeline" width="650" height="160" style="display:block; margin: 20px 0;"></canvas>
+
+<p>Cabinet impeachments are extremely rare. The only prior case was Secretary of War William Belknap
+in 1876, who was impeached for accepting bribes. He resigned before the Senate could convict.
+If Hegseth is impeached, he would be the second cabinet member in 250 years of U.S. history.</p>
+
+<h2>The $350 billion ask</h2>
+
+<canvas id="spending" width="600" height="260" style="display:block; margin: 20px 0;"></canvas>
+
+<p>Current U.S. defense spending is roughly $886 billion per year. Hegseth is asking for $350 billion
+on top of that. For context, the entire U.S. education budget is about $90 billion.</p>
+
+<hr>
+
+<p><a href="2026-11-06.html">back to digest</a></p>
+
+<script>
+  // Timeline
+  (function() {
+    const canvas = document.getElementById('timeline');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    const W = 650, H = 160;
+    const y = 70;
+    const padL = 50, padR = 50;
+    const lineW = W - padL - padR;
+
+    rc.line(padL, y, W - padR, y, { stroke: '#333', roughness: 0.6, strokeWidth: 1.5 });
+
+    const events = [
+      { t: 0.0,  above: '1789', below: 'Constitution\nratified' },
+      { t: 0.35, above: '1876', below: 'Belknap\nimpeached' },
+      { t: 0.65, above: '1876-2026', below: '150 years.\nNo cabinet\nimpeachments.' },
+      { t: 1.0,  above: '2026', below: 'Hegseth\neffort' },
+    ];
+
+    ctx.font = '11px serif';
+    ctx.textAlign = 'center';
+
+    events.forEach((e, i) => {
+      const x = padL + e.t * lineW;
+      rc.line(x, y - 6, x, y + 6, { stroke: '#333', roughness: 0.5 });
+      rc.circle(x, y, 8, {
+        fill: i === events.length - 1 ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)',
+        fillStyle: 'solid', stroke: 'none', roughness: 0.5,
+      });
+
+      ctx.fillStyle = '#333';
+      ctx.font = 'bold 11px serif';
+      ctx.fillText(e.above, x, y - 20);
+      ctx.font = '11px serif';
+      const lines = e.below.split('\n');
+      lines.forEach((line, li) => {
+        ctx.fillText(line, x, y + 28 + li * 13);
+      });
+    });
+  })();
+
+  // Spending comparison
+  (function() {
+    const canvas = document.getElementById('spending');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    const W = 600, H = 260;
+    const pad = { top: 20, right: 20, bottom: 55, left: 45 };
+
+    const bars = [
+      { label: 'Current defense\nbudget', value: 886 },
+      { label: 'Hegseth\nadditional ask', value: 350 },
+      { label: 'Total U.S.\neducation budget', value: 90 },
+    ];
+
+    const maxV = 1000;
+    const barW = 90;
+    const plotH = H - pad.top - pad.bottom;
+    const totalGap = W - pad.left - pad.right - bars.length * barW;
+    const gap = totalGap / (bars.length + 1);
+
+    rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+    rc.line(pad.left, H - pad.bottom, W - pad.right, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+    bars.forEach((b, i) => {
+      const x = pad.left + gap + i * (barW + gap);
+      const barH = (b.value / maxV) * plotH;
+      const y = H - pad.bottom - barH;
+
+      rc.rectangle(x, y, barW, barH, {
+        fill: i === 1 ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.35)',
+        fillStyle: 'solid', stroke: '#333', strokeWidth: 1, roughness: 1,
+      });
+
+      ctx.font = 'bold 12px serif';
+      ctx.fillStyle = '#333';
+      ctx.textAlign = 'center';
+      ctx.fillText('$' + b.value + 'B', x + barW / 2, y - 8);
+
+      ctx.font = '11px serif';
+      const lines = b.label.split('\n');
+      lines.forEach((line, li) => {
+        ctx.fillText(line, x + barW / 2, H - pad.bottom + 14 + li * 13);
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>

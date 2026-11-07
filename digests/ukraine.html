@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ukraine deal</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<h1>Trump says Ukraine deal is close</h1>
+
+<p><a href="news.html">back to digest</a> · <a href="index.html">home</a></p>
+
+<hr>
+
+<p>The president said he met with a Putin envoy and sees a deal soon. He described it as potentially
+"a big, beautiful agreement" covering all of Europe. That's all that's confirmed. Here's what we know and don't know.</p>
+
+<h2>Timeline</h2>
+
+<canvas id="timeline" width="700" height="180" style="display:block; margin: 20px 0;"></canvas>
+
+<h2>What's been said</h2>
+
+<ul>
+<li>Trump claims direct contact with a Putin envoy</li>
+<li>He framed the deal as covering "all of Europe," not just Ukraine</li>
+<li>No specifics on territorial concessions</li>
+<li>No confirmation from Ukraine or from Zelensky's office</li>
+<li>No confirmation from the Kremlin either</li>
+</ul>
+
+<h2>What's not been said</h2>
+
+<p>What Ukraine gives up. Whether Crimea is on the table. Whether NATO membership is off the table.
+Whether this is a real negotiation or a public pressure campaign. Whether Zelensky has agreed to anything.
+The gap between what's claimed and what's confirmed is large.</p>
+
+<hr>
+
+<p><a href="news.html">back to digest</a></p>
+
+<script>
+  (function() {
+    const canvas = document.getElementById('timeline');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+
+    const W = 700, H = 180;
+    const y = 80;
+    const padL = 40, padR = 40;
+    const lineW = W - padL - padR;
+
+    // Main line
+    rc.line(padL, y, W - padR, y, { stroke: '#333', roughness: 0.6, strokeWidth: 1.5 });
+
+    const events = [
+      { t: 0.0,  label: 'Feb 2022',     desc: 'Russia invades' },
+      { t: 0.25, label: 'Early 2023',   desc: 'Counteroffensive stalls' },
+      { t: 0.5,  label: 'Nov 2024',     desc: 'Trump wins election' },
+      { t: 0.72, label: 'Jan 2025',     desc: '"Deal in 24 hours" promise' },
+      { t: 0.88, label: 'Mid 2026',     desc: 'War continues' },
+      { t: 1.0,  label: 'Nov 2026',     desc: '"Deal is close"' },
+    ];
+
+    ctx.font = '11px serif';
+
+    events.forEach((e, i) => {
+      const x = padL + e.t * lineW;
+
+      // Tick
+      rc.line(x, y - 8, x, y + 8, { stroke: '#333', roughness: 0.5 });
+
+      // Dot
+      rc.circle(x, y, 8, {
+        fill: i === events.length - 1 ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)',
+        fillStyle: 'solid',
+        stroke: 'none',
+        roughness: 0.5,
+      });
+
+      // Labels alternate above and below
+      const above = i % 2 === 0;
+      ctx.fillStyle = '#333';
+      ctx.textAlign = 'center';
+
+      if (above) {
+        ctx.font = 'bold 11px serif';
+        ctx.fillText(e.label, x, y - 22);
+        ctx.font = '11px serif';
+        ctx.fillText(e.desc, x, y - 38);
+      } else {
+        ctx.font = 'bold 11px serif';
+        ctx.fillText(e.label, x, y + 30);
+        ctx.font = '11px serif';
+        ctx.fillText(e.desc, x, y + 46);
+      }
+    });
+  })();
+</script>
+
+</body>
+</html>
