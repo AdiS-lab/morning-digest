@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>U.S. strikes on Iran</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<h1>U.S. carries out "minor strikes" on Iran</h1>
+
+<p><a href="2026-11-07.html">back to digest</a> · <a href="index.html">home</a></p>
+
+<hr>
+
+<p>Trump said U.S. forces knocked out an Iranian anti-aircraft system near the Strait of Hormuz on Friday.
+He said it took about 15 minutes, "maybe five." Iranian state media reported two explosions in the Suza area
+of Qeshm Island. Trump did not say directly that these were the same strikes.</p>
+
+<p>This was the second round in a week. Sources differ on when the first one happened. Some say Monday,
+November 2. Others say early Tuesday. U.S. officials called the earlier strike "defensive."
+It reportedly followed an Iranian missile fired at a U.S. aircraft.</p>
+
+<h2>The week so far</h2>
+
+<canvas id="timeline" width="640" height="200" style="display:block; margin: 20px 0;"></canvas>
+
+<p>The signals are mixed. On Thursday Trump said the U.S. may have to "destroy" the rest of Iran.
+On Friday he said "we've made a lot of progress."</p>
+
+<h2>Qatar's plan</h2>
+
+<canvas id="plan" width="640" height="170" style="display:block; margin: 20px 0;"></canvas>
+
+<p>Qatar is mediating. Its plan phases in steps over two days. The U.S. lifts the blockade and releases some
+frozen Iranian funds. Iran gives the IAEA access to struck sites. Iran then reopens the strait under a temporary
+arrangement. Neither side has accepted it publicly.</p>
+
+<p>Iran says it sent a nuclear proposal through Qatar. It says that will only be discussed after the U.S. meets
+seven demands to reopen the strait. For background on why the strait matters, see the
+<a href="hormuz.html">Strait of Hormuz page</a>.</p>
+
+<hr>
+
+<p><a href="2026-11-07.html">back to digest</a></p>
+
+<p>Source: <a href="https://www.cnbc.com/2026/11/07/trump-us-minor-strikes-iran-qeshm-island.html">CNBC</a></p>
+
+<script>
+  // === TIMELINE ===
+  (function() {
+    const canvas = document.getElementById('timeline');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    const W = 640, H = 200;
+    const pad = { left: 50, right: 50 };
+    const y0 = 100;
+    const days = 5; // Nov 2 to Nov 6
+    const xOf = d => pad.left + ((d - 2) / (days - 1)) * (W - pad.left - pad.right);
+
+    rc.line(pad.left - 20, y0, W - pad.right + 20, y0, { stroke: '#333', strokeWidth: 1.2, roughness: 0.6 });
+
+    const events = [
+      { d: 2, date: 'Nov 2-3', label: 'First strike, Qeshm' },
+      { d: 3, date: 'Nov 3', label: 'Midterm elections' },
+      { d: 4, date: 'Nov 4', label: 'Iran: reply "unconvincing"' },
+      { d: 5, date: 'Nov 5', label: 'Trump: may "destroy" Iran' },
+      { d: 6, date: 'Nov 6', label: '"Minor strikes," Qeshm', focal: true },
+    ];
+
+    events.forEach((e, i) => {
+      const x = xOf(e.d);
+      rc.circle(x, y0, e.focal ? 14 : 9, {
+        fill: e.focal ? 'rgba(0,0,0,0.9)' : 'rgba(0,0,0,0.4)', fillStyle: 'solid',
+        stroke: '#333', roughness: 0.6,
+      });
+      const above = i % 2 === 0;
+      const ty = above ? y0 - 38 : y0 + 30;
+      rc.line(x, above ? y0 - 8 : y0 + 8, x, above ? ty + 14 : ty - 12, { stroke: 'rgba(0,0,0,0.3)', roughness: 0.4 });
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#333';
+      ctx.font = 'bold 11px serif';
+      ctx.fillText(e.date, x, ty);
+      ctx.font = e.focal ? 'bold 11px serif' : '11px serif';
+      ctx.fillText(e.label, x, ty + 13);
+    });
+
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#666';
+    ctx.textAlign = 'left';
+    ctx.fillText('U.S. and Iran, November 2 to 6, 2026. Date of the first strike varies by source.', 20, H - 10);
+  })();
+
+  // === QATAR PLAN WORKFLOW ===
+  (function() {
+    const canvas = document.getElementById('plan');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    const W = 640, H = 170;
+    const boxes = [
+      { lines: ['U.S. lifts blockade,', 'releases some funds'] },
+      { lines: ['Iran gives IAEA', 'access to struck sites'] },
+      { lines: ['Iran reopens strait', '(temporary)'], focal: true },
+    ];
+    const bw = 160, bh = 60, y = 40;
+    const gap = (W - boxes.length * bw) / (boxes.length + 1);
+
+    boxes.forEach((b, i) => {
+      const x = gap + i * (bw + gap);
+      rc.rectangle(x, y, bw, bh, {
+        fill: b.focal ? 'rgba(0,0,0,0.15)' : 'rgba(0,0,0,0.04)', fillStyle: 'solid',
+        stroke: '#333', strokeWidth: b.focal ? 1.8 : 1, roughness: 1,
+      });
+      ctx.fillStyle = '#333';
+      ctx.textAlign = 'center';
+      ctx.font = b.focal ? 'bold 11px serif' : '11px serif';
+      b.lines.forEach((l, li) => ctx.fillText(l, x + bw / 2, y + 26 + li * 14));
+
+      if (i < boxes.length - 1) {
+        const ax = x + bw + 6, bx = x + bw + gap - 6, ay = y + bh / 2;
+        rc.line(ax, ay, bx, ay, { stroke: '#333', roughness: 0.6 });
+        rc.line(bx, ay, bx - 8, ay - 5, { stroke: '#333', roughness: 0.4 });
+        rc.line(bx, ay, bx - 8, ay + 5, { stroke: '#333', roughness: 0.4 });
+      }
+    });
+
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#666';
+    ctx.textAlign = 'left';
+    ctx.fillText('Qatar\'s proposed sequence, phased over about 48 hours. Not yet accepted.', gap, H - 20);
+  })();
+</script>
+
+</body>
+</html>

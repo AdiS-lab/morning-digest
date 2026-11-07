@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Measles cases pass 5,000</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<h1>U.S. measles cases pass 5,000</h1>
+
+<p><a href="2026-11-07.html">back to digest</a> · <a href="index.html">home</a></p>
+
+<hr>
+
+<p>The CDC confirmed 5,182 measles cases in 2026 as of Friday. That is the most since 1991.
+The year is not over. About 96% of cases are tied to outbreaks. Cases are in 45 states.</p>
+
+<h2>Cases by year</h2>
+
+<canvas id="cases" width="600" height="280" style="display:block; margin: 20px 0;"></canvas>
+
+<p>In 2000 the U.S. declared measles eliminated. That year saw 86 cases. The 2019 outbreak reached 1,274.
+Last year hit 2,289. This year has more than doubled that.</p>
+
+<h2>Deaths</h2>
+
+<canvas id="deaths" width="600" height="150" style="display:block; margin: 20px 0;"></canvas>
+
+<p>State health departments report eight deaths. Six in Pennsylvania, one in New York, one in Wisconsin.
+The CDC recognizes four. It is working with outside epidemiologists to define what counts as a measles death.</p>
+
+<h2>What happens next</h2>
+
+<p>The Pan American Health Organization reviews U.S. transmission data next week. It will decide whether
+the U.S. keeps its elimination status. Losing it would mean measles is considered spreading continuously
+inside the country again.</p>
+
+<hr>
+
+<p><a href="2026-11-07.html">back to digest</a></p>
+
+<p>Source: <a href="https://www.euronews.com/2026/11/06/us-measles-cases-exceed-5000-in-2026-reaching-their-highest-level-in-35-years">Euronews</a></p>
+
+<script>
+  // === CASES BY YEAR ===
+  (function() {
+    const canvas = document.getElementById('cases');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    const W = 600, H = 280;
+    const pad = { top: 25, right: 20, bottom: 50, left: 55 };
+    const data = [
+      { label: '1991', v: 9643 },
+      { label: '2000', v: 86 },
+      { label: '2019', v: 1274 },
+      { label: '2024', v: 285 },
+      { label: '2025', v: 2289 },
+      { label: '2026', v: 5182, focal: true },
+    ];
+    const max = 10000;
+    const plotH = H - pad.top - pad.bottom;
+    const plotW = W - pad.left - pad.right;
+
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'right';
+    for (let v = 0; v <= max; v += 2500) {
+      const y = H - pad.bottom - (v / max) * plotH;
+      ctx.fillText(v.toLocaleString(), pad.left - 6, y + 4);
+      if (v > 0) rc.line(pad.left, y, W - pad.right, y, { stroke: 'rgba(0,0,0,0.06)', roughness: 0.3 });
+    }
+
+    rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+    rc.line(pad.left, H - pad.bottom, W - pad.right, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+    const barW = 52;
+    const gap = (plotW - data.length * barW) / (data.length + 1);
+    data.forEach((d, i) => {
+      const x = pad.left + gap + i * (barW + gap);
+      const bh = Math.max((d.v / max) * plotH, 2);
+      const y = H - pad.bottom - bh;
+      rc.rectangle(x, y, barW, bh, {
+        fill: d.focal ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.35)', fillStyle: 'solid',
+        stroke: '#333', strokeWidth: d.focal ? 1.8 : 1, roughness: 1,
+      });
+      ctx.fillStyle = '#333';
+      ctx.textAlign = 'center';
+      ctx.font = d.focal ? 'bold 12px serif' : '12px serif';
+      ctx.fillText(d.v.toLocaleString(), x + barW / 2, y - 6);
+      ctx.font = d.focal ? 'bold 11px serif' : '11px serif';
+      ctx.fillText(d.label, x + barW / 2, H - pad.bottom + 16);
+    });
+
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#666';
+    ctx.textAlign = 'left';
+    ctx.fillText('Confirmed U.S. measles cases. 2026 is through November 6.', pad.left, H - 10);
+  })();
+
+  // === DEATHS ===
+  (function() {
+    const canvas = document.getElementById('deaths');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    const W = 600, H = 150;
+    const pad = { top: 15, right: 60, bottom: 35, left: 160 };
+    const data = [
+      { label: 'Reported by states', v: 8, focal: true },
+      { label: 'Recognized by CDC', v: 4 },
+    ];
+    const max = 10;
+    const plotW = W - pad.left - pad.right;
+    const rowH = (H - pad.top - pad.bottom) / data.length;
+    const barH = rowH * 0.6;
+
+    rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+    data.forEach((d, i) => {
+      const y = pad.top + i * rowH + (rowH - barH) / 2;
+      const w = (d.v / max) * plotW;
+      rc.rectangle(pad.left, y, w, barH, {
+        fill: d.focal ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.35)', fillStyle: 'solid',
+        stroke: '#333', strokeWidth: 1, roughness: 1,
+      });
+      ctx.fillStyle = '#333';
+      ctx.textAlign = 'right';
+      ctx.font = '11px serif';
+      ctx.fillText(d.label, pad.left - 8, y + barH / 2 + 4);
+      ctx.textAlign = 'left';
+      ctx.font = '12px serif';
+      ctx.fillText(d.v, pad.left + w + 6, y + barH / 2 + 4);
+    });
+
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#666';
+    ctx.textAlign = 'left';
+    ctx.fillText('Measles deaths in 2026. The two counts differ.', pad.left, H - 10);
+  })();
+</script>
+
+</body>
+</html>

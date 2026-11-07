@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI chip stocks bounce</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<h1>AI chip stocks bounce after the crash</h1>
+
+<p><a href="2026-11-07.html">back to digest</a> · <a href="index.html">home</a></p>
+
+<hr>
+
+<p>Chip stocks started sliding the day after the midterms. Democrat Gina Hinojosa won the Texas governor's race.
+She has proposed a moratorium on new state data centers. Bernie Sanders has called for a national one.
+Investors read that as a threat to the data center buildout. See the <a href="midterms.html">midterms page</a>.</p>
+
+<h2>Nvidia, day by day</h2>
+
+<canvas id="daily" width="600" height="260" style="display:block; margin: 20px 0;"></canvas>
+
+<p>Thursday was the worst day. Nvidia lost more than $440 billion in market value. Friday brought a partial bounce.
+It did not erase the losses. Earlier coverage is on the <a href="nvidia-selloff.html">Nvidia sell-off page</a>.</p>
+
+<h2>Thursday's damage</h2>
+
+<canvas id="thursday" width="600" height="170" style="display:block; margin: 20px 0;"></canvas>
+
+<p>All 11 market sectors fell on Thursday. That included defensive ones like utilities and consumer staples.</p>
+
+<h2>Other worries</h2>
+
+<p>About 600,000 Nvidia H200 chips bound for China are stuck in Hong Kong. Import licenses are delayed, per Reuters.
+Nvidia had no company news. No customer has reported canceling an order. Nvidia reports earnings on November 17.</p>
+
+<hr>
+
+<p><a href="2026-11-07.html">back to digest</a></p>
+
+<p>Source: <a href="https://www.cnbc.com/2026/11/06/ai-data-center-midterms-selloff.html">CNBC</a></p>
+
+<script>
+  // === NVIDIA DAILY MOVES ===
+  (function() {
+    const canvas = document.getElementById('daily');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    const W = 600, H = 260;
+    const pad = { top: 20, right: 20, bottom: 50, left: 50 };
+    const data = [
+      { label: 'Wed Nov 4', v: -3.2 },
+      { label: 'Thu Nov 5', v: -9.3, focal: true },
+      { label: 'Fri Nov 6', v: 4.0 },
+    ];
+    const minV = -10, maxV = 6;
+    const plotH = H - pad.top - pad.bottom;
+    const plotW = W - pad.left - pad.right;
+    const yOf = v => pad.top + ((maxV - v) / (maxV - minV)) * plotH;
+
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'right';
+    for (let v = minV; v <= maxV; v += 2) {
+      const y = yOf(v);
+      ctx.fillText(v + '%', pad.left - 6, y + 4);
+      if (v !== 0) rc.line(pad.left, y, W - pad.right, y, { stroke: 'rgba(0,0,0,0.06)', roughness: 0.3 });
+    }
+
+    rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+    rc.line(pad.left, yOf(0), W - pad.right, yOf(0), { stroke: '#333', roughness: 0.5 });
+
+    const barW = 80;
+    const gap = (plotW - data.length * barW) / (data.length + 1);
+    data.forEach((d, i) => {
+      const x = pad.left + gap + i * (barW + gap);
+      const y1 = yOf(Math.max(d.v, 0)), y2 = yOf(Math.min(d.v, 0));
+      rc.rectangle(x, y1, barW, y2 - y1, {
+        fill: d.focal ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.35)', fillStyle: 'solid',
+        stroke: '#333', strokeWidth: d.focal ? 1.8 : 1, roughness: 1,
+      });
+      ctx.fillStyle = '#333';
+      ctx.textAlign = 'center';
+      ctx.font = d.focal ? 'bold 12px serif' : '12px serif';
+      const txt = (d.v > 0 ? '+' : '') + d.v + '%' + (d.v > 0 ? '*' : '');
+      ctx.fillText(txt, x + barW / 2, d.v >= 0 ? y1 - 6 : y2 + 14);
+      ctx.font = d.focal ? 'bold 11px serif' : '11px serif';
+      ctx.fillText(d.label, x + barW / 2, H - pad.bottom + 16);
+    });
+
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#666';
+    ctx.textAlign = 'left';
+    ctx.fillText('Nvidia daily price change. *Reported as "more than 4%".', pad.left, H - 10);
+  })();
+
+  // === THURSDAY DROPS ===
+  (function() {
+    const canvas = document.getElementById('thursday');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    const W = 600, H = 170;
+    const pad = { top: 15, right: 60, bottom: 35, left: 120 };
+    const data = [
+      { label: 'Marvell', v: 16, focal: true },
+      { label: 'Nvidia', v: 9.3 },
+      { label: 'Nasdaq', v: 5 },
+    ];
+    const max = 18;
+    const plotW = W - pad.left - pad.right;
+    const rowH = (H - pad.top - pad.bottom) / data.length;
+    const barH = rowH * 0.6;
+
+    rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+    data.forEach((d, i) => {
+      const y = pad.top + i * rowH + (rowH - barH) / 2;
+      const w = (d.v / max) * plotW;
+      rc.rectangle(pad.left, y, w, barH, {
+        fill: d.focal ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.35)', fillStyle: 'solid',
+        stroke: '#333', strokeWidth: 1, roughness: 1,
+      });
+      ctx.fillStyle = '#333';
+      ctx.textAlign = 'right';
+      ctx.font = d.focal ? 'bold 11px serif' : '11px serif';
+      ctx.fillText(d.label, pad.left - 8, y + barH / 2 + 4);
+      ctx.textAlign = 'left';
+      ctx.font = '12px serif';
+      ctx.fillText('-' + d.v + '%', pad.left + w + 6, y + barH / 2 + 4);
+    });
+
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#666';
+    ctx.textAlign = 'left';
+    ctx.fillText('Declines on Thursday, November 5. Marvell and Nasdaq approximate.', pad.left, H - 10);
+  })();
+</script>
+
+</body>
+</html>

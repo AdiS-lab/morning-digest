@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paraguay's president out</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<h1>Paraguay's president is out after a bank collapse</h1>
+
+<p><a href="2026-11-07.html">back to digest</a> · <a href="index.html">home</a></p>
+
+<hr>
+
+<p>Regulators took over Ueno Bank early Tuesday, November 3. Deposits were frozen. Millions of Paraguayans
+were affected, including pensioners. Within three days, President Santiago Pena was out of office.</p>
+
+<p>Pena was a shareholder in Grupo Vazquez, which owned Ueno, until March 2025. Diario Libre reports he kept
+financial ties to the bank after that. He is a close ally of Trump.</p>
+
+<h2>Three days</h2>
+
+<canvas id="timeline" width="640" height="200" style="display:block; margin: 20px 0;"></canvas>
+
+<p>Pena first tried to contain it. He named a new central bank chief and proposed an emergency law to return savings.
+It was not enough.</p>
+
+<h2>The Senate vote</h2>
+
+<canvas id="senate" width="560" height="180" style="display:block; margin: 20px 0;"></canvas>
+
+<p>One report says 44 of 45 senators voted to remove him. Other reports say he resigned Thursday before that.
+This is unconfirmed. CNN describes him as under house arrest. Vice President Pedro Alliana is now president.
+Police arrested eight Ueno executives, including CEO Miguel Vazquez.</p>
+
+<hr>
+
+<p><a href="2026-11-07.html">back to digest</a></p>
+
+<p>Source: <a href="https://cnnespanol.cnn.com/2026/11/06/latinoamerica/live-news/ultima-hora-juicio-politico-santiago-pena-paraguay-banco-ueno-orix">CNN Espanol</a></p>
+
+<script>
+  // === TIMELINE ===
+  (function() {
+    const canvas = document.getElementById('timeline');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    const W = 640, H = 200;
+    const pad = { left: 70, right: 70 };
+    const y0 = 100;
+    const xOf = d => pad.left + ((d - 3) / 3) * (W - pad.left - pad.right);
+
+    rc.line(pad.left - 30, y0, W - pad.right + 30, y0, { stroke: '#333', strokeWidth: 1.2, roughness: 0.6 });
+
+    const events = [
+      { d: 3, date: 'Tue Nov 3', label: 'Regulators seize Ueno' },
+      { d: 4, date: 'Wed Nov 4', label: 'New central bank chief' },
+      { d: 5, date: 'Thu Nov 5', label: 'Probe opened, resignation' },
+      { d: 6, date: 'Fri Nov 6', label: 'Alliana in office', focal: true },
+    ];
+
+    events.forEach((e, i) => {
+      const x = xOf(e.d);
+      rc.circle(x, y0, e.focal ? 14 : 9, {
+        fill: e.focal ? 'rgba(0,0,0,0.9)' : 'rgba(0,0,0,0.4)', fillStyle: 'solid',
+        stroke: '#333', roughness: 0.6,
+      });
+      const above = i % 2 === 0;
+      const ty = above ? y0 - 38 : y0 + 30;
+      rc.line(x, above ? y0 - 8 : y0 + 8, x, above ? ty + 14 : ty - 12, { stroke: 'rgba(0,0,0,0.3)', roughness: 0.4 });
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#333';
+      ctx.font = 'bold 11px serif';
+      ctx.fillText(e.date, x, ty);
+      ctx.font = e.focal ? 'bold 11px serif' : '11px serif';
+      ctx.fillText(e.label, x, ty + 13);
+    });
+
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#666';
+    ctx.textAlign = 'left';
+    ctx.fillText('Paraguay, November 3 to 6, 2026. Exact order of events varies by source.', 40, H - 10);
+  })();
+
+  // === SENATE GRID ===
+  (function() {
+    const canvas = document.getElementById('senate');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    const cols = 15, rows = 3, size = 22, gap = 6;
+    const x0 = 20, y0 = 15;
+
+    for (let i = 0; i < 45; i++) {
+      const c = i % cols, r = Math.floor(i / cols);
+      const isNo = i === 44;
+      rc.rectangle(x0 + c * (size + gap), y0 + r * (size + gap), size, size, {
+        fill: isNo ? 'rgba(255,255,255,1)' : 'rgba(0,0,0,0.7)', fillStyle: 'solid',
+        stroke: '#333', strokeWidth: isNo ? 1.8 : 1, roughness: 0.8,
+      });
+    }
+
+    const ly = y0 + rows * (size + gap) + 20;
+    rc.rectangle(x0, ly, 12, 12, { fill: 'rgba(0,0,0,0.7)', fillStyle: 'solid', stroke: '#333', roughness: 0.6 });
+    rc.rectangle(x0 + 150, ly, 12, 12, { fill: 'white', fillStyle: 'solid', stroke: '#333', roughness: 0.6 });
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'left';
+    ctx.fillText('Voted to remove (44)', x0 + 18, ly + 10);
+    ctx.fillText('Did not (1)', x0 + 168, ly + 10);
+
+    ctx.fillStyle = '#666';
+    ctx.fillText('Paraguay Senate, 45 seats. Vote count from one report. Unconfirmed.', x0, ly + 38);
+  })();
+</script>
+
+</body>
+</html>

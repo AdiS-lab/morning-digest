@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stephen Miller named chief of staff</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<h1>Stephen Miller named chief of staff</h1>
+
+<p><a href="2026-11-07.html">back to digest</a> · <a href="index.html">home</a></p>
+
+<hr>
+
+<p>Trump announced the change on Truth Social on Friday, November 6. Miller takes over Monday, November 9.
+Susie Wiles moves to Trump's political operation. Trump praised her service.</p>
+
+<p>The timing follows the midterms. Republicans lost both chambers of Congress on November 3.
+Democrats take control in early 2027. See the <a href="midterms.html">midterms page</a> and the
+<a href="investigations.html">investigations page</a> for what that means.</p>
+
+<h2>Trump's chiefs of staff</h2>
+
+<canvas id="timeline" width="640" height="200" style="display:block; margin: 20px 0;"></canvas>
+
+<p>Miller is the sixth person in the job across Trump's two terms. Four served in the first term alone.
+Mick Mulvaney was acting chief the whole time.</p>
+
+<h2>How long each one lasted</h2>
+
+<canvas id="tenure" width="600" height="230" style="display:block; margin: 20px 0;"></canvas>
+
+<p>Wiles lasted longer than any of the first-term chiefs. About 22 months. Reince Priebus lasted about six.</p>
+
+<h2>Who Miller is</h2>
+
+<p>Miller was a senior adviser and speechwriter in the first term. In the second term he became deputy chief
+of staff for policy. He shaped the administration's immigration crackdown. Wiles was seen as a manager.
+Miller is seen as a policy driver.</p>
+
+<hr>
+
+<p><a href="2026-11-07.html">back to digest</a></p>
+
+<p>Source: <a href="https://www.pbs.org/newshour/politics/trump-names-stephen-miller-his-next-chief-of-staff-after-major-republican-midterm-losses">PBS NewsHour</a></p>
+
+<script>
+  // === TIMELINE OF CHIEFS ===
+  (function() {
+    const canvas = document.getElementById('timeline');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    const W = 640, H = 200;
+    const pad = { left: 30, right: 30 };
+    const y0 = 100;
+    const start = 2017, end = 2027;
+    const xOf = t => pad.left + ((t - start) / (end - start)) * (W - pad.left - pad.right);
+
+    rc.line(pad.left, y0, W - pad.right, y0, { stroke: '#333', strokeWidth: 1.2, roughness: 0.6 });
+
+    // Gap between terms
+    rc.line(xOf(2021.05), y0, xOf(2025.05), y0, {
+      stroke: 'rgba(0,0,0,0.25)', strokeWidth: 4, roughness: 0.4, strokeLineDash: [6, 6],
+    });
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#666';
+    ctx.textAlign = 'center';
+    ctx.fillText('Biden years', xOf(2023), y0 + 20);
+
+    const events = [
+      { t: 2017.05, date: 'Jan 2017', label: 'Priebus' },
+      { t: 2017.58, date: 'Jul 2017', label: 'Kelly' },
+      { t: 2019.0, date: 'Jan 2019', label: 'Mulvaney (acting)' },
+      { t: 2020.25, date: 'Mar 2020', label: 'Meadows' },
+      { t: 2025.05, date: 'Jan 2025', label: 'Wiles' },
+      { t: 2026.86, date: 'Nov 2026', label: 'Miller', focal: true },
+    ];
+
+    events.forEach((e, i) => {
+      const x = xOf(e.t);
+      rc.circle(x, y0, e.focal ? 14 : 9, {
+        fill: e.focal ? 'rgba(0,0,0,0.9)' : 'rgba(0,0,0,0.4)', fillStyle: 'solid',
+        stroke: '#333', roughness: 0.6,
+      });
+      const above = i % 2 === 0;
+      const ty = above ? y0 - 38 : y0 + 30;
+      rc.line(x, above ? y0 - 8 : y0 + 8, x, above ? ty + 14 : ty - 12, { stroke: 'rgba(0,0,0,0.3)', roughness: 0.4 });
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#333';
+      ctx.font = 'bold 11px serif';
+      ctx.fillText(e.date, x, ty);
+      ctx.font = e.focal ? 'bold 11px serif' : '11px serif';
+      ctx.fillText(e.label, x, ty + 13);
+    });
+
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#666';
+    ctx.textAlign = 'left';
+    ctx.fillText('Start date of each White House chief of staff under Trump', pad.left, H - 10);
+  })();
+
+  // === TENURE BARS ===
+  (function() {
+    const canvas = document.getElementById('tenure');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    const W = 600, H = 230;
+    const pad = { top: 15, right: 60, bottom: 35, left: 140 };
+    const data = [
+      { label: 'Reince Priebus', v: 6.4 },
+      { label: 'John Kelly', v: 17 },
+      { label: 'Mick Mulvaney', v: 15 },
+      { label: 'Mark Meadows', v: 9.7 },
+      { label: 'Susie Wiles', v: 21.6, focal: true },
+    ];
+    const max = 24;
+    const plotW = W - pad.left - pad.right;
+    const rowH = (H - pad.top - pad.bottom) / data.length;
+    const barH = rowH * 0.6;
+
+    rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+    data.forEach((d, i) => {
+      const y = pad.top + i * rowH + (rowH - barH) / 2;
+      const w = (d.v / max) * plotW;
+      rc.rectangle(pad.left, y, w, barH, {
+        fill: d.focal ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.35)', fillStyle: 'solid',
+        stroke: '#333', strokeWidth: d.focal ? 1.8 : 1, roughness: 1,
+      });
+      ctx.fillStyle = '#333';
+      ctx.textAlign = 'right';
+      ctx.font = d.focal ? 'bold 11px serif' : '11px serif';
+      ctx.fillText(d.label, pad.left - 8, y + barH / 2 + 4);
+      ctx.textAlign = 'left';
+      ctx.font = '12px serif';
+      ctx.fillText(Math.round(d.v) + ' mo', pad.left + w + 6, y + barH / 2 + 4);
+    });
+
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#666';
+    ctx.textAlign = 'left';
+    ctx.fillText('Months in the job, approximate. Wiles counted through Nov 9, 2026.', pad.left, H - 10);
+  })();
+</script>
+
+</body>
+</html>
