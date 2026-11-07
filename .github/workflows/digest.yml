@@ -1,0 +1,47 @@
+name: Morning Wire
+
+on:
+  schedule:
+    - cron: '0 13 * * *'  # 8:00 AM EST = 1:00 PM UTC
+  workflow_dispatch:       # manual trigger button in GitHub
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Claude CLI
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Generate digest
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          TODAY=$(date -u -d '5 hours ago' +%Y-%m-%d)
+          TODAY_DISPLAY=$(date -u -d '5 hours ago' +"%B %-d, %Y")
+
+          claude --print -p "
+          You are generating today's Morning Wire daily news digest. Today is ${TODAY_DISPLAY}.
+
+          Read these files first:
+          - guidelines/digest-guidelines.md
+          - guidelines/diagram-guidelines.md
+
+          Then:
+          1. Search for today's top news. Use multiple searches: 'top news today ${TODAY_DISPLAY}', 'world news today', 'technology news today'. Get at least 3 searches.
+          2. Create digests/${TODAY}.html following digest guidelines. Raw HTML, no CSS, default fonts. H1 is the date. Each story: H2, 1-2 paragraphs, 'more' link. Previous day link, home link.
+          3. Create 'more' pages in digests/ for top 4-5 stories. EVERY more page MUST have at least one rough.js diagram. Follow diagram guidelines exactly. Each gets: back to digest link, home link, one external source link at bottom.
+          4. Update digests/index.html archive links to include today.
+          5. All links flat within digests/. home = index.html, back = ${TODAY}.html.
+
+          Do NOT skip diagrams. Short sentences. No em dashes. No CSS.
+          " --allowedTools "WebSearch,Read,Write,Edit,Bash,Glob"
+
+      - name: Commit and push
+        run: |
+          git config user.name "Morning Wire Bot"
+          git config user.email "bot@morningwire.local"
+          git add digests/
+          git diff --staged --quiet || git commit -m "digest: $(date -u -d '5 hours ago' +%Y-%m-%d)"
+          git push
