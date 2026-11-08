@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Geography — The Morning Wire</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://d3js.org/topojson.v3.min.js"></script>
+</head>
+<body>
+
+<p><a href="index.html">home</a></p>
+
+<h1>Geography</h1>
+<p>Click any region to reveal its name, capital, and language. Click again to deselect.</p>
+
+<p>
+  <a href="#india">India</a> ·
+  <a href="#us">United States</a> ·
+  <a href="#russia">Russia</a> ·
+  <a href="#mideast">Middle East</a>
+</p>
+
+<br>
+
+<h2 id="india">India</h2>
+<div id="india-map"></div>
+<p id="india-info"></p>
+
+<br><hr><br>
+
+<h2 id="us">United States</h2>
+<div id="us-map"></div>
+<p id="us-info"></p>
+
+<br><hr><br>
+
+<h2 id="russia">Russia</h2>
+<div id="russia-map"></div>
+<p id="russia-info"></p>
+
+<br><hr><br>
+
+<h2 id="mideast">Middle East</h2>
+<div id="mideast-map"></div>
+<p id="mideast-info"></p>
+
+<br><hr><br>
+
+<p><a href="index.html">home</a></p>
+
+<script>
+// ── Shared helper ──
+function makeMap(containerId, infoId, width, height, projection, dataUrl, objKeyFn, nameFn, lookupData) {
+  var svg = d3.select('#' + containerId).append('svg')
+    .attr('width', width).attr('height', height)
+    .attr('style', 'display:block; margin: 20px 0; border: 1px solid #ccc;');
+  var path = d3.geoPath().projection(projection);
+  var selected = null;
+
+  d3.json(dataUrl).then(function(topo) {
+    var objKey = objKeyFn(topo);
+    var features = topojson.feature(topo, topo.objects[objKey]).features;
+
+    svg.selectAll('path.region')
+      .data(features)
+      .enter().append('path')
+      .attr('class', 'region')
+      .attr('d', path)
+      .attr('fill', '#e8e8e8')
+      .attr('stroke', '#999')
+      .attr('stroke-width', 0.5)
+      .attr('cursor', 'pointer')
+      .on('mouseover', function() {
+        if (this !== selected) d3.select(this).attr('fill', '#d0d0d0');
+      })
+      .on('mouseout', function() {
+        if (this !== selected) d3.select(this).attr('fill', '#e8e8e8');
+      })
+      .on('click', function(event, d) {
+        svg.selectAll('path.region').attr('fill', '#e8e8e8');
+        if (selected === this) {
+          selected = null;
+          document.getElementById(infoId).textContent = '';
+          return;
+        }
+        selected = this;
+        d3.select(this).attr('fill', '#888');
+        var name = nameFn(d);
+        var info = document.getElementById(infoId);
+        var data = lookupData[name];
+        if (data) {
+          var parts = '<b>' + name + '</b>.';
+          if (data.capital) parts += ' Capital: ' + data.capital + '.';
+          if (data.lang) parts += ' Language: ' + data.lang + '.';
+          info.innerHTML = parts;
+        } else {
+          info.innerHTML = '<b>' + name + '</b>.';
+        }
+      });
+
+    svg.append('path')
+      .datum(topojson.mesh(topo, topo.objects[objKey], function(a, b) { return a !== b; }))
+      .attr('fill', 'none')
+      .attr('stroke', '#999')
+      .attr('stroke-width', 0.5)
+      .attr('d', path)
+      .attr('pointer-events', 'none');
+  });
+}
+
+// ── India ──
+var indiaData = {
+  'Andhra Pradesh':{capital:'Amaravati',lang:'Telugu'},
+  'Arunachal Pradesh':{capital:'Itanagar',lang:'English'},
+  'Assam':{capital:'Dispur',lang:'Assamese'},
+  'Bihar':{capital:'Patna',lang:'Hindi'},
+  'Chhattisgarh':{capital:'Raipur',lang:'Hindi'},
+  'Goa':{capital:'Panaji',lang:'Konkani'},
+  'Gujarat':{capital:'Gandhinagar',lang:'Gujarati'},
+  'Haryana':{capital:'Chandigarh',lang:'Hindi'},
+  'Himachal Pradesh':{capital:'Shimla',lang:'Hindi'},
+  'Jharkhand':{capital:'Ranchi',lang:'Hindi'},
+  'Karnataka':{capital:'Bengaluru',lang:'Kannada'},
+  'Kerala':{capital:'Thiruvananthapuram',lang:'Malayalam'},
+  'Madhya Pradesh':{capital:'Bhopal',lang:'Hindi'},
+  'Maharashtra':{capital:'Mumbai',lang:'Marathi'},
+  'Manipur':{capital:'Imphal',lang:'Meitei'},
+  'Meghalaya':{capital:'Shillong',lang:'English, Khasi'},
+  'Mizoram':{capital:'Aizawl',lang:'Mizo'},
+  'Nagaland':{capital:'Kohima',lang:'English'},
+  'Odisha':{capital:'Bhubaneswar',lang:'Odia'},
+  'Punjab':{capital:'Chandigarh',lang:'Punjabi'},
+  'Rajasthan':{capital:'Jaipur',lang:'Hindi'},
+  'Sikkim':{capital:'Gangtok',lang:'Nepali'},
+  'Tamil Nadu':{capital:'Chennai',lang:'Tamil'},
+  'Telangana':{capital:'Hyderabad',lang:'Telugu'},
+  'Tripura':{capital:'Agartala',lang:'Bengali'},
+  'Uttar Pradesh':{capital:'Lucknow',lang:'Hindi'},
+  'Uttarakhand':{capital:'Dehradun',lang:'Hindi'},
+  'West Bengal':{capital:'Kolkata',lang:'Bengali'},
+  'Jammu & Kashmir':{capital:'Srinagar',lang:'Urdu, Kashmiri'},
+  'Jammu and Kashmir':{capital:'Srinagar',lang:'Urdu, Kashmiri'},
+  'Ladakh':{capital:'Leh',lang:'Ladakhi'},
+  'Delhi':{capital:'New Delhi',lang:'Hindi'},
+  'NCT of Delhi':{capital:'New Delhi',lang:'Hindi'},
+  'Puducherry':{capital:'Puducherry',lang:'Tamil'},
+  'Chandigarh':{capital:'Chandigarh',lang:'Hindi, Punjabi'},
+  'Andaman and Nicobar':{capital:'Port Blair',lang:'Hindi, English'},
+  'Andaman & Nicobar':{capital:'Port Blair',lang:'Hindi, English'},
+  'Dadra and Nagar Haveli and Daman and Diu':{capital:'Daman',lang:'Gujarati, Hindi'},
+  'Dadra & Nagar Haveli':{capital:'Silvassa',lang:'Gujarati, Hindi'},
+  'Daman & Diu':{capital:'Daman',lang:'Gujarati'},
+  'Lakshadweep':{capital:'Kavaratti',lang:'Malayalam'},
+};
+
+makeMap('india-map', 'india-info', 500, 520,
+  d3.geoMercator().center([82, 23]).scale(900).translate([250, 260]),
+  'https://gist.githubusercontent.com/anilnairxyz/1ca20f47982712cf6d4128064e3a6feb/raw/3e0c829745ebf567cb8e15399168ba2777ba1864/ne_10m_admin_1_India_Official.json',
+  function(t) { return Object.keys(t.objects)[0]; },
+  function(d) { return d.properties.name; },
+  indiaData
+);
+
+// ── United States ──
+var usData = {
+  'Alabama':{capital:'Montgomery',lang:'English'},'Alaska':{capital:'Juneau',lang:'English'},
+  'Arizona':{capital:'Phoenix',lang:'English'},'Arkansas':{capital:'Little Rock',lang:'English'},
+  'California':{capital:'Sacramento',lang:'English'},'Colorado':{capital:'Denver',lang:'English'},
+  'Connecticut':{capital:'Hartford',lang:'English'},'Delaware':{capital:'Dover',lang:'English'},
+  'Florida':{capital:'Tallahassee',lang:'English'},'Georgia':{capital:'Atlanta',lang:'English'},
+  'Hawaii':{capital:'Honolulu',lang:'English, Hawaiian'},'Idaho':{capital:'Boise',lang:'English'},
+  'Illinois':{capital:'Springfield',lang:'English'},'Indiana':{capital:'Indianapolis',lang:'English'},
+  'Iowa':{capital:'Des Moines',lang:'English'},'Kansas':{capital:'Topeka',lang:'English'},
+  'Kentucky':{capital:'Frankfort',lang:'English'},'Louisiana':{capital:'Baton Rouge',lang:'English'},
+  'Maine':{capital:'Augusta',lang:'English'},'Maryland':{capital:'Annapolis',lang:'English'},
+  'Massachusetts':{capital:'Boston',lang:'English'},'Michigan':{capital:'Lansing',lang:'English'},
+  'Minnesota':{capital:'Saint Paul',lang:'English'},'Mississippi':{capital:'Jackson',lang:'English'},
+  'Missouri':{capital:'Jefferson City',lang:'English'},'Montana':{capital:'Helena',lang:'English'},
+  'Nebraska':{capital:'Lincoln',lang:'English'},'Nevada':{capital:'Carson City',lang:'English'},
+  'New Hampshire':{capital:'Concord',lang:'English'},'New Jersey':{capital:'Trenton',lang:'English'},
+  'New Mexico':{capital:'Santa Fe',lang:'English, Spanish'},'New York':{capital:'Albany',lang:'English'},
+  'North Carolina':{capital:'Raleigh',lang:'English'},'North Dakota':{capital:'Bismarck',lang:'English'},
+  'Ohio':{capital:'Columbus',lang:'English'},'Oklahoma':{capital:'Oklahoma City',lang:'English'},
+  'Oregon':{capital:'Salem',lang:'English'},'Pennsylvania':{capital:'Harrisburg',lang:'English'},
+  'Rhode Island':{capital:'Providence',lang:'English'},'South Carolina':{capital:'Columbia',lang:'English'},
+  'South Dakota':{capital:'Pierre',lang:'English'},'Tennessee':{capital:'Nashville',lang:'English'},
+  'Texas':{capital:'Austin',lang:'English'},'Utah':{capital:'Salt Lake City',lang:'English'},
+  'Vermont':{capital:'Montpelier',lang:'English'},'Virginia':{capital:'Richmond',lang:'English'},
+  'Washington':{capital:'Olympia',lang:'English'},'West Virginia':{capital:'Charleston',lang:'English'},
+  'Wisconsin':{capital:'Madison',lang:'English'},'Wyoming':{capital:'Cheyenne',lang:'English'},
+  'District of Columbia':{capital:'Washington D.C.',lang:'English'},
+  'Puerto Rico':{capital:'San Juan',lang:'Spanish, English'},
+};
+
+makeMap('us-map', 'us-info', 700, 450,
+  d3.geoAlbersUsa().scale(900).translate([350, 225]),
+  'https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json',
+  function() { return 'states'; },
+  function(d) { return d.properties.name; },
+  usData
+);
+
+// ── Russia ──
+var russiaData = {
+  'Adygey':{capital:'Maykop',lang:'Russian, Adyghe'},
+  'Altay':{capital:'Gorno-Altaysk',lang:'Russian, Altai'},
+  'Amur':{capital:'Blagoveshchensk',lang:'Russian'},
+  'Arkhangel\'sk':{capital:'Arkhangelsk',lang:'Russian'},
+  'Astrakhan\'':{capital:'Astrakhan',lang:'Russian'},
+  'Bashkortostan':{capital:'Ufa',lang:'Russian, Bashkir'},
+  'Belgorod':{capital:'Belgorod',lang:'Russian'},
+  'Bryansk':{capital:'Bryansk',lang:'Russian'},
+  'Buryat':{capital:'Ulan-Ude',lang:'Russian, Buryat'},
+  'Chechnya':{capital:'Grozny',lang:'Russian, Chechen'},
+  'Chelyabinsk':{capital:'Chelyabinsk',lang:'Russian'},
+  'Chukot':{capital:'Anadyr',lang:'Russian'},
+  'Chuvash':{capital:'Cheboksary',lang:'Russian, Chuvash'},
+  'City of St. Petersburg':{capital:'St. Petersburg',lang:'Russian'},
+  'Dagestan':{capital:'Makhachkala',lang:'Russian, Avar, others'},
+  'Gorno-Altay':{capital:'Gorno-Altaysk',lang:'Russian, Altai'},
+  'Ingush':{capital:'Magas',lang:'Russian, Ingush'},
+  'Irkutsk':{capital:'Irkutsk',lang:'Russian'},
+  'Ivanovo':{capital:'Ivanovo',lang:'Russian'},
+  'Kabardin-Balkar':{capital:'Nalchik',lang:'Russian, Kabardian, Balkar'},
+  'Kaliningrad':{capital:'Kaliningrad',lang:'Russian'},
+  'Kalmyk':{capital:'Elista',lang:'Russian, Kalmyk'},
+  'Kaluga':{capital:'Kaluga',lang:'Russian'},
+  'Kamchatka':{capital:'Petropavlovsk-Kamchatsky',lang:'Russian'},
+  'Karachay-Cherkess':{capital:'Cherkessk',lang:'Russian, Karachay, Circassian'},
+  'Karelia':{capital:'Petrozavodsk',lang:'Russian'},
+  'Kemerovo':{capital:'Kemerovo',lang:'Russian'},
+  'Khabarovsk':{capital:'Khabarovsk',lang:'Russian'},
+  'Khakass':{capital:'Abakan',lang:'Russian, Khakas'},
+  'Khanty-Mansiy':{capital:'Khanty-Mansiysk',lang:'Russian'},
+  'Kirov':{capital:'Kirov',lang:'Russian'},
+  'Komi':{capital:'Syktyvkar',lang:'Russian, Komi'},
+  'Kostroma':{capital:'Kostroma',lang:'Russian'},
+  'Krasnodar':{capital:'Krasnodar',lang:'Russian'},
+  'Krasnoyarsk':{capital:'Krasnoyarsk',lang:'Russian'},
+  'Kurgan':{capital:'Kurgan',lang:'Russian'},
+  'Kursk':{capital:'Kursk',lang:'Russian'},
+  'Leningrad':{capital:'Gatchina',lang:'Russian'},
+  'Lipetsk':{capital:'Lipetsk',lang:'Russian'},
+  'Maga Buryatdan':{capital:'Magadan',lang:'Russian'},
+  'Magadan':{capital:'Magadan',lang:'Russian'},
+  'Mariy-El':{capital:'Yoshkar-Ola',lang:'Russian, Mari'},
+  'Mordovia':{capital:'Saransk',lang:'Russian, Moksha, Erzya'},
+  'Moscow':{capital:'Moscow',lang:'Russian'},
+  'Moscow City':{capital:'Moscow',lang:'Russian'},
+  'Moskva':{capital:'Moscow',lang:'Russian'},
+  'Murmansk':{capital:'Murmansk',lang:'Russian'},
+  'Nenets':{capital:'Naryan-Mar',lang:'Russian'},
+  'Nizhegorod':{capital:'Nizhny Novgorod',lang:'Russian'},
+  'North Ossetia':{capital:'Vladikavkaz',lang:'Russian, Ossetic'},
+  'Novgorod':{capital:'Veliky Novgorod',lang:'Russian'},
+  'Novosibirsk':{capital:'Novosibirsk',lang:'Russian'},
+  'Omsk':{capital:'Omsk',lang:'Russian'},
+  'Orel':{capital:'Oryol',lang:'Russian'},
+  'Orenburg':{capital:'Orenburg',lang:'Russian'},
+  'Penza':{capital:'Penza',lang:'Russian'},
+  'Perm\'':{capital:'Perm',lang:'Russian'},
+  'Primor\'ye':{capital:'Vladivostok',lang:'Russian'},
+  'Pskov':{capital:'Pskov',lang:'Russian'},
+  'Rostov':{capital:'Rostov-on-Don',lang:'Russian'},
+  'Ryazan\'':{capital:'Ryazan',lang:'Russian'},
+  'Sakha':{capital:'Yakutsk',lang:'Russian, Yakut'},
+  'Sakhalin':{capital:'Yuzhno-Sakhalinsk',lang:'Russian'},
+  'Samara':{capital:'Samara',lang:'Russian'},
+  'Saratov':{capital:'Saratov',lang:'Russian'},
+  'Sevastopol':{capital:'Sevastopol',lang:'Russian'},
+  'Smolensk':{capital:'Smolensk',lang:'Russian'},
+  'Stavropol\'':{capital:'Stavropol',lang:'Russian'},
+  'Sverdlovsk':{capital:'Yekaterinburg',lang:'Russian'},
+  'Tambov':{capital:'Tambov',lang:'Russian'},
+  'Tatarstan':{capital:'Kazan',lang:'Russian, Tatar'},
+  'Tomsk':{capital:'Tomsk',lang:'Russian'},
+  'Tula':{capital:'Tula',lang:'Russian'},
+  'Tuva':{capital:'Kyzyl',lang:'Russian, Tuvan'},
+  'Tver\'':{capital:'Tver',lang:'Russian'},
+  'Tyumen\'':{capital:'Tyumen',lang:'Russian'},
+  'Udmurt':{capital:'Izhevsk',lang:'Russian, Udmurt'},
+  'Ul\'yanovsk':{capital:'Ulyanovsk',lang:'Russian'},
+  'Vladimir':{capital:'Vladimir',lang:'Russian'},
+  'Volgograd':{capital:'Volgograd',lang:'Russian'},
+  'Vologda':{capital:'Vologda',lang:'Russian'},
+  'Voronezh':{capital:'Voronezh',lang:'Russian'},
+  'Yamal-Nenets':{capital:'Salekhard',lang:'Russian'},
+  'Yaroslavl\'':{capital:'Yaroslavl',lang:'Russian'},
+  'Yevrey':{capital:'Birobidzhan',lang:'Russian'},
+  'Zabaykal\'ye':{capital:'Chita',lang:'Russian'},
+  'Crimea':{capital:'Simferopol',lang:'Russian, Ukrainian, Crimean Tatar'},
+};
+
+makeMap('russia-map', 'russia-info', 700, 450,
+  d3.geoMercator().center([100, 65]).scale(350).translate([350, 225]),
+  'https://gist.githubusercontent.com/logvik/cf787bda80a8aa125c84/raw/russia_mercator.json',
+  function() { return 'name'; },
+  function(d) { return d.properties.NAME_1; },
+  russiaData
+);
+
+// ── Middle East ──
+// Uses world-atlas, filtered to Middle East countries
+var middleEastNames = [
+  'Saudi Arabia','Iran','Iraq','Israel','Turkey','Syria','Jordan','Lebanon',
+  'Yemen','Oman','United Arab Emirates','Qatar','Bahrain','Kuwait','Palestine',
+  'Cyprus','Egypt','Afghanistan','Pakistan'
+];
+
+var middleEastData = {
+  'Saudi Arabia':{capital:'Riyadh',lang:'Arabic'},
+  'Iran':{capital:'Tehran',lang:'Persian'},
+  'Iraq':{capital:'Baghdad',lang:'Arabic, Kurdish'},
+  'Israel':{capital:'Jerusalem',lang:'Hebrew, Arabic'},
+  'Turkey':{capital:'Ankara',lang:'Turkish'},
+  'Syria':{capital:'Damascus',lang:'Arabic'},
+  'Jordan':{capital:'Amman',lang:'Arabic'},
+  'Lebanon':{capital:'Beirut',lang:'Arabic'},
+  'Yemen':{capital:'Sanaa',lang:'Arabic'},
+  'Oman':{capital:'Muscat',lang:'Arabic'},
+  'United Arab Emirates':{capital:'Abu Dhabi',lang:'Arabic'},
+  'Qatar':{capital:'Doha',lang:'Arabic'},
+  'Bahrain':{capital:'Manama',lang:'Arabic'},
+  'Kuwait':{capital:'Kuwait City',lang:'Arabic'},
+  'Palestine':{capital:'Ramallah',lang:'Arabic'},
+  'Cyprus':{capital:'Nicosia',lang:'Greek, Turkish'},
+  'Egypt':{capital:'Cairo',lang:'Arabic'},
+  'Afghanistan':{capital:'Kabul',lang:'Pashto, Dari'},
+  'Pakistan':{capital:'Islamabad',lang:'Urdu, English'},
+};
+
+// Middle East uses world-atlas but zoomed into the region
+(function() {
+  var width = 600, height = 450;
+  var svg = d3.select('#mideast-map').append('svg')
+    .attr('width', width).attr('height', height)
+    .attr('style', 'display:block; margin: 20px 0; border: 1px solid #ccc;');
+
+  var projection = d3.geoMercator()
+    .center([50, 28])
+    .scale(600)
+    .translate([width / 2, height / 2]);
+
+  var path = d3.geoPath().projection(projection);
+  var selected = null;
+
+  d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(function(world) {
+    var allCountries = topojson.feature(world, world.objects.countries).features;
+
+    // Filter to Middle East region by bounding box + name match
+    var meCountries = allCountries.filter(function(f) {
+      var name = f.properties.name;
+      if (middleEastNames.indexOf(name) >= 0) return true;
+      // Also include by centroid location (roughly 25-45E, 10-42N)
+      if (!f.geometry) return false;
+      var c = d3.geoCentroid(f);
+      return c[0] > 24 && c[0] < 75 && c[1] > 10 && c[1] < 42;
+    });
+
+    // Draw neighboring context countries lightly
+    allCountries.forEach(function(f) {
+      if (!f.geometry) return;
+      var c = d3.geoCentroid(f);
+      if (c[0] > 10 && c[0] < 85 && c[1] > 0 && c[1] < 50) {
+        svg.append('path')
+          .datum(f)
+          .attr('d', path)
+          .attr('fill', '#f4f4f4')
+          .attr('stroke', '#ddd')
+          .attr('stroke-width', 0.3)
+          .attr('pointer-events', 'none');
+      }
+    });
+
+    // Draw Middle East countries on top
+    svg.selectAll('path.me')
+      .data(meCountries)
+      .enter().append('path')
+      .attr('class', 'me')
+      .attr('d', path)
+      .attr('fill', '#e8e8e8')
+      .attr('stroke', '#999')
+      .attr('stroke-width', 0.5)
+      .attr('cursor', 'pointer')
+      .on('mouseover', function() {
+        if (this !== selected) d3.select(this).attr('fill', '#d0d0d0');
+      })
+      .on('mouseout', function() {
+        if (this !== selected) d3.select(this).attr('fill', '#e8e8e8');
+      })
+      .on('click', function(event, d) {
+        svg.selectAll('path.me').attr('fill', '#e8e8e8');
+        if (selected === this) {
+          selected = null;
+          document.getElementById('mideast-info').textContent = '';
+          return;
+        }
+        selected = this;
+        d3.select(this).attr('fill', '#888');
+        var name = d.properties.name;
+        var info = document.getElementById('mideast-info');
+        var data = middleEastData[name];
+        if (data) {
+          info.innerHTML = '<b>' + name + '</b>. Capital: ' + data.capital + '. Language: ' + data.lang + '.';
+        } else {
+          info.innerHTML = '<b>' + name + '</b>.';
+        }
+      });
+  });
+})();
+</script>
+
+</body>
+</html>

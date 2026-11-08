@@ -1,0 +1,102 @@
+{
+  "description": "Morning Wire digest manifest. The bot reads this first to understand all content without scanning HTML files.",
+  "static_pages": [
+    {"file": "index.html", "purpose": "Home page with archive links"},
+    {"file": "geography.html", "purpose": "Interactive maps for India, US, Russia, Middle East"}
+  ],
+  "digests": [
+    {
+      "date": "2026-11-05",
+      "file": "2026-11/2026-11-05.html",
+      "summary": "Election day and its immediate aftermath.",
+      "stories": [
+        {
+          "headline": "Democrats sweep the midterms",
+          "file": "2026-11/2026-11-05/midterms.html",
+          "tags": ["us-politics", "elections", "midterms", "congress"]
+        },
+        {
+          "headline": "Strait of Hormuz: tankers hit mines",
+          "file": "2026-11/2026-11-05/hormuz.html",
+          "tags": ["iran", "middle-east", "oil", "military", "strait-of-hormuz"]
+        },
+        {
+          "headline": "Russia bombed a Ukrainian aid center. 42 dead.",
+          "file": "2026-11/2026-11-05/ukraine.html",
+          "tags": ["russia", "ukraine", "war", "europe"]
+        },
+        {
+          "headline": "France: 600,000 people protested",
+          "file": "2026-11/2026-11-05/france.html",
+          "tags": ["france", "europe", "protests", "labor"]
+        }
+      ],
+      "else_file": "2026-11/2026-11-05/else.html"
+    },
+    {
+      "date": "2026-11-06",
+      "file": "2026-11/2026-11-06.html",
+      "summary": "The day after. Markets react. Congress prepares.",
+      "stories": [
+        {
+          "headline": "Markets crashed",
+          "file": "2026-11/2026-11-06/nvidia-selloff.html",
+          "tags": ["markets", "tech", "nvidia", "economy"]
+        },
+        {
+          "headline": "Democrats plan investigations into Trump's family",
+          "file": "2026-11/2026-11-06/investigations.html",
+          "tags": ["us-politics", "congress", "investigations"]
+        },
+        {
+          "headline": "Hegseth impeachment effort advances",
+          "file": "2026-11/2026-11-06/hegseth.html",
+          "tags": ["us-politics", "impeachment", "military", "iran"]
+        },
+        {
+          "headline": "Alito won't retire",
+          "file": "2026-11/2026-11-06/alito.html",
+          "tags": ["us-politics", "supreme-court"]
+        },
+        {
+          "headline": "Trump cuts $4 billion in Israel aid",
+          "file": "2026-11/2026-11-06/israel-aid.html",
+          "tags": ["us-politics", "israel", "middle-east", "foreign-aid"]
+        }
+      ],
+      "else_file": "2026-11/2026-11-06/else.html"
+    },
+    {
+      "date": "2026-11-07",
+      "file": "2026-11/2026-11-07.html",
+      "summary": "A new chief of staff, new strikes on Iran, and a measles record.",
+      "stories": [
+        {
+          "headline": "Stephen Miller named White House chief of staff",
+          "file": "2026-11/2026-11-07/miller.html",
+          "tags": ["us-politics", "white-house", "immigration"]
+        },
+        {
+          "headline": "U.S. carries out minor strikes on Iran",
+          "file": "2026-11/2026-11-07/iran-strikes.html",
+          "tags": ["iran", "middle-east", "military", "strait-of-hormuz"]
+        },
+        {
+          "headline": "U.S. measles cases pass 5,000",
+          "file": "2026-11/2026-11-07/measles.html",
+          "tags": ["health", "us", "cdc"]
+        },
+        {
+          "headline": "Paraguay's president is out after a bank collapse",
+          "file": "2026-11/2026-11-07/paraguay.html",
+          "tags": ["south-america", "paraguay", "banking", "corruption"]
+        },
+        {
+          "headline": "AI chip stocks bounce after the crash",
+          "file": "2026-11/2026-11-07/ai-stocks.html",
+          "tags": ["markets", "tech", "nvidia", "ai", "economy"]
+        }
+      ]
+    }
+  ]
+}

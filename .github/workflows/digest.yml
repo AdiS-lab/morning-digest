@@ -2,7 +2,7 @@ name: Morning Wire
 
 on:
   schedule:
-    - cron: '0 13 * * *'  # 8:00 AM EST = 1:00 PM UTC
+    - cron: '0 10 * * *'  # 5:00 AM EST = 10:00 AM UTC (buffer for GitHub delays)
   workflow_dispatch:       # manual trigger button in GitHub
 
 jobs:
@@ -22,6 +22,7 @@ jobs:
         run: |
           TODAY=$(date -u -d '5 hours ago' +%Y-%m-%d)
           TODAY_DISPLAY=$(date -u -d '5 hours ago' +"%B %-d, %Y")
+          MONTH=$(date -u -d '5 hours ago' +%Y-%m)
 
           claude --print -p "
           You are generating today's Morning Wire daily news digest. Today is ${TODAY_DISPLAY}.
@@ -29,13 +30,27 @@ jobs:
           Read these files first:
           - guidelines/digest-guidelines.md
           - guidelines/diagram-guidelines.md
+          - guidelines/geography-guidelines.md
+          - digests/manifest.json
+
+          FOLDER STRUCTURE:
+          - Daily digest goes in: digests/${MONTH}/${TODAY}.html
+          - Story 'more' pages go in: digests/${MONTH}/${TODAY}/<story-slug>.html
+          - Static pages (index.html, geography.html) stay in digests/
+
+          LINK RULES (critical):
+          - From a digest page: home = '../index.html', story = '${TODAY}/<slug>.html'
+          - From a story page: home = '../../index.html', back to digest = '../${TODAY}.html'
+          - Cross-links to other dates: '../<other-date>/<slug>.html'
+          - Previous day link: find the most recent date in manifest.json
 
           Then:
           1. Search for today's top news. Use multiple searches: 'top news today ${TODAY_DISPLAY}', 'world news today', 'technology news today'. Get at least 3 searches.
-          2. Create digests/${TODAY}.html following digest guidelines. Raw HTML, no CSS, default fonts. H1 is the date. Each story: H2, 1-2 paragraphs, 'more' link. Previous day link, home link.
-          3. Create 'more' pages in digests/ for top 4-5 stories. EVERY more page MUST have at least one rough.js diagram. Follow diagram guidelines exactly. Each gets: back to digest link, home link, one external source link at bottom.
-          4. Update digests/index.html archive links to include today.
-          5. All links flat within digests/. home = index.html, back = ${TODAY}.html.
+          2. Create the daily digest at digests/${MONTH}/${TODAY}.html. Raw HTML, no CSS, default fonts. H1 is the date. Each story: H2, 1-2 paragraphs, 'more' link. Previous day link, home link.
+          3. Create 'more' pages in digests/${MONTH}/${TODAY}/ for top 4-5 stories. EVERY more page MUST have at least one rough.js diagram. Follow diagram guidelines exactly. Each gets: back to digest link, home link, one external source link at bottom.
+          4. Update digests/index.html: change the 'today' link to point to ${MONTH}/${TODAY}.html, and add today's date to the archive links.
+          5. Update digests/manifest.json: append today's digest entry with date, file path, summary, and stories array (each with headline, file, and tags). Use tags from the existing manifest as reference for consistency.
+          6. Cross-reference: check manifest.json for related stories by tag. Add cross-links in today's more pages to relevant older stories.
 
           Do NOT skip diagrams. Short sentences. No em dashes. No CSS.
           " --allowedTools "WebSearch,Read,Write,Edit,Bash,Glob"
