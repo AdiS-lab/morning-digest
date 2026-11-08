@@ -1,42 +1,65 @@
 #!/bin/bash
 # Morning Wire — Daily Digest Generator
-# Run manually: bash scripts/generate-digest.sh
-# Or schedule with GitHub Actions at 8:00 AM EST
+# Runs on login via Windows Task Scheduler.
+# Catches up on any missed days since the last digest.
 
 PROJECT_DIR="C:/01-Projects/RealProjects/morning-digest"
-DIGEST_DIR="$PROJECT_DIR/digests"
-GUIDELINES_DIR="$PROJECT_DIR/guidelines"
-TODAY=$(date +%Y-%m-%d)
-TODAY_DISPLAY=$(date +"%B %-d, %Y")
-
-# Load API key from .env if not already set
-if [ -z "$ANTHROPIC_API_KEY" ] && [ -f "$PROJECT_DIR/.env" ]; then
-  export $(grep -v '^#' "$PROJECT_DIR/.env" | xargs)
-fi
-
 cd "$PROJECT_DIR"
 
-claude --print -p "
-You are generating today's Morning Wire daily news digest. Today is ${TODAY_DISPLAY}.
+# Find the last digest date from manifest
+LAST_DATE=$(grep -o '"date": "[0-9-]*"' digests/manifest.json | tail -1 | grep -o '[0-9-]*')
+TODAY=$(date +%Y-%m-%d)
 
-IMPORTANT: Read these files first for your instructions:
-- ${GUIDELINES_DIR}/digest-guidelines.md
-- ${GUIDELINES_DIR}/diagram-guidelines.md
+if [ "$LAST_DATE" = "$TODAY" ]; then
+  echo "Already up to date."
+  exit 0
+fi
 
-Then do the following:
+# Build list of missing dates (from day after last digest through today)
+MISSING=()
+CURRENT=$(date -d "$LAST_DATE + 1 day" +%Y-%m-%d)
+while [ "$CURRENT" != "$(date -d "$TODAY + 1 day" +%Y-%m-%d)" ]; do
+  MISSING+=("$CURRENT")
+  CURRENT=$(date -d "$CURRENT + 1 day" +%Y-%m-%d)
+done
 
-1. Search for today's top news. Use multiple searches: 'top news today ${TODAY_DISPLAY}', 'world news today', 'technology news today ${TODAY}'. Get at least 3 searches worth of stories.
+echo "Last digest: $LAST_DATE"
+echo "Missing dates: ${MISSING[*]}"
+echo "Generating..."
 
-2. Create the daily digest at ${DIGEST_DIR}/${TODAY}.html following the digest guidelines exactly. Raw HTML, no CSS, default fonts, purple links. H1 is the date. Each story: H2, 1-2 paragraphs, 'more' link. 'Everything else' section at the bottom. Previous day link, home link.
+for DAY in "${MISSING[@]}"; do
+  DAY_DISPLAY=$(date -d "$DAY" +"%B %-d, %Y")
+  MONTH=$(date -d "$DAY" +%Y-%m)
 
-3. Create 'more' pages for the top 4-5 stories in ${DIGEST_DIR}/. EVERY more page MUST have at least one rough.js diagram (bar chart, timeline, line chart, comparison, etc). Follow the diagram guidelines exactly. Each more page gets: back to digest link, home link, one external source link at the bottom.
+  echo "--- Generating $DAY ---"
 
-4. Update ${DIGEST_DIR}/index.html to add today's date to the archive links at the bottom.
+  # Step 1: Search + digest + manifest (haiku)
+  claude --print --model haiku -p "
+  Today is ${DAY_DISPLAY}. MONTH=${MONTH}. TODAY=${DAY}.
+  Read guidelines/generation-instructions.md, then do steps 1-2 and 4-6.
+  Create the digest page and update index/manifest.
+  Do NOT create story pages yet.
+  " --allowedTools "WebSearch,Read,Write,Edit,Bash,Glob"
 
-5. Make sure all links work. All files are in the same digests/ folder. Links are flat: href='filename.html'. home links to index.html, back links to ${TODAY}.html, previous/next day navigation between digests.
+  # Step 2: Story pages with diagrams (sonnet)
+  claude --print --model sonnet -p "
+  Read guidelines/generation-instructions.md and guidelines/diagram-guidelines.md.
+  Read the digest at digests/${MONTH}/${DAY}.html.
+  Do step 3 only: create story pages in digests/${MONTH}/${DAY}/ for every story linked from the digest.
+  Every page MUST have at least one rough.js diagram. Follow diagram guidelines exactly.
+  Check digests/manifest.json for cross-links by tag.
+  " --allowedTools "Read,Write,Edit,Bash,Glob"
 
-6. After writing all files, open the digest: start '' '${DIGEST_DIR}/${TODAY}.html'
+  echo "--- Done $DAY ---"
+done
 
-Do NOT skip diagrams. They are the entire point. Every more page needs at least one.
-Short sentences. No em dashes. No CSS. Default browser everything.
-" --allowedTools "WebSearch,Read,Write,Edit,Bash,Glob"
+# Open today's digest
+MONTH=$(date +%Y-%m)
+start "" "$PROJECT_DIR/digests/$MONTH/$TODAY.html"
+
+# Push to GitHub
+git add digests/
+git diff --staged --quiet || git commit -m "digest: ${MISSING[*]}"
+git push
+
+echo "All done."
