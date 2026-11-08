@@ -10,6 +10,7 @@ Live at [adis-lab.github.io/morning-digest](https://adis-lab.github.io/morning-d
   <img src="images/news-3.png" alt="Landing page" width="200">
   <img src="images/news-1.png" alt="NZ election diagrams" width="200">
   <img src="images/news-2.png" alt="Nvidia stock diagrams" width="200">
+  <img src="images/news-4.png" alt="Senate seat map and flips" width="200">
 </p>
 
 Hand-drawn diagrams built with rough.js — timelines, bar charts, seat maps, and more. Raw HTML, no CSS, default browser everything.
