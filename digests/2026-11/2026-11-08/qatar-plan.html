@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Qatar's Hormuz plan</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<h1>Qatar's Hormuz plan still has no takers</h1>
+
+<p><a href="../2026-11-08.html">back to digest</a> · <a href="../../index.html">home</a></p>
+
+<hr>
+
+<p>Qatar submitted a two-stage plan to the U.S. and Iran on November 6. It would end the fighting and reopen the
+Strait of Hormuz within 48 hours. As of the latest reports, neither side has accepted it. Neither has rejected it.</p>
+
+<h2>How the plan would work</h2>
+
+<canvas id="flow" width="660" height="230" style="display:block; margin: 20px 0;"></canvas>
+
+<p>The size of the asset release is unclear. Reports cite both $8 billion and 6 billion pounds.</p>
+
+<h2>The past four days</h2>
+
+<canvas id="days" width="620" height="210" style="display:block; margin: 20px 0;"></canvas>
+
+<p>Iran says it wants practical U.S. steps, not "paper commitments." On November 5 its top security official said Tehran
+would not reopen the strait until seven demands are met. They include lifting sanctions. Iran has exempted ships from
+India, China, Iraq and Qatar from its restrictions. Analysts say Iran is trying to separate shipping and oil exports
+from the nuclear question.</p>
+
+<p>Background on the waterway is on the <a href="hormuz.html">Strait of Hormuz page</a>.
+Friday's strikes are on the <a href="iran-strikes.html">Iran strikes page</a>.</p>
+
+<hr>
+
+<p><a href="../2026-11-08.html">back to digest</a></p>
+
+<p>Source: <a href="https://www.aljazeera.com/news/2026/11/6/why-is-iran-exempting-india-china-qatar-iraq-from-hormuz-restrictions">Al Jazeera</a></p>
+
+<script>
+  // === WORKFLOW: THE TWO STAGES ===
+  (function() {
+    const canvas = document.getElementById('flow');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    const W = 660, H = 230;
+
+    function box(x, y, w, h, lines, focal) {
+      rc.rectangle(x, y, w, h, {
+        fill: focal ? 'rgba(0,0,0,0.12)' : 'rgba(0,0,0,0.03)',
+        fillStyle: 'solid', stroke: '#333', strokeWidth: focal ? 2 : 1, roughness: 0.9,
+      });
+      ctx.fillStyle = '#333';
+      ctx.textAlign = 'center';
+      lines.forEach((l, i) => {
+        ctx.font = i === 0 ? 'bold 11px serif' : '11px serif';
+        ctx.fillText(l, x + w / 2, y + 20 + i * 15);
+      });
+    }
+
+    function arrow(x1, y1, x2, y2) {
+      rc.line(x1, y1, x2, y2, { stroke: '#333', strokeWidth: 1.3, roughness: 0.6 });
+      const a = Math.atan2(y2 - y1, x2 - x1);
+      rc.line(x2, y2, x2 - 9 * Math.cos(a - 0.4), y2 - 9 * Math.sin(a - 0.4), { stroke: '#333', roughness: 0.4 });
+      rc.line(x2, y2, x2 - 9 * Math.cos(a + 0.4), y2 - 9 * Math.sin(a + 0.4), { stroke: '#333', roughness: 0.4 });
+    }
+
+    // Stage headers
+    ctx.font = 'bold 12px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'center';
+    ctx.fillText('DAY 1', 190, 18);
+    ctx.fillText('DAY 2', 555, 18);
+
+    box(20, 35, 170, 70, ['United States', 'lifts naval blockade,', 'releases some frozen assets']);
+    box(20, 125, 170, 70, ['Iran', 'lets IAEA inspectors', 'into bombed nuclear sites']);
+
+    rc.line(380, 30, 380, 200, { stroke: 'rgba(0,0,0,0.25)', roughness: 0.4, strokeLineDash: [5, 5] });
+
+    box(460, 80, 180, 70, ['Iran reopens the strait', 'on a route negotiated', 'with Oman'], true);
+
+    rc.circle(290, 115, 46, { fill: 'rgba(0,0,0,0.06)', fillStyle: 'solid', stroke: '#333', roughness: 0.6 });
+    ctx.font = '11px serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('both', 290, 113);
+    ctx.fillText('done', 290, 126);
+
+    arrow(192, 70, 266, 106);
+    arrow(192, 160, 266, 124);
+    arrow(314, 115, 456, 115);
+
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#666';
+    ctx.textAlign = 'left';
+    ctx.fillText('Qatar\'s proposal, as reported. Neither side has signed on.', 20, H - 8);
+  })();
+
+  // === TIMELINE: PAST FOUR DAYS ===
+  (function() {
+    const canvas = document.getElementById('days');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    const W = 620, H = 210;
+    const pad = { left: 70, right: 70 };
+    const lineY = 92;
+    rc.line(pad.left - 20, lineY, W - pad.right + 20, lineY, { stroke: '#333', strokeWidth: 1.5, roughness: 0.6 });
+
+    const start = 5, end = 8;
+    const xOf = d => pad.left + (d - start) / (end - start) * (W - pad.left - pad.right);
+    const events = [
+      { d: 5, date: 'Nov 5', lines: ['Iran sets seven', 'conditions'] },
+      { d: 6, date: 'Nov 6', lines: ['Qatar submits plan.', 'U.S. "minor strikes."', 'Two tankers hit mines'], focal: true },
+      { d: 8, date: 'Nov 8', lines: ['No answer yet', 'from either side'] },
+    ];
+
+    events.forEach((e, i) => {
+      const x = xOf(e.d);
+      const up = i % 2 === 0;
+      rc.circle(x, lineY, e.focal ? 14 : 10, {
+        fill: e.focal ? 'rgba(0,0,0,0.85)' : 'rgba(0,0,0,0.35)',
+        fillStyle: 'solid', stroke: '#333', roughness: 0.5,
+      });
+      rc.line(x, lineY + (up ? -8 : 8), x, lineY + (up ? -28 : 28), { stroke: '#333', roughness: 0.4 });
+      const y1 = up ? lineY - 62 : lineY + 44;
+      ctx.fillStyle = '#333';
+      ctx.textAlign = 'center';
+      ctx.font = 'bold 11px serif';
+      ctx.fillText(e.date, x, y1);
+      ctx.font = '11px serif';
+      e.lines.forEach((l, li) => ctx.fillText(l, x, y1 + 14 + li * 13));
+    });
+
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#666';
+    ctx.textAlign = 'left';
+    ctx.fillText('Diplomacy and force on parallel tracks.', 20, H - 6);
+  })();
+</script>
+
+</body>
+</html>

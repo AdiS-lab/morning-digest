@@ -97,6 +97,38 @@
           "tags": ["markets", "tech", "nvidia", "ai", "economy"]
         }
       ]
+    },
+    {
+      "date": "2026-11-08",
+      "file": "2026-11/2026-11-08.html",
+      "summary": "A press secretary offer, a deadlocked New Zealand vote, and two peace plans waiting on a reply.",
+      "stories": [
+        {
+          "headline": "Trump offers Dana White the press secretary job",
+          "file": "2026-11/2026-11-08/press-secretary.html",
+          "tags": ["us-politics", "white-house"]
+        },
+        {
+          "headline": "New Zealand election is too close to call",
+          "file": "2026-11/2026-11-08/nz-election.html",
+          "tags": ["new-zealand", "oceania", "elections"]
+        },
+        {
+          "headline": "Qatar's Hormuz plan still has no takers",
+          "file": "2026-11/2026-11-08/qatar-plan.html",
+          "tags": ["iran", "middle-east", "qatar", "strait-of-hormuz", "diplomacy"]
+        },
+        {
+          "headline": "Russia-Ukraine talks set for Tuesday in Abu Dhabi",
+          "file": "2026-11/2026-11-08/ukraine-talks.html",
+          "tags": ["russia", "ukraine", "war", "diplomacy", "middle-east"]
+        },
+        {
+          "headline": "Dozens killed at a Yemen market. Who struck it is disputed.",
+          "file": "2026-11/2026-11-08/yemen-market.html",
+          "tags": ["yemen", "middle-east", "saudi-arabia", "military"]
+        }
+      ]
     }
   ]
 }
