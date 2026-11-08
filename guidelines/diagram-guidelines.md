@@ -83,7 +83,12 @@ Best for: structured data with names and categories.
 
 - Canvas width: 500-700px. Never wider than that.
 - `style="display:block; margin: 20px 0;"` on every canvas.
-- Colors: black/dark gray only. No color coding unless it's meaningful (party affiliation: blue/red).
+- Use color to distinguish categories and highlight what matters. Muted, readable tones work best:
+  - Green for positive/stable/growth: `'#2a8c46'`, `'rgba(40,140,70,0.5)'`
+  - Red for negative/unstable/decline: `'#c33'`, `'rgba(200,60,60,0.5)'`
+  - Blue for neutral/informational: `'#2255aa'`, `'rgba(30,70,180,0.5)'`
+  - Gray for background/secondary: `'rgba(0,0,0,0.3)'`
+  - Use party colors (blue/red) for political data. Use meaningful color, not decorative color.
 - Roughness: 0.5-1.2 for most elements. Higher (1.5+) looks too messy.
 - Fill style: always `'solid'`. The sketchy outline is enough texture.
 - Text: `ctx.font = '11px serif'` for labels, `'12px serif'` for values, `'bold 11px serif'` for headers.
@@ -91,6 +96,17 @@ Best for: structured data with names and categories.
 - Axis lines: `stroke: '#333', roughness: 0.5-0.6`.
 - Grid lines: `stroke: 'rgba(0,0,0,0.06)', roughness: 0.3`. Barely visible.
 - Highlight the focal element. Darker fill, thicker stroke, or bold label. One thing should stand out.
+
+## Label placement
+
+Labels must never overlap with the graph or each other. This is non-negotiable.
+
+- Axis labels go outside the plot area, not on top of data.
+- Data labels (values, names) go in clear space: above bars, to the right of lines, or in a corner away from the curve.
+- If a label would overlap a line or bar, offset it further or place it in the top-right or top-left corner of the canvas.
+- For line charts, label the line at the end (right side) or in a legend below, not on top of the curve.
+- For timelines, alternate labels above and below the line to prevent crowding.
+- Test mentally: if two labels are within 20px of each other, move one.
 
 ## Pick the right type for the data
 
@@ -129,8 +145,12 @@ const pad = { top: 20, right: 20, bottom: 40, left: 50 };
 ```
 
 ### Focal highlight
+Use a simple solid color for the focal bar/dot/line. Use a lighter shade of the same color or gray for the rest. No gradients, no shaded background regions.
 ```js
-fill: isFocal ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.35)'
+// Focal item: solid color
+fill: 'rgba(200,60,60,0.7)', stroke: '#c33'
+// Other items: lighter
+fill: 'rgba(0,0,0,0.25)', stroke: '#555'
 ```
 
 ### Caption
