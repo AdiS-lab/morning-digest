@@ -6,13 +6,13 @@ Live at [adis-lab.github.io/morning-digest](https://adis-lab.github.io/morning-d
 
 ## What it looks like
 
-![The Morning Wire landing page](news-3.png)
+<p>
+  <img src="images/news-3.png" alt="Landing page" width="200">
+  <img src="images/news-1.png" alt="NZ election diagrams" width="200">
+  <img src="images/news-2.png" alt="Nvidia stock diagrams" width="200">
+</p>
 
-Each story page has hand-drawn diagrams built with rough.js — timelines, bar charts, line charts, seat maps, and more. They render on an HTML canvas with a sketchy, human feel.
-
-![NZ election results — bar chart and seat map drawn with rough.js](news-1.png)
-
-![Nvidia stock moves — vertical and horizontal bar charts](news-2.png)
+Hand-drawn diagrams built with rough.js — timelines, bar charts, seat maps, and more. Raw HTML, no CSS, default browser everything.
 
 ## How it works
 

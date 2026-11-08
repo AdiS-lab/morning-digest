@@ -92,6 +92,19 @@ Best for: structured data with names and categories.
 - Grid lines: `stroke: 'rgba(0,0,0,0.06)', roughness: 0.3`. Barely visible.
 - Highlight the focal element. Darker fill, thicker stroke, or bold label. One thing should stand out.
 
+## Pick the right type for the data
+
+Do not default to bar charts. Before drawing, ask: what is this data doing?
+
+- Data changes over time → **line chart**, not a bar chart
+- A sequence of events → **timeline**
+- Comparing named things → **bar chart**
+- Showing composition → **seat map / grid**
+- Showing a process or flow → **workflow diagram**
+- Structured multi-dimension data → **table**
+
+Bar charts are great when the story is comparison. But if the story is a trend, a line chart is always better. If the story is a sequence, a timeline is always better. Reach for the type that matches the data, not the type that's easiest to write.
+
 ## One idea per diagram
 
 Don't cram two stories into one chart. If you need to show two things, make two canvases. Each diagram should answer one question:
