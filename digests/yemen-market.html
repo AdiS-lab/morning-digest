@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yemen market strike</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<h1>Dozens killed at a Yemen market. Who struck it is disputed.</h1>
+
+<p><a href="2026-11-08.html">back to digest</a> · <a href="index.html">home</a></p>
+
+<hr>
+
+<p>On Friday, November 6, a market in Taiz province was hit. Houthi officials say at least 30 people died and about eight were hurt.
+AP called it one of the deadliest attacks since fighting resumed between the Houthis and Saudi-backed forces.</p>
+
+<p>Taiz is mostly under Houthi control. That makes independent checks unlikely. The toll comes from Houthi officials.</p>
+
+<h2>Two accounts</h2>
+
+<canvas id="claims" width="620" height="190" style="display:block; margin: 20px 0;"></canvas>
+
+<p>Iran's Foreign Ministry condemned "Saudi-led airstrikes" on Sunday. Its statement put the toll at 33, including 13 children.
+That figure has not been confirmed either.</p>
+
+<h2>Not the first disputed market strike</h2>
+
+<canvas id="line" width="620" height="180" style="display:block; margin: 20px 0;"></canvas>
+
+<p>Each of these drew competing claims. None has been independently confirmed.</p>
+
+<hr>
+
+<p><a href="2026-11-08.html">back to digest</a></p>
+
+<p>Source: <a href="https://www.usnews.com/news/business/articles/2026-11-06/airstrikes-on-a-market-in-southwestern-yemen-kill-at-least-20-houthis-say">AP via U.S. News</a></p>
+
+<script>
+  // === TABLE: COMPETING CLAIMS ===
+  (function() {
+    const canvas = document.getElementById('claims');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    const W = 620, H = 190;
+    const cols = [20, 150, 385];
+    const rowH = 30, top = 20;
+
+    const header = ['', 'Houthi officials', 'Yemen government (Saudi-backed)'];
+    const rows = [
+      ['What hit', 'Saudi warplanes', 'No airstrikes in the area'],
+      ['Who is to blame', 'Saudi Arabia', 'The Houthis'],
+      ['Deaths', 'At least 30', 'Not given'],
+      ['Confirmed?', 'No', 'No'],
+    ];
+
+    ctx.font = 'bold 11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'left';
+    header.forEach((h, i) => ctx.fillText(h, cols[i], top + 14));
+    rc.line(20, top + 22, W - 20, top + 22, { stroke: '#333', roughness: 0.6 });
+
+    rows.forEach((r, ri) => {
+      const y = top + 22 + (ri + 1) * rowH;
+      if (ri === 3) {
+        rc.rectangle(16, y - 20, W - 32, 28, { fill: 'rgba(0,0,0,0.07)', fillStyle: 'solid', stroke: 'none', roughness: 0.5 });
+      }
+      r.forEach((c, ci) => {
+        ctx.font = (ci === 0 || ri === 3) ? 'bold 11px serif' : '11px serif';
+        ctx.fillStyle = '#333';
+        ctx.fillText(c, cols[ci], y);
+      });
+    });
+
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#666';
+    ctx.fillText('Claims about the November 6 strike in Taiz province.', 20, H - 8);
+  })();
+
+  // === TIMELINE: DISPUTED STRIKES ===
+  (function() {
+    const canvas = document.getElementById('line');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    const W = 620, H = 180;
+    const pad = { left: 70, right: 70 };
+    const lineY = 85;
+    rc.line(pad.left - 30, lineY, W - pad.right + 30, lineY, { stroke: '#333', strokeWidth: 1.5, roughness: 0.6 });
+
+    // Days since Sep 27: Sep 27 = 0, Nov 2 = 36, Nov 6 = 40
+    const xOf = d => pad.left + d / 40 * (W - pad.left - pad.right);
+    const events = [
+      { d: 0, date: 'Sep 27', text: 'Strike, competing claims' },
+      { d: 36, date: 'Nov 2', text: 'Market, al-Misrakh' },
+      { d: 40, date: 'Nov 6', text: 'Market, al-Waziyah. 30+ dead', focal: true },
+    ];
+
+    events.forEach((e, i) => {
+      const x = xOf(e.d);
+      const up = i % 2 === 0;
+      rc.circle(x, lineY, e.focal ? 14 : 10, {
+        fill: e.focal ? 'rgba(0,0,0,0.85)' : 'rgba(0,0,0,0.35)',
+        fillStyle: 'solid', stroke: '#333', roughness: 0.5,
+      });
+      rc.line(x, lineY + (up ? -8 : 8), x, lineY + (up ? -28 : 28), { stroke: '#333', roughness: 0.4 });
+      const y1 = up ? lineY - 50 : lineY + 44;
+      ctx.fillStyle = '#333';
+      ctx.textAlign = e.focal ? 'right' : 'center';
+      const tx = e.focal ? x + 30 : x;
+      ctx.font = 'bold 11px serif';
+      ctx.fillText(e.date, tx, y1);
+      ctx.font = '11px serif';
+      ctx.fillText(e.text, tx, y1 + 14);
+    });
+
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#666';
+    ctx.textAlign = 'left';
+    ctx.fillText('Reported strikes in Taiz province, Sep 27 to Nov 6, 2026.', 20, H - 6);
+  })();
+</script>
+
+</body>
+</html>

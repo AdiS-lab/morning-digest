@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Zealand election</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<h1>New Zealand election is too close to call</h1>
+
+<p><a href="2026-11-08.html">back to digest</a> · <a href="index.html">home</a></p>
+
+<hr>
+
+<p>New Zealand voted on Saturday, November 7. Labour edged National on the party vote, 29.36% to 29.21%, in preliminary results.
+National won more electorate seats, so it leads on seats.</p>
+
+<h2>Seats by party, preliminary</h2>
+
+<canvas id="seats" width="600" height="270" style="display:block; margin: 20px 0;"></canvas>
+
+<p>ACT and NZ First both grew their vote share. That gives them more leverage in coalition talks.</p>
+
+<h2>The governing bloc sits just above a majority</h2>
+
+<canvas id="grid" width="620" height="230" style="display:block; margin: 20px 0;"></canvas>
+
+<p>National, ACT and NZ First together hold 67 of 131 seats, per CNN. A majority is 66. ABC's live blog reported 68 at an
+earlier count. Both figures are provisional. About 400,000 special votes are still uncounted, including votes from overseas.
+Special votes have shifted seats in past elections.</p>
+
+<hr>
+
+<p><a href="2026-11-08.html">back to digest</a></p>
+
+<p>Source: <a href="https://www.cnn.com/2026/11/07/world/new-zealand-election-result-uncertain-intl-hnk">CNN</a></p>
+
+<script>
+  const parties = [
+    { name: 'National', seats: 42, right: true },
+    { name: 'Labour', seats: 36 },
+    { name: 'Greens', seats: 16 },
+    { name: 'ACT', seats: 13, right: true },
+    { name: 'NZ First', seats: 12, right: true },
+    { name: 'Opportunity', seats: 7 },
+    { name: 'Te Pati Maori', seats: 5 },
+  ];
+
+  // === HORIZONTAL BARS: SEATS ===
+  (function() {
+    const canvas = document.getElementById('seats');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    const W = 600, H = 270;
+    const pad = { top: 15, right: 50, bottom: 35, left: 110 };
+    const plotW = W - pad.left - pad.right;
+    const max = 45, barH = 22, gap = 9;
+
+    rc.line(pad.left, pad.top - 4, pad.left, pad.top + parties.length * (barH + gap), { stroke: '#333', roughness: 0.5 });
+
+    parties.forEach((p, i) => {
+      const y = pad.top + i * (barH + gap);
+      const w = p.seats / max * plotW;
+      const focal = i === 0;
+      rc.rectangle(pad.left, y, w, barH, {
+        fill: focal ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.35)',
+        fillStyle: 'solid', stroke: '#333', strokeWidth: focal ? 2 : 1, roughness: 1,
+      });
+      ctx.fillStyle = '#333';
+      ctx.font = focal ? 'bold 11px serif' : '11px serif';
+      ctx.textAlign = 'right';
+      ctx.fillText(p.name, pad.left - 8, y + barH / 2 + 4);
+      ctx.font = '12px serif';
+      ctx.textAlign = 'left';
+      ctx.fillText(p.seats, pad.left + w + 8, y + barH / 2 + 4);
+    });
+
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#666';
+    ctx.textAlign = 'left';
+    ctx.fillText('Preliminary seat count, 131 seats total. Source: Elections NZ.', pad.left, H - 8);
+  })();
+
+  // === SEAT GRID: BLOCS ===
+  (function() {
+    const canvas = document.getElementById('grid');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    const W = 620, H = 230;
+    const cols = 22, cell = 22, size = 17;
+    const left = 30, top = 20;
+
+    // Right bloc first, then the rest
+    const order = parties.filter(p => p.right).concat(parties.filter(p => !p.right));
+    const seats = [];
+    order.forEach(p => { for (let k = 0; k < p.seats; k++) seats.push(p.right); });
+
+    seats.forEach((isRight, i) => {
+      const c = i % cols, r = Math.floor(i / cols);
+      rc.rectangle(left + c * cell, top + r * cell, size, size, {
+        fill: isRight ? 'rgba(0,0,0,0.75)' : 'rgba(0,0,0,0.12)',
+        fillStyle: 'solid', stroke: '#333', strokeWidth: 0.8, roughness: 0.7,
+      });
+    });
+
+    // Majority marker after seat 66 (index 65)
+    const mi = 65;
+    const mc = mi % cols, mr = Math.floor(mi / cols);
+    const mx = left + mc * cell + size + 2.5;
+    rc.line(mx, top + mr * cell - 4, mx, top + mr * cell + size + 4, { stroke: '#000', strokeWidth: 2.5, roughness: 0.5 });
+
+    const legendY = top + 6 * cell + 22;
+    rc.rectangle(left, legendY - 11, 14, 14, { fill: 'rgba(0,0,0,0.75)', fillStyle: 'solid', stroke: '#333', roughness: 0.6 });
+    rc.rectangle(left + 220, legendY - 11, 14, 14, { fill: 'rgba(0,0,0,0.12)', fillStyle: 'solid', stroke: '#333', roughness: 0.6 });
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'left';
+    ctx.fillText('National + ACT + NZ First: 67', left + 20, legendY);
+    ctx.fillText('Labour, Greens, Opportunity, TPM: 64', left + 240, legendY);
+
+    ctx.fillStyle = '#666';
+    ctx.fillText('Each square is one seat. The thick line marks 66, a majority. Specials still to count.', left, legendY + 22);
+  })();
+</script>
+
+</body>
+</html>

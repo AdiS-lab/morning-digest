@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Russia-Ukraine talks in Abu Dhabi</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<h1>Russia-Ukraine talks set for Tuesday in Abu Dhabi</h1>
+
+<p><a href="2026-11-08.html">back to digest</a> · <a href="index.html">home</a></p>
+
+<hr>
+
+<p>The U.S. will host Russian and Ukrainian delegations in Abu Dhabi on November 10 and 11. Steve Witkoff announced the date.
+He and Jared Kushner are expected to lead the U.S. side. Reports describe the meeting as working-level talks.</p>
+
+<p>The agenda covers post-war security, de-escalation, humanitarian issues and next steps toward peace.</p>
+
+<h2>Talks stopped for nine months</h2>
+
+<canvas id="gap" width="640" height="200" style="display:block; margin: 20px 0;"></canvas>
+
+<p>Three rounds were held early this year. Talks were suspended when the Iran war began in late February.
+This will be the fourth round.</p>
+
+<h2>Two tracks this week</h2>
+
+<canvas id="tracks" width="600" height="200" style="display:block; margin: 20px 0;"></canvas>
+
+<p>U.S. negotiators also plan meetings in Brussels. They will meet France, Germany, the UK, the EU and NATO.
+Those talks cover security guarantees and rebuilding Ukraine.</p>
+
+<p>The two sides remain far apart on terms. Zelensky has said the talks could be delayed if fighting in the Middle East escalates.
+Earlier coverage is on the <a href="ukraine.html">Ukraine deal page</a>.</p>
+
+<hr>
+
+<p><a href="2026-11-08.html">back to digest</a></p>
+
+<p>Source: <a href="https://www.axios.com/2026/11/03/us-russia-ukraine-peace-talks-uae-trump-witkoff-kushner">Axios</a></p>
+
+<script>
+  // === TIMELINE: 2026 ROUNDS AND THE PAUSE ===
+  (function() {
+    const canvas = document.getElementById('gap');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    const W = 640, H = 200;
+    const pad = { left: 40, right: 30 };
+    const lineY = 100;
+    const plotW = W - pad.left - pad.right;
+    // month index 0 = Jan start, 11 = Dec start
+    const xOf = m => pad.left + m / 11 * plotW;
+
+    // Pause band: late Feb to Nov 10
+    const p1 = xOf(1.8), p2 = xOf(10.3);
+    rc.rectangle(p1, lineY - 14, p2 - p1, 28, {
+      fill: 'rgba(0,0,0,0.08)', fillStyle: 'solid', stroke: 'rgba(0,0,0,0.25)', roughness: 0.6,
+    });
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'center';
+    ctx.fillText('no talks, about nine months', (p1 + p2) / 2, lineY + 4);
+
+    rc.line(pad.left, lineY, W - pad.right, lineY, { stroke: '#333', strokeWidth: 1.5, roughness: 0.6 });
+
+    // Month ticks
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#666';
+    months.forEach((m, i) => {
+      const x = xOf(i);
+      rc.line(x, lineY + 14, x, lineY + 20, { stroke: '#333', roughness: 0.3 });
+      ctx.fillText(m, x, lineY + 34);
+    });
+
+    // Rounds 1-3, Jan-Feb (exact dates not shown)
+    [0.5, 0.9, 1.3].forEach(m => {
+      rc.circle(xOf(m), lineY, 10, { fill: 'rgba(0,0,0,0.35)', fillStyle: 'solid', stroke: '#333', roughness: 0.5 });
+    });
+    ctx.fillStyle = '#333';
+    ctx.font = 'bold 11px serif';
+    ctx.fillText('Jan-Feb', xOf(0.9), lineY - 50);
+    ctx.font = '11px serif';
+    ctx.fillText('Rounds 1 to 3', xOf(0.9), lineY - 36);
+
+    // Iran war begins
+    rc.line(xOf(1.8), lineY + 40, xOf(1.8), lineY + 48, { stroke: '#333', roughness: 0.3 });
+    ctx.font = 'bold 11px serif';
+    ctx.fillText('Late Feb', xOf(1.8) + 10, lineY + 62);
+    ctx.font = '11px serif';
+    ctx.fillText('Iran war begins', xOf(1.8) + 10, lineY + 76);
+
+    // Round 4
+    const x4 = xOf(10.3);
+    rc.circle(x4, lineY, 16, { fill: 'rgba(0,0,0,0.85)', fillStyle: 'solid', stroke: '#333', strokeWidth: 2, roughness: 0.5 });
+    ctx.font = 'bold 11px serif';
+    ctx.fillText('Nov 10-11', x4, lineY - 50);
+    ctx.font = '11px serif';
+    ctx.fillText('Round 4, Abu Dhabi', x4 - 10, lineY - 36);
+
+    ctx.fillStyle = '#666';
+    ctx.textAlign = 'left';
+    ctx.fillText('U.S.-brokered Russia-Ukraine talks, 2026. Early round dates approximate.', pad.left, H - 6);
+  })();
+
+  // === WORKFLOW: TWO TRACKS ===
+  (function() {
+    const canvas = document.getElementById('tracks');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    const W = 600, H = 200;
+
+    function box(x, y, w, h, lines, focal) {
+      rc.rectangle(x, y, w, h, {
+        fill: focal ? 'rgba(0,0,0,0.12)' : 'rgba(0,0,0,0.03)',
+        fillStyle: 'solid', stroke: '#333', strokeWidth: focal ? 2 : 1, roughness: 0.9,
+      });
+      ctx.fillStyle = '#333';
+      ctx.textAlign = 'center';
+      lines.forEach((l, i) => {
+        ctx.font = i === 0 ? 'bold 11px serif' : '11px serif';
+        ctx.fillText(l, x + w / 2, y + 20 + i * 15);
+      });
+    }
+    function arrow(x1, y1, x2, y2) {
+      rc.line(x1, y1, x2, y2, { stroke: '#333', strokeWidth: 1.3, roughness: 0.6 });
+      const a = Math.atan2(y2 - y1, x2 - x1);
+      rc.line(x2, y2, x2 - 9 * Math.cos(a - 0.4), y2 - 9 * Math.sin(a - 0.4), { stroke: '#333', roughness: 0.4 });
+      rc.line(x2, y2, x2 - 9 * Math.cos(a + 0.4), y2 - 9 * Math.sin(a + 0.4), { stroke: '#333', roughness: 0.4 });
+    }
+
+    box(20, 65, 150, 55, ['U.S. negotiators', 'Witkoff, Kushner']);
+    box(300, 15, 270, 70, ['Abu Dhabi', 'with Russia and Ukraine', 'security, de-escalation, aid'], true);
+    box(300, 105, 270, 70, ['Brussels', 'France, Germany, UK, EU, NATO', 'guarantees, rebuilding']);
+    arrow(172, 85, 296, 50);
+    arrow(172, 100, 296, 140);
+
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#666';
+    ctx.textAlign = 'left';
+    ctx.fillText('Planned U.S. meetings, as reported.', 20, H - 6);
+  })();
+</script>
+
+</body>
+</html>
