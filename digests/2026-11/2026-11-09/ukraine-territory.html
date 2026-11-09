@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ukraine territory</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<h1>Trump says Ukraine may have to give up territory</h1>
+
+<p><a href="../2026-11-09.html">back to digest</a> · <a href="../../index.html">home</a></p>
+
+<hr>
+
+<p>Ahead of the Abu Dhabi talks, Trump told 60 Minutes that Ukraine will "end up with a little bit different shape."
+Zelensky responded that Ukraine's territorial integrity is protected under its constitution.</p>
+
+<h2>Two positions</h2>
+
+<canvas id="flow" width="620" height="200" style="display:block; margin: 20px 0;"></canvas>
+
+<p>The two sides remain far apart.</p>
+
+<h2>The road to Abu Dhabi</h2>
+
+<canvas id="timeline" width="620" height="260" style="display:block; margin: 20px 0;"></canvas>
+
+<p>The talks are set for November 10 and 11. See the <a href="../2026-11-08/ukraine-talks.html">talks announcement</a>
+and the <a href="../2026-11-05/ukraine.html">Ukraine deal page</a> for earlier coverage.</p>
+
+<hr>
+
+<p><a href="../2026-11-09.html">back to digest</a></p>
+
+<p>Source: <a href="https://www.cbsnews.com/60-minutes/">60 Minutes (CBS News)</a></p>
+
+<script>
+  function arrow(rc, x1, y1, x2, y2) {
+    rc.line(x1, y1, x2, y2, { stroke: '#333', strokeWidth: 1.3, roughness: 0.6 });
+    const a = Math.atan2(y2 - y1, x2 - x1);
+    rc.line(x2, y2, x2 - 9 * Math.cos(a - 0.4), y2 - 9 * Math.sin(a - 0.4), { stroke: '#333', roughness: 0.4 });
+    rc.line(x2, y2, x2 - 9 * Math.cos(a + 0.4), y2 - 9 * Math.sin(a + 0.4), { stroke: '#333', roughness: 0.4 });
+  }
+
+  // === WORKFLOW: TWO POSITIONS ===
+  (function() {
+    const canvas = document.getElementById('flow');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    function box(x, y, w, h, lines, fill, stroke) {
+      rc.rectangle(x, y, w, h, { fill, fillStyle: 'solid', stroke, strokeWidth: 1.5, roughness: 0.9 });
+      ctx.fillStyle = '#333';
+      ctx.textAlign = 'center';
+      lines.forEach((l, k) => {
+        ctx.font = k === 0 ? 'bold 11px serif' : '11px serif';
+        ctx.fillText(l, x + w / 2, y + 22 + k * 16);
+      });
+    }
+    box(20, 25, 230, 90, ['Trump, on 60 Minutes', 'Ukraine will "end up with', 'a little bit different shape"'], 'rgba(200,60,60,0.25)', '#c33');
+    box(370, 25, 230, 90, ['Zelensky', 'Territorial integrity is', 'protected by the constitution'], 'rgba(30,70,180,0.2)', '#2255aa');
+    arrow(rc, 255, 70, 365, 70);
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#666';
+    ctx.textAlign = 'left';
+    ctx.fillText('Zelensky replied to Trump. The gap is the main obstacle.', 20, 150);
+  })();
+
+  // === TIMELINE ===
+  (function() {
+    const canvas = document.getElementById('timeline');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    const W = 620, H = 260, y = 130;
+    const events = [
+      { d: 'Nov 5', t: ['Russia bombs aid', 'center, 42 dead'] },
+      { d: 'Nov 8', t: ['Talks announced', 'for Tuesday'] },
+      { d: 'Nov 9', t: ['Trump: Ukraine', 'may lose land'], focal: true },
+      { d: 'Nov 10-11', t: ['Abu Dhabi talks'] },
+    ];
+    rc.line(30, y, W - 20, y, { stroke: '#333', roughness: 0.5 });
+    const step = (W - 140) / (events.length - 1);
+    events.forEach((e, i) => {
+      const x = 70 + i * step;
+      const above = i % 2 === 0;
+      rc.circle(x, y, e.focal ? 16 : 11, {
+        fill: e.focal ? 'rgba(200,60,60,0.7)' : 'rgba(0,0,0,0.3)', fillStyle: 'solid',
+        stroke: e.focal ? '#c33' : '#555', strokeWidth: e.focal ? 2 : 1, roughness: 0.8,
+      });
+      ctx.fillStyle = '#333';
+      ctx.textAlign = 'center';
+      const base = above ? y - 78 : y + 36;
+      ctx.font = 'bold 11px serif';
+      ctx.fillText(e.d, x, base);
+      ctx.font = '11px serif';
+      e.t.forEach((l, k) => ctx.fillText(l, x, base + 15 + k * 14));
+    });
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#666';
+    ctx.textAlign = 'left';
+    ctx.fillText('Spacing is even, not to scale.', 30, H - 10);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iran talks</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<h1>Iran wants sanctions lifted before talks restart</h1>
+
+<p><a href="../2026-11-09.html">back to digest</a> · <a href="../../index.html">home</a></p>
+
+<hr>
+
+<p>Iran proposed restarting talks with Washington within two days. It wants sanctions and the U.S. naval blockade lifted first.
+Secretary of State Marco Rubio called those conditions unacceptable.</p>
+
+<h2>The standoff</h2>
+
+<canvas id="flow" width="620" height="230" style="display:block; margin: 20px 0;"></canvas>
+
+<p>On November 8, Trump told CNN that renewed strikes on Iran are "highly unlikely" if talks show progress.</p>
+
+<h2>Five days on Iran</h2>
+
+<canvas id="timeline" width="620" height="260" style="display:block; margin: 20px 0;"></canvas>
+
+<p>This follows the <a href="../2026-11-08/qatar-plan.html">Qatar plan</a>, which neither side has accepted. Friday's strikes are on the
+<a href="../2026-11-07/iran-strikes.html">Iran strikes page</a>. Background on the waterway is on the
+<a href="../2026-11-05/hormuz.html">Strait of Hormuz page</a>. The <a href="../2026-11-06/hegseth.html">Hegseth page</a> covers the Iran link in the impeachment push.</p>
+
+<hr>
+
+<p><a href="../2026-11-09.html">back to digest</a></p>
+
+<p>Source: <a href="https://www.cnn.com">CNN</a></p>
+
+<script>
+  function arrow(rc, x1, y1, x2, y2) {
+    rc.line(x1, y1, x2, y2, { stroke: '#333', strokeWidth: 1.3, roughness: 0.6 });
+    const a = Math.atan2(y2 - y1, x2 - x1);
+    rc.line(x2, y2, x2 - 9 * Math.cos(a - 0.4), y2 - 9 * Math.sin(a - 0.4), { stroke: '#333', roughness: 0.4 });
+    rc.line(x2, y2, x2 - 9 * Math.cos(a + 0.4), y2 - 9 * Math.sin(a + 0.4), { stroke: '#333', roughness: 0.4 });
+  }
+
+  // === WORKFLOW: THE STANDOFF ===
+  (function() {
+    const canvas = document.getElementById('flow');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    function box(x, y, w, h, lines, fill, stroke, sw) {
+      rc.rectangle(x, y, w, h, { fill, fillStyle: 'solid', stroke, strokeWidth: sw, roughness: 0.9 });
+      ctx.fillStyle = '#333';
+      ctx.textAlign = 'center';
+      lines.forEach((l, k) => {
+        ctx.font = k === 0 ? 'bold 11px serif' : '11px serif';
+        ctx.fillText(l, x + w / 2, y + 20 + k * 15);
+      });
+    }
+    box(20, 20, 160, 75, ['Iran proposes', 'talks within', 'two days'], 'rgba(0,0,0,0.05)', '#333', 1);
+    box(230, 20, 170, 75, ['Iran asks first', 'sanctions lifted,', 'blockade lifted'], 'rgba(30,70,180,0.2)', '#2255aa', 1.5);
+    box(450, 20, 150, 75, ['Rubio says', 'unacceptable'], 'rgba(200,60,60,0.3)', '#c33', 2);
+    arrow(rc, 185, 57, 225, 57);
+    arrow(rc, 405, 57, 445, 57);
+    box(230, 135, 170, 60, ['Trump to CNN:', 'strikes "highly unlikely"', 'if talks progress'], 'rgba(40,140,70,0.2)', '#2a8c46', 1.5);
+    arrow(rc, 525, 100, 405, 150);
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#666';
+    ctx.textAlign = 'left';
+    ctx.fillText('Talks are on the table. The terms are not.', 20, 215);
+  })();
+
+  // === TIMELINE ===
+  (function() {
+    const canvas = document.getElementById('timeline');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    const W = 620, H = 260, y = 130;
+    const events = [
+      { d: 'Nov 5', t: ['Tankers hit', 'mines in Hormuz'] },
+      { d: 'Nov 6', t: ['Qatar submits', 'two-stage plan'] },
+      { d: 'Nov 7', t: ['U.S. carries out', 'minor strikes'] },
+      { d: 'Nov 8', t: ['Trump: strikes', '"highly unlikely"'] },
+      { d: 'Nov 9', t: ['Iran sets terms,', 'Rubio says no'], focal: true },
+    ];
+    rc.line(30, y, W - 20, y, { stroke: '#333', roughness: 0.5 });
+    const step = (W - 130) / (events.length - 1);
+    events.forEach((e, i) => {
+      const x = 65 + i * step;
+      const above = i % 2 === 0;
+      rc.circle(x, y, e.focal ? 16 : 11, {
+        fill: e.focal ? 'rgba(200,60,60,0.7)' : 'rgba(0,0,0,0.3)', fillStyle: 'solid',
+        stroke: e.focal ? '#c33' : '#555', strokeWidth: e.focal ? 2 : 1, roughness: 0.8,
+      });
+      ctx.fillStyle = '#333';
+      ctx.textAlign = 'center';
+      const base = above ? y - 78 : y + 36;
+      ctx.font = 'bold 11px serif';
+      ctx.fillText(e.d, x, base);
+      ctx.font = '11px serif';
+      e.t.forEach((l, k) => ctx.fillText(l, x, base + 15 + k * 14));
+    });
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#666';
+    ctx.textAlign = 'left';
+    ctx.fillText('Iran coverage in this digest, November 5 to 9.', 30, H - 10);
+  })();
+</script>
+
+</body>
+</html>
