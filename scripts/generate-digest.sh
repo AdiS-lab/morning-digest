@@ -4,6 +4,7 @@
 # Catches up on any missed days since the last digest.
 
 PROJECT_DIR="C:/01-Projects/RealProjects/morning-digest"
+export PATH="$PATH:$HOME/.local/bin:$HOME/AppData/Local/Microsoft/WinGet/Packages/Anthropic.ClaudeCode_Microsoft.Winget.Source_8wekyb3d8bbwe"
 cd "$PROJECT_DIR"
 
 # Find the last digest date from manifest
@@ -53,13 +54,13 @@ for DAY in "${MISSING[@]}"; do
   echo "--- Done $DAY ---"
 done
 
-# Open today's digest
-MONTH=$(date +%Y-%m)
-start "" "$PROJECT_DIR/digests/$MONTH/$TODAY.html"
-
 # Push to GitHub
 git add digests/
 git diff --staged --quiet || git commit -m "digest: ${MISSING[*]}"
 git push
+
+# Open today's digest (after everything is done)
+MONTH=$(date +%Y-%m)
+cmd.exe /c start "" "$PROJECT_DIR/digests/$MONTH/$TODAY.html"
 
 echo "All done."

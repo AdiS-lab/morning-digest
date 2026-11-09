@@ -133,32 +133,27 @@
     {
       "date": "2026-11-09",
       "file": "2026-11/2026-11-09.html",
-      "summary": "A Hegseth impeachment vote is expected, Iran sets terms for talks, and a shooting in Krakow leaves six dead.",
+      "summary": "Hegseth impeachment filing. A spy scandal at NVIDIA. Ukraine's power grid under fire. Iran talks with Qatar.",
       "stories": [
         {
-          "headline": "Hegseth impeachment vote expected",
+          "headline": "Rep. Massie filed to impeach Hegseth",
           "file": "2026-11/2026-11-09/hegseth-vote.html",
-          "tags": ["us-politics", "impeachment", "military", "congress"]
+          "tags": ["us-politics", "impeachment", "defense", "military"]
         },
         {
-          "headline": "Iran wants sanctions lifted before talks restart",
-          "file": "2026-11/2026-11-09/iran-talks.html",
-          "tags": ["iran", "middle-east", "diplomacy", "strait-of-hormuz"]
-        },
-        {
-          "headline": "Trump says Ukraine may have to give up territory",
-          "file": "2026-11/2026-11-09/ukraine-territory.html",
-          "tags": ["russia", "ukraine", "war", "diplomacy"]
-        },
-        {
-          "headline": "Nvidia's board probes CEO Jensen Huang",
+          "headline": "NVIDIA CEO admits affair with suspected Chinese spy",
           "file": "2026-11/2026-11-09/nvidia-probe.html",
-          "tags": ["markets", "tech", "nvidia", "china"]
+          "tags": ["tech", "nvidia", "china", "espionage", "security"]
         },
         {
-          "headline": "Six killed in a shooting at a Krakow market",
-          "file": "2026-11/2026-11-09/krakow-shooting.html",
-          "tags": ["poland", "europe", "shooting"]
+          "headline": "Russia struck Ukraine's power grid again",
+          "file": "2026-11/2026-11-09/ukraine-territory.html",
+          "tags": ["russia", "ukraine", "war", "europe", "energy"]
+        },
+        {
+          "headline": "Trump meets Qatar on Iran mediation",
+          "file": "2026-11/2026-11-09/iran-talks.html",
+          "tags": ["iran", "middle-east", "qatar", "strait-of-hormuz", "diplomacy"]
         }
       ]
     }
