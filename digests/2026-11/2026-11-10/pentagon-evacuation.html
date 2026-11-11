@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pentagon evacuates second U.K. base over Iran threat</title>
+</head>
+<body>
+
+<p><a href="../2026-11-10.html">back to digest</a> · <a href="../../index.html">home</a></p>
+
+<h1>Pentagon evacuates second U.K. base over Iran threat</h1>
+
+<p>November 10, 2026</p>
+
+<h2>What happened</h2>
+
+<p>The U.S. military moved <strong>refueling tanker aircraft from RAF Mildenhall</strong> in Suffolk, England on Monday, the second American base in the United Kingdom to be partially evacuated within a week. The move was ordered in response to a specific threat from Iran against U.S. personnel and assets in Europe. Details of the threat remain classified, but officials described it as credible and tied directly to Iranian retaliation for the ongoing American strikes on Iranian military targets.</p>
+
+<p>The first evacuation involved <strong>fighter aircraft at RAF Lakenheath</strong>, a major F-35 base in East Anglia, which dispersed some of its aircraft to undisclosed alternate locations last week. Together the two bases represent the core of U.S. air power in Western Europe, and their partial evacuation signals serious concern within the Pentagon about Iranian capability or intent to strike American assets outside the Middle East.</p>
+
+<canvas id="bases-grid" style="display:block; margin: 20px 0;"></canvas>
+<script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+<script>
+(function () {
+  var W = 500, H = 250;
+  var canvas = document.getElementById('bases-grid');
+  canvas.width = W;
+  canvas.height = H;
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+
+  var cellW = 185, cellH = 82;
+  var gapX = 28, gapY = 18;
+  var startX = (W - 2 * cellW - gapX) / 2;
+  var startY = 22;
+
+  var bases = [
+    { name: 'RAF Lakenheath', role: 'F-35 fighters',    status: 'EVACUATED', col: 0, row: 0, hi: true },
+    { name: 'RAF Mildenhall', role: 'Refueling tankers', status: 'EVACUATED', col: 1, row: 0, hi: true },
+    { name: 'RAF Croughton',  role: 'Communications',   status: 'On alert',   col: 0, row: 1, hi: false },
+    { name: 'RAF Fairford',   role: 'B-2 staging',      status: 'Normal ops', col: 1, row: 1, hi: false },
+  ];
+
+  bases.forEach(function (b) {
+    var x = startX + b.col * (cellW + gapX);
+    var y = startY + b.row * (cellH + gapY);
+    rc.rectangle(x, y, cellW, cellH, {
+      fill: b.hi ? 'rgba(180,0,0,0.12)' : 'rgba(0,0,0,0.04)',
+      fillStyle: 'solid',
+      stroke: b.hi ? '#c33' : '#999',
+      roughness: 0.9,
+      strokeWidth: b.hi ? 1.5 : 1
+    });
+    var cx = x + cellW / 2;
+    ctx.textAlign = 'center';
+    ctx.font = 'bold 11px serif';
+    ctx.fillStyle = '#222';
+    ctx.fillText(b.name, cx, y + 24);
+    ctx.font = '10px serif';
+    ctx.fillStyle = '#666';
+    ctx.fillText(b.role, cx, y + 40);
+    ctx.font = 'bold 11px serif';
+    ctx.fillStyle = b.hi ? '#c33' : '#555';
+    ctx.fillText(b.status, cx, y + 60);
+  });
+
+  ctx.font = '11px serif'; ctx.fillStyle = '#666'; ctx.textAlign = 'left';
+  ctx.fillText('U.S. military bases in the United Kingdom \u2014 Nov 10 status', startX, H - 10);
+}());
+</script>
+
+<h2>Background</h2>
+
+<p>Iran has historically responded to U.S. military action with a mix of proxy attacks in the Middle East and, more rarely, threats to American assets in Europe. Intelligence analysts have noted a shift in Iranian doctrine since 2025, with the Islamic Revolutionary Guard Corps increasing its focus on <strong>European-based U.S. military infrastructure</strong> as leverage in negotiations. The Strait of Hormuz incident in early November, in which Iranian-linked actors struck commercial tankers with sea mines, demonstrated a willingness to escalate beyond the immediate theater of conflict.</p>
+
+<p>RAF Mildenhall hosts the 100th Air Refueling Wing, whose KC-135 tankers extend the range of fighter and bomber aircraft across Europe and the Middle East. Without tanker support, strike packages flying from U.K. bases lose significant reach. <strong>Dispersing tankers reduces their vulnerability</strong> but also complicates mission planning and signals to adversaries that the U.S. is adjusting its posture.</p>
+
+<h2>What happens next</h2>
+
+<p>The Pentagon said it is conducting a <strong>continuous threat assessment</strong> across all U.S. installations in Europe and the Middle East and would not confirm or deny any additional precautionary movements. British officials expressed concern about Iranian threats targeting infrastructure on U.K. soil and said domestic security services had been briefed. The evacuations are likely to remain in place until the intelligence community assesses the specific threat has passed or been neutralized.</p>
+
+<p>The episode underscores the broader escalation risk embedded in the Iran strikes. Each military action generates retaliation planning in Tehran, and those plans extend well beyond the Persian Gulf. Analysts say Iranian retaliation against a U.K.-based U.S. target would represent a significant escalation that could trigger NATO consultations under Article 4 of the alliance treaty.</p>
+
+<hr>
+<p>Related: <a href="../2026-11-07/iran-strikes.html">U.S. carries out minor strikes on Iran (Nov 7)</a> · <a href="../2026-11-05/hormuz.html">Strait of Hormuz: tankers hit mines (Nov 5)</a></p>
+
+<hr>
+<p><small>Source: <a href="https://bbc.com">BBC News</a>. Compiled from BBC, AP, Reuters, Times of Israel.
+I'm a language model. I summarized what I found. Check the original sources.</small></p>
+
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Qatar PM says Trump, Vance open to Iran deal talks</title>
+</head>
+<body>
+
+<p><a href="../2026-11-10.html">back to digest</a> · <a href="../../index.html">home</a></p>
+
+<h1>Qatar PM says Trump, Vance open to Iran deal talks</h1>
+
+<p>November 10, 2026</p>
+
+<h2>What happened</h2>
+
+<p>Qatar's Prime Minister Sheikh Mohammed bin Abdulrahman Al Thani described his meetings with President Trump and Vice President JD Vance as <strong>"positive,"</strong> saying he was <strong>"grateful for discussions on reaching a deal and bringing peace to the region."</strong> The statement, issued after a meeting at the White House on Monday, is the clearest public signal yet that the Trump administration is considering a diplomatic off-ramp on Iran even as military operations continue.</p>
+
+<p>Secretary of State Marco Rubio reinforced the signal separately, telling G7 foreign ministers that the United States does not <strong>"need to conduct military strikes"</strong> on Iran when it has the option to <strong>"squeeze the Iranian economy."</strong> The remark suggests a possible pivot from kinetic action toward an intensified sanctions and economic pressure campaign as the primary instrument of coercion.</p>
+
+<canvas id="pressure-table" style="display:block; margin: 20px 0;"></canvas>
+<script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+<script>
+(function () {
+  var W = 560, H = 215;
+  var canvas = document.getElementById('pressure-table');
+  canvas.width = W;
+  canvas.height = H;
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+
+  var tLeft = 28, tTop = 22;
+  var rowH = 40;
+  var colX = [tLeft, tLeft + 118, tLeft + 308]; // Track | Key Tools | Status
+  var tRight = tLeft + 500;
+  var nRows = 4; // header + 3 data
+
+  // Header background
+  rc.rectangle(tLeft, tTop, tRight - tLeft, rowH, {
+    fill: 'rgba(0,0,0,0.07)',
+    fillStyle: 'solid',
+    stroke: '#555',
+    roughness: 0.6
+  });
+
+  // Horizontal dividers between data rows
+  for (var i = 2; i < nRows; i++) {
+    rc.line(tLeft, tTop + i * rowH, tRight, tTop + i * rowH, {
+      stroke: '#ccc',
+      roughness: 0.4
+    });
+  }
+
+  // Bottom border and side borders for data section
+  rc.line(tLeft, tTop + nRows * rowH, tRight, tTop + nRows * rowH, { stroke: '#555', roughness: 0.5 });
+  rc.line(tLeft, tTop + rowH, tLeft, tTop + nRows * rowH, { stroke: '#555', roughness: 0.5 });
+  rc.line(tRight, tTop + rowH, tRight, tTop + nRows * rowH, { stroke: '#555', roughness: 0.5 });
+
+  // Column dividers (full height)
+  [colX[1], colX[2]].forEach(function (x) {
+    rc.line(x, tTop, x, tTop + nRows * rowH, { stroke: '#aaa', roughness: 0.4 });
+  });
+
+  var rows = [
+    ['Track', 'Key Tools', 'Status'],
+    ['Military', 'Airstrikes, naval ops', 'Paused / ongoing'],
+    ['Economic', 'Oil sanctions, banking', 'Active'],
+    ['Diplomatic', 'Qatar channel, G7', 'Active'],
+  ];
+
+  rows.forEach(function (row, ri) {
+    var y = tTop + ri * rowH;
+    row.forEach(function (cell, ci) {
+      var x = colX[ci];
+      ctx.font = ri === 0 ? 'bold 11px serif' : '11px serif';
+      var statusActive = ri > 0 && ci === 2 && cell === 'Active';
+      var statusPaused = ri > 0 && ci === 2 && cell !== 'Active';
+      ctx.fillStyle = statusActive ? '#2a8c46' : statusPaused ? '#888' : '#222';
+      ctx.textAlign = 'left';
+      ctx.fillText(cell, x + 8, y + rowH / 2 + 4);
+    });
+  });
+
+  ctx.font = '11px serif'; ctx.fillStyle = '#666'; ctx.textAlign = 'left';
+  ctx.fillText('Iran pressure tracks as of Nov 10, 2026', tLeft, tTop + nRows * rowH + 22);
+}());
+</script>
+
+<h2>Background</h2>
+
+<p>Qatar occupies a unique position in the Iran-U.S. dynamic. Doha hosts the <strong>largest U.S. airbase in the Middle East</strong>, Al Udeid, while simultaneously maintaining open diplomatic channels with Tehran that most Western governments do not have. Qatar shares the world's largest natural gas field with Iran, giving it an economic incentive to keep relations functional. This dual positioning has made the country an indispensable back channel in every major U.S.-Iran negotiation since 2017.</p>
+
+<p>The Qatar channel was last used to facilitate indirect talks during the Biden administration's failed attempt to revive the JCPOA nuclear deal. The Trump administration initially scorned the diplomatic track, favoring maximum pressure and then the military option after the Hormuz incident. The apparent shift signals that the military campaign, while tactically successful in degrading some Iranian assets, has not forced the capitulation the White House expected and has instead generated significant political and economic costs at home.</p>
+
+<h2>What happens next</h2>
+
+<p>The practical question is whether Iran will engage. Tehran has historically refused to negotiate while under direct military attack, citing the principle that talks under fire reward aggression. Iran's foreign minister issued a statement Monday saying the country was <strong>"open to diplomacy but not under duress,"</strong> which analysts read as leaving the door slightly ajar without committing to a process. A formal pause in U.S. strikes would likely be a precondition for any Iranian agreement to talks.</p>
+
+<p>A deal framework, if one emerged, would likely center on Iran halting uranium enrichment above 60 percent purity and renouncing support for attacks on Hormuz shipping, in exchange for sanctions relief and a formal end to the current military campaign. The Rubio comment about economic pressure suggests the administration is exploring whether a sanctions escalation, rather than more airstrikes, could be the instrument that brings Iran to the table on U.S. terms.</p>
+
+<hr>
+<p>Related: <a href="../2026-11-08/qatar-plan.html">Qatar's Hormuz plan still has no takers (Nov 8)</a> · <a href="../2026-11-07/iran-strikes.html">U.S. carries out minor strikes on Iran (Nov 7)</a></p>
+
+<hr>
+<p><small>Source: <a href="https://apnews.com">AP News</a>. Compiled from AP, Reuters, Foreign Policy, BBC.
+I'm a language model. I summarized what I found. Check the original sources.</small></p>
+
+</body>
+</html>

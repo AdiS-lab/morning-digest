@@ -156,6 +156,70 @@
           "tags": ["us-politics", "elections", "midterms", "congress"]
         }
       ]
+    },
+    {
+      "date": "2026-11-10",
+      "file": "2026-11/2026-11-10.html",
+      "summary": "Hegseth faces impeachment articles. Abu Dhabi talks underway. Markets bounce back. Pentagon evacuates a second U.K. base.",
+      "stories": [
+        {
+          "headline": "Hegseth impeachment articles introduced in Congress",
+          "file": "2026-11/2026-11-10/hegseth-impeachment.html",
+          "tags": ["us-politics", "impeachment", "military", "iran", "war-powers"]
+        },
+        {
+          "headline": "Russia and Ukraine hold talks in Abu Dhabi as U.S. mediates",
+          "file": "2026-11/2026-11-10/abu-dhabi-talks.html",
+          "tags": ["russia", "ukraine", "war", "diplomacy", "middle-east"]
+        },
+        {
+          "headline": "Stock market rebounds after three-day plunge",
+          "file": "2026-11/2026-11-10/market-rebound.html",
+          "tags": ["markets", "tech", "nvidia", "economy"]
+        },
+        {
+          "headline": "Pentagon evacuates second U.K. base over Iran threat",
+          "file": "2026-11/2026-11-10/pentagon-evacuation.html",
+          "tags": ["iran", "middle-east", "military", "uk"]
+        },
+        {
+          "headline": "Qatar PM says Trump, Vance open to Iran deal talks",
+          "file": "2026-11/2026-11-10/qatar-deal.html",
+          "tags": ["iran", "middle-east", "diplomacy", "qatar", "us-politics"]
+        }
+      ]
+    },
+    {
+      "date": "2026-11-11",
+      "file": "2026-11/2026-11-11.html",
+      "summary": "Russia escalates attacks on Ukraine. Hegseth defends his record. Nvidia scandal deepens. Religious leaders call for AI weapons regulation. Inflation data unnerves the Fed.",
+      "stories": [
+        {
+          "headline": "Russia launches massive drone attack on Zelensky's hometown",
+          "file": "2026-11/2026-11-11/zelensky-hometown.html",
+          "tags": ["russia", "ukraine", "war", "military"]
+        },
+        {
+          "headline": "Hegseth lashes out at 'political show' over impeachment",
+          "file": "2026-11/2026-11-11/hegseth-defends.html",
+          "tags": ["us-politics", "impeachment", "military"]
+        },
+        {
+          "headline": "Nvidia shares plummet as scandal deepens",
+          "file": "2026-11/2026-11-11/nvidia-scandal.html",
+          "tags": ["tech", "nvidia", "markets", "espionage", "china"]
+        },
+        {
+          "headline": "Religious leaders demand international regulation of 'killer robots'",
+          "file": "2026-11/2026-11-11/ai-weapons.html",
+          "tags": ["technology", "international", "military", "ai", "regulation"]
+        },
+        {
+          "headline": "U.S. inflation exceeds expectations, Fed rate hike likely",
+          "file": "2026-11/2026-11-11/inflation-rate.html",
+          "tags": ["us-economy", "fed", "inflation", "markets"]
+        }
+      ]
     }
   ]
 }
