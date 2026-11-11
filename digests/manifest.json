@@ -133,27 +133,27 @@
     {
       "date": "2026-11-09",
       "file": "2026-11/2026-11-09.html",
-      "summary": "Hegseth impeachment filing. A spy scandal at NVIDIA. Ukraine's power grid under fire. Iran talks with Qatar.",
+      "summary": "Strikes before talks. A spy scandal at Nvidia. COP31 opens. The midterm count continues.",
       "stories": [
         {
-          "headline": "Rep. Massie filed to impeach Hegseth",
-          "file": "2026-11/2026-11-09/hegseth-vote.html",
-          "tags": ["us-politics", "impeachment", "defense", "military"]
+          "headline": "Russia and Ukraine trade strikes before Abu Dhabi talks",
+          "file": "2026-11/2026-11-09/ukraine-strikes.html",
+          "tags": ["russia", "ukraine", "war", "diplomacy", "energy"]
         },
         {
-          "headline": "NVIDIA CEO admits affair with suspected Chinese spy",
-          "file": "2026-11/2026-11-09/nvidia-probe.html",
-          "tags": ["tech", "nvidia", "china", "espionage", "security"]
+          "headline": "Nvidia spy scandal deepens",
+          "file": "2026-11/2026-11-09/nvidia-spy.html",
+          "tags": ["tech", "nvidia", "china", "espionage", "markets"]
         },
         {
-          "headline": "Russia struck Ukraine's power grid again",
-          "file": "2026-11/2026-11-09/ukraine-territory.html",
-          "tags": ["russia", "ukraine", "war", "europe", "energy"]
+          "headline": "COP31 opens in Antalya",
+          "file": "2026-11/2026-11-09/cop31.html",
+          "tags": ["climate", "turkey", "diplomacy"]
         },
         {
-          "headline": "Trump meets Qatar on Iran mediation",
-          "file": "2026-11/2026-11-09/iran-talks.html",
-          "tags": ["iran", "middle-east", "qatar", "strait-of-hormuz", "diplomacy"]
+          "headline": "Democrats reach 254 seats, still counting",
+          "file": "2026-11/2026-11-09/midterms-count.html",
+          "tags": ["us-politics", "elections", "midterms", "congress"]
         }
       ]
     }

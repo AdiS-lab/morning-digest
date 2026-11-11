@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Russia and Ukraine trade strikes before Abu Dhabi talks</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<p><a href="../2026-11-09.html">back to digest</a> · <a href="../../index.html">home</a></p>
+
+<h1>Russia and Ukraine trade strikes before Abu Dhabi talks</h1>
+
+<p>On Monday, Russia launched <b>317 drones</b> at Ukraine overnight, including 105 jet-powered drones. The Russian Ministry of Defense said it targeted four electrical substations in the <b>Kyiv, Dnipropetrovsk, Cherkasy, and Vinnytsia</b> regions. The result: 850,000 Ukrainians lost power.</p>
+
+<p>The timing was not subtle. U.S.-brokered trilateral talks in <b>Abu Dhabi are scheduled for Tuesday and Wednesday</b>. Both sides appear to be escalating to strengthen their negotiating position.</p>
+
+<h2>Ukraine hit back</h2>
+
+<p>Hours after the Russian strikes, Ukrainian forces <b>hit another of Russia's largest oil refineries</b>. Ukraine has made Russian energy infrastructure a regular target since late 2024, aiming to cut into the revenue that funds Russia's war effort. Officials did not name the specific refinery.</p>
+
+<h2>The winter problem</h2>
+
+<p>Russia's strategy is familiar: <b>destroy power infrastructure before winter</b> to deny civilians heating, light, and running water. Ukraine's grid has been under systematic attack since October 2022. Each time it gets repaired, Russia hits it again.</p>
+
+<p>President Zelenskyy said Monday that the <b>EU agreed to activate an emergency mechanism</b> to speed up funding for grid repairs. He also called for tougher international sanctions targeting Russia's missile production capacity.</p>
+
+<canvas id="timeline" width="600" height="160" style="display:block; margin: 20px 0;"></canvas>
+
+<h2>What happens next</h2>
+
+<p>The Abu Dhabi talks on November 10-11 are the first direct U.S.-brokered negotiation in months. Expectations are low. Both sides went into the meeting having just attacked each other's infrastructure. The talks are trilateral: U.S., Russia, and Ukraine. Whether they produce anything depends on whether either side is willing to make concessions neither has signaled so far.</p>
+
+<h2>Related</h2>
+<ul>
+<li><a href="../2026-11-08/ukraine-talks.html">Nov 8: Russia-Ukraine talks set for Tuesday in Abu Dhabi</a></li>
+<li><a href="../2026-11-05/ukraine.html">Nov 5: Russia bombed a Ukrainian aid center</a></li>
+</ul>
+
+<p><a href="https://www.washingtonpost.com/world/2026/11/09/russia-ukraine-war-talks-trump/">Source: The Washington Post</a></p>
+
+<p><a href="../2026-11-09.html">back to digest</a> · <a href="../../index.html">home</a></p>
+
+<script>
+(function() {
+  const canvas = document.getElementById('timeline');
+  const ctx = canvas.getContext('2d');
+  const rc = rough.canvas(canvas);
+
+  const W = 600, H = 160;
+  const lineY = 55;
+  const pad = { left: 50, right: 50 };
+  const plotW = W - pad.left - pad.right;
+
+  const events = [
+    { label: 'Russia strikes\n4 substations', pos: 0 },
+    { label: '317 drones\nlaunched', pos: 0.25 },
+    { label: '850K lose\npower', pos: 0.5 },
+    { label: 'Ukraine hits\nRussian refinery', pos: 0.75 },
+    { label: 'Abu Dhabi\ntalks begin', pos: 1, focal: true },
+  ];
+
+  rc.line(pad.left, lineY, W - pad.right, lineY, { stroke: '#333', roughness: 0.6, strokeWidth: 1.2 });
+
+  events.forEach(function(e) {
+    var x = pad.left + e.pos * plotW;
+    var r = e.focal ? 8 : 6;
+    rc.circle(x, lineY, r * 2, {
+      fill: e.focal ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.35)',
+      fillStyle: 'solid',
+      stroke: '#333', strokeWidth: 1, roughness: 0.6,
+    });
+    var lines = e.label.split('\n');
+    var above = events.indexOf(e) % 2 === 0;
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'center';
+    lines.forEach(function(ln, i) {
+      ctx.fillText(ln, x, above ? lineY - 18 + i * 13 : lineY + 20 + i * 13);
+    });
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Nov 9 overnight into Nov 10. Escalation before negotiation.', pad.left, H - 10);
+})();
+</script>
+
+</body>
+</html>

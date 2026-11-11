@@ -1,162 +1,45 @@
 # Diagram Guidelines
 
-## Why diagrams
+## Core rules
 
-Diagrams are the core value of this format. A bar chart comparing $350B to $90B lands in one second. A paragraph explaining the same thing takes 30 seconds and doesn't stick. Every "more" page should have at least one diagram. Err on the side of MORE diagrams, not fewer.
+- Library: **rough.js** always. `<script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>`
+- Every "more" page needs at least one diagram. It must show something the text alone cannot.
+- **Labels must never overlap** with the graph or each other. This is the most common bug. If two labels are within 20px, move one. Alternate timeline labels above and below. Put axis labels outside the plot area.
+- Vary diagram types across pages in the same digest. Do not use the same type on every page.
+- Never visualize human deaths as counted objects.
 
-## Library
+## Diagram types
 
-Rough.js. Always. The hand-drawn quality makes diagrams feel human and frictionless. It removes the sterile "infographic" feel that makes people glaze over.
+| Type | Best for | Example |
+|------|----------|---------|
+| Timeline | Sequence of events | Ukraine war, impeachment history |
+| Bar chart (horizontal) | Comparing named things | Oil chokepoints, market drops |
+| Bar chart (vertical) | Few data points over time | Premiums by year |
+| Line chart | Trends over time | Stock prices, aid over time |
+| Seat map / grid | Composition | Senate seats, court justices |
+| Table | Multi-dimension data | Investigation patterns |
 
-```html
-<script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
-```
+Pick the type that matches the data. If the story is a trend, use a line chart. If it is a sequence, use a timeline. If it is a comparison, use a bar chart. Do not default to timelines and workflow boxes.
 
-```js
-const rc = rough.canvas(canvas);
-```
+## Style
 
-## Beyond news
+- Canvas width: 500-700px. `style="display:block; margin: 20px 0;"`
+- **Color: default to black and gray.** Use `'rgba(0,0,0,0.6)'` for primary, `'rgba(0,0,0,0.2)'` for secondary. Only add color when it carries meaning (party colors, decline, absence). Keep it muted: `'#c33'`, `'#2a8c46'`, `'#2255aa'`.
+- Roughness: 0.5-1.2. Fill style: `'solid'`.
+- Text: `'11px serif'` for labels, `'12px serif'` for values, `'bold 11px serif'` for headers. Fill: `'#333'`.
+- Axes: `stroke: '#333', roughness: 0.5`. Grid lines: `stroke: 'rgba(0,0,0,0.06)', roughness: 0.3`.
+- Highlight the focal element with darker fill or thicker stroke. One thing should stand out.
+- One caption line below each diagram.
 
-Diagrams are not limited to news. They work for any topic where data or concepts need to land fast. Math explainers, technical walkthroughs, history. The same diagram types apply. Timelines, bar charts, and line charts are the most versatile. They work for almost anything.
+## Common code
 
-## The most impactful types (in order)
-
-1. **Timelines** — Immensely helpful. Put events in spatial context. A 150-year gap on a timeline hits harder than the words "first time since 1876."
-2. **Bar charts** (horizontal and vertical) — Instant comparison. $350B vs $90B. 21M bbl/day vs 5M. No reading required.
-3. **Line charts** — Show trends. Unemployment flat at 4%. Aid dropping to zero. The shape tells the story.
-4. **Seat maps / grids** — Composition at a glance. Senate seats, court justices.
-5. **Waveform / signal plots** — For math and engineering content. Show what a function looks like.
-6. **Workflow diagrams** — Boxes and arrows. Show a process.
-7. **Tables** — Structured data. Use when the comparison is across multiple dimensions.
-
-## Diagram types that work
-
-### Horizontal bar chart
-Best for: comparing named things (countries, companies, categories).
-```
-rc.rectangle(x, y, barW, barH, {
-  fill: 'rgba(0,0,0,0.55)', fillStyle: 'solid',
-  stroke: '#333', strokeWidth: 1, roughness: 1,
-});
-```
-- Labels on the left (right-aligned), values on the right of the bar.
-- Highlight the focal bar with darker fill or thicker stroke.
-- One caption line below.
-- Examples: oil chokepoints, protest sizes, market drops, senate flips by years.
-
-### Vertical bar chart
-Best for: time series with few data points, or comparing 2-3 quantities.
-- Labels below each bar. Values above.
-- Highlight the current/focal bar darker.
-- Examples: ACA premiums by year, spending comparison (defense vs education).
-
-### Line chart
-Best for: trends over time with many data points.
-- Draw with rough.js line segments between points.
-- Dot at the current/final value.
-- Dashed lines for projections or drops.
-- Light grid lines at intervals (very low opacity).
-- Examples: unemployment rate, Israel aid over time, loss curve, AI spending vs stock prices.
-
-### Timeline
-Best for: sequence of events.
-- Horizontal line, dots at events, labels alternating above and below.
-- Bold the date, regular weight for the description.
-- Darken the current/focal dot.
-- Examples: Ukraine war timeline, floppy disk history, cabinet impeachment history.
-
-### Seat map / grid
-Best for: showing composition of a body (senate, court, etc.).
-- Grid of small rectangles, colored by category.
-- Legend below.
-- Highlight special items (flips, focus items) with thicker stroke.
-- Examples: senate seats by party, supreme court by lean.
-
-### Table (rough.js)
-Best for: structured data with names and categories.
-- Rows drawn with text, header line drawn with rough.js.
-- Highlight focal row with a light background rectangle.
-- Examples: midterm investigation pattern (year, president, result, investigation).
-
-## Style rules
-
-- Canvas width: 500-700px. Never wider than that.
-- `style="display:block; margin: 20px 0;"` on every canvas.
-- Use color to distinguish categories and highlight what matters. Muted, readable tones work best:
-  - Green for positive/stable/growth: `'#2a8c46'`, `'rgba(40,140,70,0.5)'`
-  - Red for negative/unstable/decline: `'#c33'`, `'rgba(200,60,60,0.5)'`
-  - Blue for neutral/informational: `'#2255aa'`, `'rgba(30,70,180,0.5)'`
-  - Gray for background/secondary: `'rgba(0,0,0,0.3)'`
-  - Use party colors (blue/red) for political data. Use meaningful color, not decorative color.
-- Roughness: 0.5-1.2 for most elements. Higher (1.5+) looks too messy.
-- Fill style: always `'solid'`. The sketchy outline is enough texture.
-- Text: `ctx.font = '11px serif'` for labels, `'12px serif'` for values, `'bold 11px serif'` for headers.
-- Fill color for text: `'#333'`, not pure black. Softer.
-- Axis lines: `stroke: '#333', roughness: 0.5-0.6`.
-- Grid lines: `stroke: 'rgba(0,0,0,0.06)', roughness: 0.3`. Barely visible.
-- Highlight the focal element. Darker fill, thicker stroke, or bold label. One thing should stand out.
-
-## Label placement
-
-Labels must never overlap with the graph or each other. This is non-negotiable.
-
-- Axis labels go outside the plot area, not on top of data.
-- Data labels (values, names) go in clear space: above bars, to the right of lines, or in a corner away from the curve.
-- If a label would overlap a line or bar, offset it further or place it in the top-right or top-left corner of the canvas.
-- For line charts, label the line at the end (right side) or in a legend below, not on top of the curve.
-- For timelines, alternate labels above and below the line to prevent crowding.
-- Test mentally: if two labels are within 20px of each other, move one.
-
-## Pick the right type for the data
-
-Do not default to bar charts. Before drawing, ask: what is this data doing?
-
-- Data changes over time → **line chart**, not a bar chart
-- A sequence of events → **timeline**
-- Comparing named things → **bar chart**
-- Showing composition → **seat map / grid**
-- Showing a process or flow → **workflow diagram**
-- Structured multi-dimension data → **table**
-
-Bar charts are great when the story is comparison. But if the story is a trend, a line chart is always better. If the story is a sequence, a timeline is always better. Reach for the type that matches the data, not the type that's easiest to write.
-
-## One idea per diagram
-
-Don't cram two stories into one chart. If you need to show two things, make two canvases. Each diagram should answer one question:
-- "How big was the drop?" → bar chart
-- "What's the trend?" → line chart
-- "When did things happen?" → timeline
-- "Who's on which side?" → seat map
-- "How does X compare to Y?" → comparison bars
-
-## Common patterns
-
-### Axes
-```js
-rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
-rc.line(pad.left, H - pad.bottom, W - pad.right, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
-```
-
-### Padding object
 ```js
 const pad = { top: 20, right: 20, bottom: 40, left: 50 };
-// Adjust left for label width. Horizontal bars need more (100-160).
-```
-
-### Focal highlight
-Use a simple solid color for the focal bar/dot/line. Use a lighter shade of the same color or gray for the rest. No gradients, no shaded background regions.
-```js
-// Focal item: solid color
-fill: 'rgba(200,60,60,0.7)', stroke: '#c33'
-// Other items: lighter
-fill: 'rgba(0,0,0,0.25)', stroke: '#555'
-```
-
-### Caption
-```js
+// Axes
+rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+rc.line(pad.left, H - pad.bottom, W - pad.right, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+// Caption
 ctx.font = '11px serif';
 ctx.fillStyle = '#666';
-ctx.textAlign = 'left';
-ctx.fillText('Description of what this shows', pad.left, H - pad.bottom + 20);
+ctx.fillText('Description', pad.left, H - pad.bottom + 20);
 ```

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Democrats reach 254 seats, still counting</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<p><a href="../2026-11-09.html">back to digest</a> · <a href="../../index.html">home</a></p>
+
+<h1>Democrats reach 254 seats, still counting</h1>
+
+<p>Four days after election night, the count continues. Democrats hold <b>254 House seats</b>. Republicans hold <b>162</b>. Nineteen races remain undecided. Democrats need 218 for a majority and passed that threshold on Wednesday.</p>
+
+<canvas id="seatChart" width="600" height="200" style="display:block; margin: 20px 0;"></canvas>
+
+<p>This is the <b>best House result for Democrats since 1993</b>, the year Bill Clinton took office. The party flipped over 40 seats, ousting at least 30 Republican incumbents.</p>
+
+<h2>Beyond the House</h2>
+
+<p>The sweep extends past Congress. Democrats will control <b>at least 30 governorships</b>. In 23 states, Democrats now hold the governor's office and both legislative chambers, up from 16 before the election. That kind of state-level dominance gives the party control over redistricting, election administration, and policy.</p>
+
+<p>The Senate also flipped. Mississippi and Alaska remain too close to call, but Democrats have already secured enough seats to take the majority.</p>
+
+<h2>What comes next</h2>
+
+<p>Congress returns this week for a <b>lame-duck session</b>. The outgoing Republican majority still controls both chambers until January. The immediate business: the annual defense authorization bill and government funding. The incoming Democratic majority is already preparing oversight of Defense Secretary Pete Hegseth and discussing impeachment proceedings.</p>
+
+<p>Rep. Thomas Massie of Kentucky, an outgoing Republican, has <b>filed articles of impeachment against Hegseth</b>. It is unclear whether the lame-duck House will vote on them or whether the incoming Congress will take it up.</p>
+
+<h2>Related</h2>
+<ul>
+<li><a href="../2026-11-05/midterms.html">Nov 5: Democrats sweep the midterms</a></li>
+<li><a href="../2026-11-06/investigations.html">Nov 6: Democrats plan investigations into Trump's family</a></li>
+<li><a href="../2026-11-06/hegseth.html">Nov 6: Hegseth impeachment effort advances</a></li>
+</ul>
+
+<p><a href="https://www.cbsnews.com/live-updates/house-election-results-2026/">Source: CBS News</a></p>
+
+<p><a href="../2026-11-09.html">back to digest</a> · <a href="../../index.html">home</a></p>
+
+<script>
+(function() {
+  const canvas = document.getElementById('seatChart');
+  const ctx = canvas.getContext('2d');
+  const rc = rough.canvas(canvas);
+
+  const W = 600, H = 200;
+  const pad = { top: 30, right: 30, bottom: 50, left: 30 };
+  const plotW = W - pad.left - pad.right;
+  const barH = 36;
+
+  const total = 435;
+  const dem = 254, rep = 162, undecided = 19;
+
+  const demW = (dem / total) * plotW;
+  const repW = (rep / total) * plotW;
+  const undW = (undecided / total) * plotW;
+
+  const y = pad.top + 20;
+
+  // Democrat bar
+  rc.rectangle(pad.left, y, demW, barH, {
+    fill: 'rgba(0,0,0,0.7)', fillStyle: 'solid',
+    stroke: '#000', strokeWidth: 1, roughness: 0.8,
+  });
+
+  // Undecided bar
+  rc.rectangle(pad.left + demW, y, undW, barH, {
+    fill: 'rgba(0,0,0,0.15)', fillStyle: 'solid',
+    stroke: '#999', strokeWidth: 0.8, roughness: 0.8,
+  });
+
+  // Republican bar
+  rc.rectangle(pad.left + demW + undW, y, repW, barH, {
+    fill: 'rgba(0,0,0,0.4)', fillStyle: 'solid',
+    stroke: '#555', strokeWidth: 1, roughness: 0.8,
+  });
+
+  // 218 majority line
+  const majorityX = pad.left + (218 / total) * plotW;
+  rc.line(majorityX, y - 8, majorityX, y + barH + 8, {
+    stroke: '#000', strokeWidth: 1.5, roughness: 0.4, strokeLineDash: [4, 3],
+  });
+
+  // Labels
+  ctx.font = 'bold 12px serif';
+  ctx.fillStyle = '#fff';
+  ctx.textAlign = 'center';
+  ctx.fillText('Dem 254', pad.left + demW / 2, y + barH / 2 + 4);
+
+  ctx.fillStyle = '#333';
+  ctx.font = '11px serif';
+  ctx.fillText('19', pad.left + demW + undW / 2, y + barH / 2 + 4);
+
+  ctx.fillStyle = '#fff';
+  ctx.font = 'bold 12px serif';
+  ctx.fillText('Rep 162', pad.left + demW + undW + repW / 2, y + barH / 2 + 4);
+
+  // Majority label
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#333';
+  ctx.textAlign = 'center';
+  ctx.fillText('218 for majority', majorityX, y - 12);
+
+  // Caption
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('House seats, as of November 9. 19 races still undecided.', pad.left, H - pad.bottom + 20);
+})();
+</script>
+
+</body>
+</html>

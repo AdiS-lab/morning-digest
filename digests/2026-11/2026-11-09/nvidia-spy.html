@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nvidia spy scandal deepens</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<p><a href="../2026-11-09.html">back to digest</a> · <a href="../../index.html">home</a></p>
+
+<h1>Nvidia spy scandal deepens</h1>
+
+<p>Nvidia stock fell as much as <b>8.8% on Monday</b> before recovering to close down about 4%. At its low point, the drop erased nearly <b>$400 billion in market value</b>. This comes on top of the <a href="../2026-11-06/nvidia-selloff.html">$450 billion loss on November 5</a>.</p>
+
+<canvas id="stockChart" width="600" height="300" style="display:block; margin: 20px 0;"></canvas>
+
+<p>Nvidia has lost roughly a quarter of its value in the past week. The November 5 drop was driven by the midterms and regulation fears. Monday's drop is about something different: espionage.</p>
+
+<h2>What happened</h2>
+
+<p>On Sunday, CEO Jensen Huang sent a memo to employees <b>admitting to an affair</b> with Alice Huang, a former executive at Singapore-based chip company Megaspeed. A classified State Department memo, first reported by Bloomberg, alleges that <b>Alice Huang was recruited by China's Ministry of State Security</b> to target Jensen Huang.</p>
+
+<p>Secretary of State Marco Rubio had been briefed on the intelligence as early as spring 2026. Republican lawmakers are now asking why the administration did not act sooner.</p>
+
+<h2>The probe</h2>
+
+<p>Nvidia's board announced an <b>independent investigation</b> led by outside legal counsel. The board said it has "no reason to believe that either national security or Nvidia secrets were compromised," but acknowledged the seriousness of the allegations.</p>
+
+<p>Republican lawmakers called on Huang to <b>testify before Congress on November 18</b>. The hearing will focus on whether China gained access to sensitive chip design or AI model information through the relationship.</p>
+
+<h2>Why it matters</h2>
+
+<p>Nvidia designs the chips that power most of the world's AI systems. If China's intelligence services had access to Huang's communications, the implications go beyond one company. It touches the core of the U.S.-China technology competition. The stock reaction reflects that uncertainty.</p>
+
+<h2>Related</h2>
+<ul>
+<li><a href="../2026-11-06/nvidia-selloff.html">Nov 6: Nvidia lost $450 billion in one day</a></li>
+<li><a href="../2026-11-07/ai-stocks.html">Nov 7: AI chip stocks bounce after the crash</a></li>
+</ul>
+
+<p><a href="https://www.cnbc.com/2026/11/09/nvidia-jensen-huang-chinese-spy-investigation.html">Source: CNBC</a></p>
+
+<p><a href="../2026-11-09.html">back to digest</a> · <a href="../../index.html">home</a></p>
+
+<script>
+(function() {
+  const canvas = document.getElementById('stockChart');
+  const ctx = canvas.getContext('2d');
+  const rc = rough.canvas(canvas);
+
+  const W = 600, H = 300;
+  const pad = { top: 30, right: 30, bottom: 45, left: 60 };
+  const plotW = W - pad.left - pad.right;
+  const plotH = H - pad.top - pad.bottom;
+
+  // Nvidia approximate market cap trajectory (trillions)
+  // Nov 4 (pre-midterm): ~4.8T, Nov 5: ~4.35T, Nov 6: ~4.1T, Nov 7: ~4.4T (bounce), Nov 8: ~4.3T, Nov 9: ~3.9T (spy news)
+  const days = ['Nov 4', 'Nov 5', 'Nov 6', 'Nov 7', 'Nov 8', 'Nov 9'];
+  const vals = [4.8, 4.35, 4.1, 4.4, 4.3, 3.9];
+  const minV = 3.5, maxV = 5.0;
+
+  // Axes
+  rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+  rc.line(pad.left, H - pad.bottom, W - pad.right, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+  // Y labels
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#333';
+  ctx.textAlign = 'right';
+  for (let v = 3.5; v <= 5.0; v += 0.5) {
+    const y = pad.top + (1 - (v - minV) / (maxV - minV)) * plotH;
+    ctx.fillText('$' + v.toFixed(1) + 'T', pad.left - 8, y + 4);
+    if (v > minV) {
+      rc.line(pad.left, y, W - pad.right, y, { stroke: 'rgba(0,0,0,0.06)', roughness: 0.3 });
+    }
+  }
+
+  // Plot points and lines
+  const pts = vals.map(function(v, i) {
+    return [
+      pad.left + (i / (days.length - 1)) * plotW,
+      pad.top + (1 - (v - minV) / (maxV - minV)) * plotH
+    ];
+  });
+
+  for (let i = 0; i < pts.length - 1; i++) {
+    rc.line(pts[i][0], pts[i][1], pts[i+1][0], pts[i+1][1], {
+      stroke: '#000', strokeWidth: 1.8, roughness: 0.7,
+    });
+  }
+
+  // Dots
+  pts.forEach(function(p, i) {
+    var isLast = i === pts.length - 1;
+    rc.circle(p[0], p[1], isLast ? 10 : 7, {
+      fill: isLast ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)',
+      fillStyle: 'solid',
+      stroke: '#000',
+      strokeWidth: isLast ? 1.5 : 1,
+      roughness: 0.6,
+    });
+  });
+
+  // X labels
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#333';
+  ctx.textAlign = 'center';
+  days.forEach(function(d, i) {
+    ctx.fillText(d, pts[i][0], H - pad.bottom + 16);
+  });
+
+  // Caption
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Nvidia market cap, approximate. Two drops in one week.', pad.left, H - pad.bottom + 36);
+})();
+</script>
+
+</body>
+</html>

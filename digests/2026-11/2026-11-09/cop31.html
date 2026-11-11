@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>COP31 opens in Antalya</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<p><a href="../2026-11-09.html">back to digest</a> · <a href="../../index.html">home</a></p>
+
+<h1>COP31 opens in Antalya</h1>
+
+<p>The United Nations climate summit began Monday in <b>Antalya, Turkey</b>, bringing together representatives from nearly 200 countries for two weeks of negotiations running through November 20. The theme this year is "COP of Implementation," a nod to the gap between what countries have promised and what they have delivered.</p>
+
+<h2>What COP is</h2>
+
+<p>COP stands for <b>Conference of the Parties</b>. It is the annual meeting where countries that signed the UN Framework Convention on Climate Change negotiate targets, funding, and accountability for emissions reduction. COP21 in Paris (2015) produced the Paris Agreement, which set the goal of limiting warming to 1.5 degrees Celsius. That agreement turns 10 this year.</p>
+
+<h2>Who is there and who is not</h2>
+
+<p>Turkey hosts. <b>Australia's climate minister Chris Bowen</b> presides over negotiations. A Leaders' Summit on November 11-12 will bring heads of state.</p>
+
+<p>The notable absence: <b>the United States did not send an official delegation</b>. The U.S. is the world's second-largest current emitter and historically its biggest. The absence weakens the summit's leverage. It also means the largest economy on earth will not be part of whatever commitments emerge.</p>
+
+<canvas id="emitters" width="600" height="260" style="display:block; margin: 20px 0;"></canvas>
+
+<h2>What to watch</h2>
+
+<p>The central question is whether this COP can turn the Paris targets into <b>measurable, enforceable plans</b>. Previous summits have produced pledges. This one is supposed to produce proof. Whether it will is another matter. The 1.5-degree target is widely considered to have already been missed.</p>
+
+<p><a href="https://news.un.org/en/story/2026/11/1168763">Source: UN News</a></p>
+
+<p><a href="../2026-11-09.html">back to digest</a> · <a href="../../index.html">home</a></p>
+
+<script>
+(function() {
+  const canvas = document.getElementById('emitters');
+  const ctx = canvas.getContext('2d');
+  const rc = rough.canvas(canvas);
+
+  const W = 600, H = 260;
+  const pad = { top: 20, right: 40, bottom: 40, left: 110 };
+  const plotW = W - pad.left - pad.right;
+
+  // Top CO2 emitters (billion tonnes, approximate 2025)
+  const data = [
+    { label: 'China',        val: 12.6, absent: false },
+    { label: 'United States', val: 4.7,  absent: true },
+    { label: 'India',        val: 3.5,  absent: false },
+    { label: 'EU',           val: 2.7,  absent: false },
+    { label: 'Russia',       val: 1.8,  absent: false },
+  ];
+  const maxVal = 14;
+  const barH = 28, gap = 12;
+
+  // Axis
+  rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+  rc.line(pad.left, H - pad.bottom, W - pad.right, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+  data.forEach(function(d, i) {
+    var y = pad.top + i * (barH + gap);
+    var bw = (d.val / maxVal) * plotW;
+
+    rc.rectangle(pad.left, y, bw, barH, {
+      fill: d.absent ? 'rgba(0,0,0,0.12)' : 'rgba(0,0,0,0.6)',
+      fillStyle: 'solid',
+      stroke: d.absent ? '#aaa' : '#333',
+      strokeWidth: 1,
+      roughness: 0.8,
+    });
+
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'right';
+    ctx.fillText(d.label, pad.left - 8, y + barH / 2 + 4);
+
+    ctx.textAlign = 'left';
+    ctx.font = '12px serif';
+    var suffix = d.absent ? ' Bt — not at COP31' : ' Bt';
+    ctx.fillText(d.val + suffix, pad.left + bw + 6, y + barH / 2 + 4);
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Annual CO2 emissions by top emitters (billion tonnes). The faded bar is absent.', pad.left, H - pad.bottom + 20);
+})();
+</script>
+
+</body>
+</html>
