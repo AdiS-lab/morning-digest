@@ -220,6 +220,38 @@
           "tags": ["us-economy", "fed", "inflation", "markets"]
         }
       ]
+    },
+    {
+      "date": "2026-11-12",
+      "file": "2026-11/2026-11-12.html",
+      "summary": "Abu Dhabi talks end with a prisoner exchange deal. Three tankers on fire in Hormuz. Jim Jordan elected House Minority Leader. Congo confirms second-largest Ebola outbreak on record.",
+      "stories": [
+        {
+          "headline": "Russia and Ukraine agree to prisoner exchange as Abu Dhabi talks end",
+          "file": "2026-11/2026-11-12/pow-deal.html",
+          "tags": ["russia", "ukraine", "war", "diplomacy", "prisoners"]
+        },
+        {
+          "headline": "Three tankers catch fire in Strait of Hormuz. Bessent moves family to military base.",
+          "file": "2026-11/2026-11-12/hormuz-tankers.html",
+          "tags": ["iran", "middle-east", "oil", "military", "strait-of-hormuz"]
+        },
+        {
+          "headline": "Jim Jordan elected House Minority Leader",
+          "file": "2026-11/2026-11-12/jim-jordan.html",
+          "tags": ["us-politics", "congress", "republicans"]
+        },
+        {
+          "headline": "Congo Ebola outbreak is second-largest on record",
+          "file": "2026-11/2026-11-12/ebola-congo.html",
+          "tags": ["health", "africa", "drc", "ebola"]
+        },
+        {
+          "headline": "Democrat wins Mississippi Senate race, majority grows to 55",
+          "file": "2026-11/2026-11-12/mississippi-senate.html",
+          "tags": ["us-politics", "elections", "midterms", "congress"]
+        }
+      ]
     }
   ]
 }

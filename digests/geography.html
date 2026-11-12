@@ -18,32 +18,40 @@
   <a href="#india">India</a> ·
   <a href="#us">United States</a> ·
   <a href="#russia">Russia</a> ·
-  <a href="#mideast">Middle East</a>
+  <a href="#canada">Canada</a>
 </p>
 
 <br>
 
 <h2 id="india">India</h2>
-<div id="india-map"></div>
-<p id="india-info"></p>
+<div style="display:flex; gap:20px; align-items:flex-start;">
+  <div id="india-map"></div>
+  <div id="india-info" style="min-width:280px; max-width:320px; font: 14px/1.5 serif; color:#333;"></div>
+</div>
 
 <br><hr><br>
 
 <h2 id="us">United States</h2>
-<div id="us-map"></div>
-<p id="us-info"></p>
+<div style="display:flex; gap:20px; align-items:flex-start;">
+  <div id="us-map"></div>
+  <div id="us-info" style="min-width:280px; max-width:320px; font: 14px/1.5 serif; color:#333;"></div>
+</div>
 
 <br><hr><br>
 
 <h2 id="russia">Russia</h2>
-<div id="russia-map"></div>
-<p id="russia-info"></p>
+<div style="display:flex; gap:20px; align-items:flex-start;">
+  <div id="russia-map"></div>
+  <div id="russia-info" style="min-width:280px; max-width:320px; font: 14px/1.5 serif; color:#333;"></div>
+</div>
 
 <br><hr><br>
 
-<h2 id="mideast">Middle East</h2>
-<div id="mideast-map"></div>
-<p id="mideast-info"></p>
+<h2 id="canada">Canada</h2>
+<div style="display:flex; gap:20px; align-items:flex-start;">
+  <div id="canada-map"></div>
+  <div id="canada-info" style="min-width:280px; max-width:320px; font: 14px/1.5 serif; color:#333;"></div>
+</div>
 
 <br><hr><br>
 
@@ -82,7 +90,7 @@ function makeMap(containerId, infoId, width, height, projection, dataUrl, objKey
         if (selected === this) {
           selected = null;
           document.getElementById(infoId).textContent = '';
-          return;
+            return;
         }
         selected = this;
         d3.select(this).attr('fill', '#888');
@@ -90,12 +98,14 @@ function makeMap(containerId, infoId, width, height, projection, dataUrl, objKey
         var info = document.getElementById(infoId);
         var data = lookupData[name];
         if (data) {
-          var parts = '<b>' + name + '</b>.';
-          if (data.capital) parts += ' Capital: ' + data.capital + '.';
-          if (data.lang) parts += ' Language: ' + data.lang + '.';
-          info.innerHTML = parts;
+          var html = '<b>' + name + '</b><br>';
+          if (data.capital) html += 'Capital: ' + data.capital + '<br>';
+          if (data.lang) html += 'Language: ' + data.lang + '<br>';
+          if (data.desc) html += '<br>' + data.desc + '<br>';
+          html += '<br><a href="https://www.earth.google.com/web/search/' + encodeURIComponent(name) + '" target="_blank">view on Google Earth</a>';
+          info.innerHTML = html;
         } else {
-          info.innerHTML = '<b>' + name + '</b>.';
+          info.innerHTML = '<b>' + name + '</b>.<br><a href="https://www.earth.google.com/web/search/' + encodeURIComponent(name) + '" target="_blank">view on Google Earth</a>';
         }
       });
 
@@ -164,33 +174,58 @@ makeMap('india-map', 'india-info', 500, 520,
 
 // ── United States ──
 var usData = {
-  'Alabama':{capital:'Montgomery',lang:'English'},'Alaska':{capital:'Juneau',lang:'English'},
-  'Arizona':{capital:'Phoenix',lang:'English'},'Arkansas':{capital:'Little Rock',lang:'English'},
-  'California':{capital:'Sacramento',lang:'English'},'Colorado':{capital:'Denver',lang:'English'},
-  'Connecticut':{capital:'Hartford',lang:'English'},'Delaware':{capital:'Dover',lang:'English'},
-  'Florida':{capital:'Tallahassee',lang:'English'},'Georgia':{capital:'Atlanta',lang:'English'},
-  'Hawaii':{capital:'Honolulu',lang:'English, Hawaiian'},'Idaho':{capital:'Boise',lang:'English'},
-  'Illinois':{capital:'Springfield',lang:'English'},'Indiana':{capital:'Indianapolis',lang:'English'},
-  'Iowa':{capital:'Des Moines',lang:'English'},'Kansas':{capital:'Topeka',lang:'English'},
-  'Kentucky':{capital:'Frankfort',lang:'English'},'Louisiana':{capital:'Baton Rouge',lang:'English'},
-  'Maine':{capital:'Augusta',lang:'English'},'Maryland':{capital:'Annapolis',lang:'English'},
-  'Massachusetts':{capital:'Boston',lang:'English'},'Michigan':{capital:'Lansing',lang:'English'},
-  'Minnesota':{capital:'Saint Paul',lang:'English'},'Mississippi':{capital:'Jackson',lang:'English'},
-  'Missouri':{capital:'Jefferson City',lang:'English'},'Montana':{capital:'Helena',lang:'English'},
-  'Nebraska':{capital:'Lincoln',lang:'English'},'Nevada':{capital:'Carson City',lang:'English'},
-  'New Hampshire':{capital:'Concord',lang:'English'},'New Jersey':{capital:'Trenton',lang:'English'},
-  'New Mexico':{capital:'Santa Fe',lang:'English, Spanish'},'New York':{capital:'Albany',lang:'English'},
-  'North Carolina':{capital:'Raleigh',lang:'English'},'North Dakota':{capital:'Bismarck',lang:'English'},
-  'Ohio':{capital:'Columbus',lang:'English'},'Oklahoma':{capital:'Oklahoma City',lang:'English'},
-  'Oregon':{capital:'Salem',lang:'English'},'Pennsylvania':{capital:'Harrisburg',lang:'English'},
-  'Rhode Island':{capital:'Providence',lang:'English'},'South Carolina':{capital:'Columbia',lang:'English'},
-  'South Dakota':{capital:'Pierre',lang:'English'},'Tennessee':{capital:'Nashville',lang:'English'},
-  'Texas':{capital:'Austin',lang:'English'},'Utah':{capital:'Salt Lake City',lang:'English'},
-  'Vermont':{capital:'Montpelier',lang:'English'},'Virginia':{capital:'Richmond',lang:'English'},
-  'Washington':{capital:'Olympia',lang:'English'},'West Virginia':{capital:'Charleston',lang:'English'},
-  'Wisconsin':{capital:'Madison',lang:'English'},'Wyoming':{capital:'Cheyenne',lang:'English'},
-  'District of Columbia':{capital:'Washington D.C.',lang:'English'},
-  'Puerto Rico':{capital:'San Juan',lang:'Spanish, English'},
+  'Alabama':{capital:'Montgomery',lang:'English',desc:'Heart of the civil rights movement. Montgomery bus boycott, 1955. Selma to Montgomery marches, 1965. Home to NASA\'s Marshall Space Flight Center in Huntsville.'},
+  'Alaska':{capital:'Juneau',lang:'English',desc:'Purchased from Russia in 1867 for $7.2 million. Largest U.S. state by area. More coastline than all other states combined. Oil revenue funds a permanent dividend to residents.'},
+  'Arizona':{capital:'Phoenix',lang:'English',desc:'Grand Canyon state. One of the Four Corners states. Became the 48th state in 1912, the last of the contiguous states. Phoenix is the hottest major city in the U.S.'},
+  'Arkansas':{capital:'Little Rock',lang:'English',desc:'Little Rock Nine desegregated Central High School in 1957. Birthplace of Walmart (Bentonville, 1962). Bill Clinton was governor here before becoming president.'},
+  'California':{capital:'Sacramento',lang:'English',desc:'Most populous U.S. state. If it were a country, its economy would rank fifth globally. Gold Rush of 1849. Home to Silicon Valley, Hollywood, and the largest agricultural output of any state.'},
+  'Colorado':{capital:'Denver',lang:'English',desc:'Named for the Colorado River. Denver sits exactly one mile above sea level. First state to legalize recreational marijuana by popular vote (2012). Rocky Mountain National Park.'},
+  'Connecticut':{capital:'Hartford',lang:'English',desc:'One of the original 13 colonies. Insurance capital of the U.S. Home to Yale University (1701), one of the oldest in the country. Smallest state by area in New England.'},
+  'Delaware':{capital:'Dover',lang:'English',desc:'First state to ratify the Constitution (1787). More than half of publicly traded U.S. companies are incorporated here due to favorable business laws. Second smallest state.'},
+  'Florida':{capital:'Tallahassee',lang:'English',desc:'Acquired from Spain in 1819. Decided the 2000 presidential election by 537 votes. Third most populous state. Kennedy Space Center launched every NASA crewed mission.'},
+  'Georgia':{capital:'Atlanta',lang:'English',desc:'Named after King George II. Atlanta burned in 1864 during the Civil War. Martin Luther King Jr. was born here. Busiest airport in the world (Hartsfield-Jackson).'},
+  'Hawaii':{capital:'Honolulu',lang:'English, Hawaiian',desc:'Annexed by the U.S. in 1898, became 50th state in 1959. Only state made entirely of islands. Pearl Harbor attack (1941) brought the U.S. into World War II. Barack Obama was born here.'},
+  'Idaho':{capital:'Boise',lang:'English',desc:'Produces about a third of all U.S. potatoes. Craters of the Moon National Monument. The state name was likely invented, not derived from any Native American language.'},
+  'Illinois':{capital:'Springfield',lang:'English',desc:'Abraham Lincoln practiced law and is buried in Springfield. Chicago is the third largest city in the U.S. First nuclear reactor achieved a self-sustaining chain reaction here (1942).'},
+  'Indiana':{capital:'Indianapolis',lang:'English',desc:'The Indianapolis 500 has run since 1911. Birthplace of the steel plow industry. Indiana means "Land of the Indians." Home to Notre Dame and Purdue universities.'},
+  'Iowa':{capital:'Des Moines',lang:'English',desc:'First-in-the-nation caucuses since 1972. Produces more corn than most countries. Over 85% of the land is farmland. The state fair is one of the oldest and largest in the U.S.'},
+  'Kansas':{capital:'Topeka',lang:'English',desc:'Geographic center of the contiguous U.S. Brown v. Board of Education (1954) originated in Topeka. Dodge City was a legendary frontier cattle town. Flatter than a pancake, per a 2003 study.'},
+  'Kentucky':{capital:'Frankfort',lang:'English',desc:'Bourbon whiskey originated here. 95% of the world\'s bourbon is still made in Kentucky. Home to the Kentucky Derby, run since 1875. Fort Knox holds most of the U.S. gold reserve.'},
+  'Louisiana':{capital:'Baton Rouge',lang:'English',desc:'Purchased from France in 1803 as part of the Louisiana Purchase. Only state that uses parishes instead of counties. New Orleans jazz culture. Hurricane Katrina devastated the coast in 2005.'},
+  'Maine':{capital:'Augusta',lang:'English',desc:'Easternmost state. Produces 90% of the U.S. lobster supply. Was part of Massachusetts until 1820. Acadia National Park is the first national park east of the Mississippi.'},
+  'Maryland':{capital:'Annapolis',lang:'English',desc:'Surrounds the Chesapeake Bay. Star-Spangled Banner was written during the Battle of Baltimore (1814). Home to the National Security Agency (NSA) and Johns Hopkins University.'},
+  'Massachusetts':{capital:'Boston',lang:'English',desc:'Plymouth Colony founded 1620. Boston Tea Party, 1773. Birthplace of the American Revolution. First state to legalize same-sex marriage (2004). Home to Harvard and MIT.'},
+  'Michigan':{capital:'Lansing',lang:'English',desc:'Surrounded by the Great Lakes. Detroit was the auto capital of the world. Motown Records founded here in 1959. Two separate peninsulas connected by the Mackinac Bridge.'},
+  'Minnesota':{capital:'Saint Paul',lang:'English',desc:'Land of 10,000 lakes (actually 11,842). Source of the Mississippi River. Coldest major metro in the U.S. (Minneapolis-St. Paul). Strong Scandinavian heritage.'},
+  'Mississippi':{capital:'Jackson',lang:'English',desc:'Named after the Mississippi River. Poorest state by median income. Birthplace of the blues. Civil rights battleground: Medgar Evers assassinated here in 1963.'},
+  'Missouri':{capital:'Jefferson City',lang:'English',desc:'Gateway to the West. St. Louis Arch marks the starting point of westward expansion. Missouri Compromise (1820) was a key event leading to the Civil War. Mark Twain grew up in Hannibal.'},
+  'Montana':{capital:'Helena',lang:'English',desc:'Fourth largest state. Glacier National Park. "Big Sky Country." Site of the Battle of Little Bighorn (1876). Population density is about 7 people per square mile.'},
+  'Nebraska':{capital:'Lincoln',lang:'English',desc:'Only state with a unicameral (single-chamber) legislature. Chimney Rock guided Oregon Trail pioneers. Strategic Air Command was headquartered at Offutt Air Force Base.'},
+  'Nevada':{capital:'Carson City',lang:'English',desc:'Las Vegas generates more revenue than any other city in the U.S. from gambling. The Nevada Test Site saw over 900 nuclear detonations. Driest state in the country.'},
+  'New Hampshire':{capital:'Concord',lang:'English',desc:'First-in-the-nation presidential primary since 1920. No state income tax or sales tax. "Live Free or Die" is the state motto. One of the original 13 colonies.'},
+  'New Jersey':{capital:'Trenton',lang:'English',desc:'Most densely populated state. Washington crossed the Delaware to attack Trenton in 1776. Thomas Edison\'s lab was in Menlo Park. The first baseball game was played in Hoboken (1846).'},
+  'New Mexico':{capital:'Santa Fe',lang:'English, Spanish',desc:'First atomic bomb tested at Trinity Site (1945). Santa Fe is the oldest state capital, founded in 1610. Roswell incident (1947). Large Native American and Hispanic populations.'},
+  'New York':{capital:'Albany',lang:'English',desc:'Ellis Island processed 12 million immigrants. Wall Street is the financial center of the world. Erie Canal transformed commerce. New York City was the first U.S. capital (1789).'},
+  'North Carolina':{capital:'Raleigh',lang:'English',desc:'Wright brothers\' first flight at Kitty Hawk (1903). Research Triangle (Raleigh, Durham, Chapel Hill). Second largest banking center after New York. Sits in the Charlotte metro.'},
+  'North Dakota':{capital:'Bismarck',lang:'English',desc:'Produces more sunflowers than any other state. Theodore Roosevelt ranched here in the 1880s. Bakken oil formation made it a top oil producer. One of the least populated states.'},
+  'Ohio':{capital:'Columbus',lang:'English',desc:'Seven U.S. presidents were born here. Wright brothers were from Dayton. First professional baseball team (Cincinnati Red Stockings, 1869). Key swing state in modern elections.'},
+  'Oklahoma':{capital:'Oklahoma City',lang:'English',desc:'Opened to settlers in the Land Run of 1889. Trail of Tears ended here, forcibly relocating Native Americans. More than 39 tribal nations are headquartered in the state.'},
+  'Oregon':{capital:'Salem',lang:'English',desc:'End of the Oregon Trail. Crater Lake is the deepest lake in the U.S. No sales tax. Portland is known for its independent culture. Largest producer of Christmas trees.'},
+  'Pennsylvania':{capital:'Harrisburg',lang:'English',desc:'Declaration of Independence signed in Philadelphia (1776). Constitutional Convention held here. Gettysburg was the turning point of the Civil War. First oil well drilled in Titusville (1859).'},
+  'Rhode Island':{capital:'Providence',lang:'English',desc:'Smallest state. Founded by Roger Williams in 1636 on principles of religious freedom. First colony to renounce allegiance to Britain. Newport was a gilded-age playground.'},
+  'South Carolina':{capital:'Columbia',lang:'English',desc:'First state to secede from the Union (1860). Fort Sumter attack started the Civil War. Charleston is one of the oldest cities in the South. Major port and military presence.'},
+  'South Dakota':{capital:'Pierre',lang:'English',desc:'Mount Rushmore carved between 1927 and 1941. Crazy Horse Memorial is still under construction. Badlands National Park. Wounded Knee Massacre occurred here in 1890.'},
+  'Tennessee':{capital:'Nashville',lang:'English',desc:'Nashville is the country music capital. Memphis is the birthplace of rock and roll and blues. Three presidents are from Tennessee: Jackson, Polk, and Andrew Johnson.'},
+  'Texas':{capital:'Austin',lang:'English',desc:'Second largest state by area and population. Independent republic from 1836 to 1845. Largest oil-producing state. The Alamo (1836) is a defining moment in Texas identity.'},
+  'Utah':{capital:'Salt Lake City',lang:'English',desc:'Settled by Mormon pioneers in 1847. Great Salt Lake is the largest saltwater lake in the Western Hemisphere. Five national parks. 2002 Winter Olympics held in Salt Lake City.'},
+  'Vermont':{capital:'Montpelier',lang:'English',desc:'Smallest state capital by population. First state to abolish slavery (1777). Largest producer of maple syrup in the U.S. Bernie Sanders represented it for decades.'},
+  'Virginia':{capital:'Richmond',lang:'English',desc:'Eight presidents were born here, more than any other state. Jamestown (1607) was the first permanent English settlement. Richmond was the Confederate capital during the Civil War.'},
+  'Washington':{capital:'Olympia',lang:'English',desc:'Named after George Washington. Home to Microsoft, Amazon, Boeing, and Starbucks. Mount Rainier is the most glaciated peak in the contiguous U.S. Largest apple producer.'},
+  'West Virginia':{capital:'Charleston',lang:'English',desc:'Split from Virginia during the Civil War (1863). Coal mining defined its economy for a century. Appalachian culture. One of the most rugged and mountainous eastern states.'},
+  'Wisconsin':{capital:'Madison',lang:'English',desc:'America\'s Dairyland. Produces more cheese than any other state. Progressive political tradition: first state to pass unemployment insurance (1932). Home to the Green Bay Packers.'},
+  'Wyoming':{capital:'Cheyenne',lang:'English',desc:'Least populous state. Yellowstone (1872) was the first national park in the world. First state to grant women the right to vote (1869). Devils Tower was the first national monument.'},
+  'District of Columbia':{capital:'Washington D.C.',lang:'English',desc:'Not a state. 700,000 residents with no voting representation in Congress. Designed by Pierre L\'Enfant. Home to every branch of the federal government.'},
+  'Puerto Rico':{capital:'San Juan',lang:'Spanish, English',desc:'U.S. territory since 1898. Residents are U.S. citizens but cannot vote in presidential elections. San Juan was founded in 1521, one of the oldest European settlements in the Americas.'},
 };
 
 makeMap('us-map', 'us-info', 700, 450,
@@ -203,93 +238,93 @@ makeMap('us-map', 'us-info', 700, 450,
 
 // ── Russia ──
 var russiaData = {
-  'Adygey':{capital:'Maykop',lang:'Russian, Adyghe'},
-  'Altay':{capital:'Gorno-Altaysk',lang:'Russian, Altai'},
-  'Amur':{capital:'Blagoveshchensk',lang:'Russian'},
-  'Arkhangel\'sk':{capital:'Arkhangelsk',lang:'Russian'},
-  'Astrakhan\'':{capital:'Astrakhan',lang:'Russian'},
-  'Bashkortostan':{capital:'Ufa',lang:'Russian, Bashkir'},
-  'Belgorod':{capital:'Belgorod',lang:'Russian'},
-  'Bryansk':{capital:'Bryansk',lang:'Russian'},
-  'Buryat':{capital:'Ulan-Ude',lang:'Russian, Buryat'},
-  'Chechnya':{capital:'Grozny',lang:'Russian, Chechen'},
-  'Chelyabinsk':{capital:'Chelyabinsk',lang:'Russian'},
-  'Chukot':{capital:'Anadyr',lang:'Russian'},
-  'Chuvash':{capital:'Cheboksary',lang:'Russian, Chuvash'},
-  'City of St. Petersburg':{capital:'St. Petersburg',lang:'Russian'},
-  'Dagestan':{capital:'Makhachkala',lang:'Russian, Avar, others'},
-  'Gorno-Altay':{capital:'Gorno-Altaysk',lang:'Russian, Altai'},
-  'Ingush':{capital:'Magas',lang:'Russian, Ingush'},
-  'Irkutsk':{capital:'Irkutsk',lang:'Russian'},
-  'Ivanovo':{capital:'Ivanovo',lang:'Russian'},
-  'Kabardin-Balkar':{capital:'Nalchik',lang:'Russian, Kabardian, Balkar'},
-  'Kaliningrad':{capital:'Kaliningrad',lang:'Russian'},
-  'Kalmyk':{capital:'Elista',lang:'Russian, Kalmyk'},
-  'Kaluga':{capital:'Kaluga',lang:'Russian'},
-  'Kamchatka':{capital:'Petropavlovsk-Kamchatsky',lang:'Russian'},
-  'Karachay-Cherkess':{capital:'Cherkessk',lang:'Russian, Karachay, Circassian'},
-  'Karelia':{capital:'Petrozavodsk',lang:'Russian'},
-  'Kemerovo':{capital:'Kemerovo',lang:'Russian'},
-  'Khabarovsk':{capital:'Khabarovsk',lang:'Russian'},
-  'Khakass':{capital:'Abakan',lang:'Russian, Khakas'},
-  'Khanty-Mansiy':{capital:'Khanty-Mansiysk',lang:'Russian'},
-  'Kirov':{capital:'Kirov',lang:'Russian'},
-  'Komi':{capital:'Syktyvkar',lang:'Russian, Komi'},
-  'Kostroma':{capital:'Kostroma',lang:'Russian'},
-  'Krasnodar':{capital:'Krasnodar',lang:'Russian'},
-  'Krasnoyarsk':{capital:'Krasnoyarsk',lang:'Russian'},
-  'Kurgan':{capital:'Kurgan',lang:'Russian'},
-  'Kursk':{capital:'Kursk',lang:'Russian'},
-  'Leningrad':{capital:'Gatchina',lang:'Russian'},
-  'Lipetsk':{capital:'Lipetsk',lang:'Russian'},
-  'Maga Buryatdan':{capital:'Magadan',lang:'Russian'},
-  'Magadan':{capital:'Magadan',lang:'Russian'},
-  'Mariy-El':{capital:'Yoshkar-Ola',lang:'Russian, Mari'},
-  'Mordovia':{capital:'Saransk',lang:'Russian, Moksha, Erzya'},
-  'Moscow':{capital:'Moscow',lang:'Russian'},
-  'Moscow City':{capital:'Moscow',lang:'Russian'},
-  'Moskva':{capital:'Moscow',lang:'Russian'},
-  'Murmansk':{capital:'Murmansk',lang:'Russian'},
-  'Nenets':{capital:'Naryan-Mar',lang:'Russian'},
-  'Nizhegorod':{capital:'Nizhny Novgorod',lang:'Russian'},
-  'North Ossetia':{capital:'Vladikavkaz',lang:'Russian, Ossetic'},
-  'Novgorod':{capital:'Veliky Novgorod',lang:'Russian'},
-  'Novosibirsk':{capital:'Novosibirsk',lang:'Russian'},
-  'Omsk':{capital:'Omsk',lang:'Russian'},
-  'Orel':{capital:'Oryol',lang:'Russian'},
-  'Orenburg':{capital:'Orenburg',lang:'Russian'},
-  'Penza':{capital:'Penza',lang:'Russian'},
-  'Perm\'':{capital:'Perm',lang:'Russian'},
-  'Primor\'ye':{capital:'Vladivostok',lang:'Russian'},
-  'Pskov':{capital:'Pskov',lang:'Russian'},
-  'Rostov':{capital:'Rostov-on-Don',lang:'Russian'},
-  'Ryazan\'':{capital:'Ryazan',lang:'Russian'},
-  'Sakha':{capital:'Yakutsk',lang:'Russian, Yakut'},
-  'Sakhalin':{capital:'Yuzhno-Sakhalinsk',lang:'Russian'},
-  'Samara':{capital:'Samara',lang:'Russian'},
-  'Saratov':{capital:'Saratov',lang:'Russian'},
-  'Sevastopol':{capital:'Sevastopol',lang:'Russian'},
-  'Smolensk':{capital:'Smolensk',lang:'Russian'},
-  'Stavropol\'':{capital:'Stavropol',lang:'Russian'},
-  'Sverdlovsk':{capital:'Yekaterinburg',lang:'Russian'},
-  'Tambov':{capital:'Tambov',lang:'Russian'},
-  'Tatarstan':{capital:'Kazan',lang:'Russian, Tatar'},
-  'Tomsk':{capital:'Tomsk',lang:'Russian'},
-  'Tula':{capital:'Tula',lang:'Russian'},
-  'Tuva':{capital:'Kyzyl',lang:'Russian, Tuvan'},
-  'Tver\'':{capital:'Tver',lang:'Russian'},
-  'Tyumen\'':{capital:'Tyumen',lang:'Russian'},
-  'Udmurt':{capital:'Izhevsk',lang:'Russian, Udmurt'},
-  'Ul\'yanovsk':{capital:'Ulyanovsk',lang:'Russian'},
-  'Vladimir':{capital:'Vladimir',lang:'Russian'},
-  'Volgograd':{capital:'Volgograd',lang:'Russian'},
-  'Vologda':{capital:'Vologda',lang:'Russian'},
-  'Voronezh':{capital:'Voronezh',lang:'Russian'},
-  'Yamal-Nenets':{capital:'Salekhard',lang:'Russian'},
-  'Yaroslavl\'':{capital:'Yaroslavl',lang:'Russian'},
-  'Yevrey':{capital:'Birobidzhan',lang:'Russian'},
-  'Zabaykal\'ye':{capital:'Chita',lang:'Russian'},
-  'Crimea':{capital:'Simferopol',lang:'Russian, Ukrainian, Crimean Tatar'},
+  'Adygey':{capital:'Maykop',lang:'Russian, Adyghe',desc:'Small republic in the North Caucasus, surrounded entirely by Krasnodar. Circassian heritage. Population under 500,000.'},
+  'Altay':{capital:'Gorno-Altaysk',lang:'Russian, Altai',desc:'Mountainous republic where Russia meets Mongolia, China, and Kazakhstan. UNESCO-listed Golden Mountains. Shamanic traditions still practiced.'},
+  'Amur':{capital:'Blagoveshchensk',lang:'Russian',desc:'Borders China along the Amur River. Vostochny Cosmodrome, Russia\'s newest spaceport, is here. Soybean farming region.'},
+  'Arkhangel\'sk':{capital:'Arkhangelsk',lang:'Russian',desc:'Gateway to the Arctic. Russia\'s first major seaport, founded in 1584. Nuclear submarine base at Severodvinsk. Novaya Zemlya nuclear test site.'},
+  'Astrakhan\'':{capital:'Astrakhan',lang:'Russian',desc:'Sits at the Volga River delta on the Caspian Sea. Historic Silk Road trading post. Famous for caviar production. Once capital of the Astrakhan Khanate.'},
+  'Bashkortostan':{capital:'Ufa',lang:'Russian, Bashkir',desc:'Largest republic by population in Russia. Major oil refining region. Bashkir honey is famous. Ural Mountains run through it.'},
+  'Belgorod':{capital:'Belgorod',lang:'Russian',desc:'Iron ore mining center. Site of the Battle of Kursk (1943), the largest tank battle in history. Borders Ukraine.'},
+  'Bryansk':{capital:'Bryansk',lang:'Russian',desc:'Borders Ukraine and Belarus. Dense forests sheltered partisan fighters in WWII. Major railway junction since the 19th century.'},
+  'Buryat':{capital:'Ulan-Ude',lang:'Russian, Buryat',desc:'Sits east of Lake Baikal. Buddhist tradition, one of the few in Russia. Mongol cultural influence. Trans-Siberian Railway passes through.'},
+  'Chechnya':{capital:'Grozny',lang:'Russian, Chechen',desc:'Two devastating wars (1994-96, 1999-2009) destroyed Grozny. Rebuilt under Ramzan Kadyrov. Deeply Islamic, Sufi tradition. One of the most politically sensitive regions in Russia.'},
+  'Chelyabinsk':{capital:'Chelyabinsk',lang:'Russian',desc:'Industrial center on the Ural divide between Europe and Asia. A meteor exploded over the city in 2013, injuring 1,500. Nuclear disaster at Mayak in 1957.'},
+  'Chukot':{capital:'Anadyr',lang:'Russian',desc:'Easternmost point of Russia, across the Bering Strait from Alaska. Indigenous Chukchi people. Roman Abramovich was governor (2000-2008). Permafrost everywhere.'},
+  'Chuvash':{capital:'Cheboksary',lang:'Russian, Chuvash',desc:'Chuvash are a Turkic people with a unique language. Volga River region. Known for embroidery traditions and hops cultivation.'},
+  'City of St. Petersburg':{capital:'St. Petersburg',lang:'Russian',desc:'Founded by Peter the Great in 1703. Imperial capital for two centuries. Hermitage Museum, one of the world\'s largest. Siege of Leningrad lasted 872 days in WWII.'},
+  'Dagestan':{capital:'Makhachkala',lang:'Russian, Avar, others',desc:'Most ethnically diverse region in Russia with over 30 distinct peoples. Khabib Nurmagomedov is from here. Caspian Sea coast. Mountainous interior.'},
+  'Gorno-Altay':{capital:'Gorno-Altaysk',lang:'Russian, Altai',desc:'Remote mountain republic. Pazyryk tombs revealed ancient Scythian culture. Low population density. Gateway to the Altai Mountains.'},
+  'Ingush':{capital:'Magas',lang:'Russian, Ingush',desc:'Smallest republic by area. Split from Chechnya in 1992. Predominantly Muslim. Magas is one of Russia\'s newest capital cities, purpose-built.'},
+  'Irkutsk':{capital:'Irkutsk',lang:'Russian',desc:'Gateway to Lake Baikal, the deepest and oldest lake in the world (25 million years). Decembrist exiles settled here after the 1825 revolt. Trans-Siberian Railway hub.'},
+  'Ivanovo':{capital:'Ivanovo',lang:'Russian',desc:'Historic textile center, called the "Russian Manchester." Known for its constructivist architecture from the 1920s-30s. Part of the Golden Ring of old Russian cities.'},
+  'Kabardin-Balkar':{capital:'Nalchik',lang:'Russian, Kabardian, Balkar',desc:'North Caucasus republic. Mount Elbrus, Europe\'s highest peak (5,642m), is here. Two ethnic groups share one republic. Ski tourism.'},
+  'Kaliningrad':{capital:'Kaliningrad',lang:'Russian',desc:'Russian exclave on the Baltic, separated from Russia proper. Was German Konigsberg until 1945. Immanuel Kant lived and died here. Major naval base.'},
+  'Kalmyk':{capital:'Elista',lang:'Russian, Kalmyk',desc:'Only Buddhist-majority region in Europe. Kalmyks are descendants of Mongol Oirats. Deported en masse to Siberia under Stalin. Chess City built in Elista for a 1998 Olympiad.'},
+  'Kaluga':{capital:'Kaluga',lang:'Russian',desc:'Tsiolkovsky, the father of rocketry, lived and worked here. Now a major auto manufacturing hub. South of Moscow.'},
+  'Kamchatka':{capital:'Petropavlovsk-Kamchatsky',lang:'Russian',desc:'Volcanic peninsula with over 160 volcanoes, 29 active. Pacific Ring of Fire. Brown bear population among the densest in the world. Geysers rival Yellowstone.'},
+  'Karachay-Cherkess':{capital:'Cherkessk',lang:'Russian, Karachay, Circassian',desc:'North Caucasus republic. Two Turkic and two Circassian peoples. Mountain tourism and mineral springs. Dombay ski resort.'},
+  'Karelia':{capital:'Petrozavodsk',lang:'Russian',desc:'Borders Finland. Kizhi Island has 18th-century wooden churches built without nails. Kalevala epic originates from this region\'s folklore. Dense forests and lakes.'},
+  'Kemerovo':{capital:'Kemerovo',lang:'Russian',desc:'Coal mining heartland, the Kuzbass basin. Industrial center of Siberia. Mining disasters have been recurring. Harsh continental climate.'},
+  'Khabarovsk':{capital:'Khabarovsk',lang:'Russian',desc:'Major city on the Chinese border. Amur River. Far Eastern Federal District capital. Named after 17th-century explorer Yerofey Khabarov.'},
+  'Khakass':{capital:'Abakan',lang:'Russian, Khakas',desc:'Turkic republic in southern Siberia. Ancient stone carvings and burial mounds. Sayan Mountains. Aluminum smelting industry.'},
+  'Khanty-Mansiy':{capital:'Khanty-Mansiysk',lang:'Russian',desc:'Produces more oil than any other region in Russia. Indigenous Khanty and Mansi peoples. Massive wealth from petroleum. Hosts biathlon world cups.'},
+  'Kirov':{capital:'Kirov',lang:'Russian',desc:'Named Vyatka until 1934. Famous for Dymkovo clay toys, a centuries-old folk art tradition. Cold winters, forested terrain.'},
+  'Komi':{capital:'Syktyvkar',lang:'Russian, Komi',desc:'Vast boreal forests and tundra. Major oil and gas production. Komi people are Finno-Ugric, related to Finns and Estonians. Gulag camps were located here.'},
+  'Kostroma':{capital:'Kostroma',lang:'Russian',desc:'Golden Ring city. The Romanov dynasty originated here. Ipatiev Monastery is where the first Romanov tsar was offered the crown in 1613.'},
+  'Krasnodar':{capital:'Krasnodar',lang:'Russian',desc:'Russia\'s agricultural heartland, the "breadbasket." Black Sea coast. Sochi, site of the 2014 Winter Olympics, is in this region. Warm climate by Russian standards.'},
+  'Krasnoyarsk':{capital:'Krasnoyarsk',lang:'Russian',desc:'Geographic center of Russia. Massive hydroelectric dam on the Yenisei River. Stolby Nature Reserve has distinctive rock pillars. Third largest region by area.'},
+  'Kurgan':{capital:'Kurgan',lang:'Russian',desc:'Named after burial mounds (kurgans). Ilizarov orthopedic center pioneered bone-lengthening surgery. Agricultural region on the western Siberian plain.'},
+  'Kursk':{capital:'Kursk',lang:'Russian',desc:'Site of the Battle of Kursk (1943), the turning point of WWII\'s Eastern Front. Kursk submarine disaster (2000) killed 118 sailors. Iron ore deposits.'},
+  'Leningrad':{capital:'Gatchina',lang:'Russian',desc:'Surrounds St. Petersburg but is a separate region. Gatchina Palace was a Romanov residence. Heavy WWII fighting along the Siege of Leningrad perimeter.'},
+  'Lipetsk':{capital:'Lipetsk',lang:'Russian',desc:'Steel manufacturing center. NLMK is one of Russia\'s largest steel companies. Mineral springs and spa resorts. Central Black Earth agricultural region.'},
+  'Maga Buryatdan':{capital:'Magadan',lang:'Russian',desc:'Gateway to the Kolyma region, synonymous with Gulag labor camps. "Road of Bones" highway was built by prisoners. Gold mining. Extremely harsh winters.'},
+  'Magadan':{capital:'Magadan',lang:'Russian',desc:'Gateway to the Kolyma region, synonymous with Gulag labor camps. "Road of Bones" highway was built by prisoners. Gold mining. Extremely harsh winters.'},
+  'Mariy-El':{capital:'Yoshkar-Ola',lang:'Russian, Mari',desc:'Mari people practice a pre-Christian nature religion alongside Orthodox Christianity. Volga region. Yoshkar-Ola has replicas of European landmarks built in the 2000s.'},
+  'Mordovia':{capital:'Saransk',lang:'Russian, Moksha, Erzya',desc:'Finno-Ugric republic. Two distinct Mordvin peoples (Moksha and Erzya) with separate languages. Saransk hosted 2018 World Cup matches. Penal colonies in the region.'},
+  'Moscow':{capital:'Moscow',lang:'Russian',desc:'Moscow Oblast surrounds the capital. Major industrial and scientific belt. Population over 7 million. Star City cosmonaut training center is here.'},
+  'Moscow City':{capital:'Moscow',lang:'Russian',desc:'Capital of Russia. Population 13 million. Kremlin, Red Square, Bolshoi Theatre. Political, economic, and cultural center. Metro system opened in 1935, known for its architecture.'},
+  'Moskva':{capital:'Moscow',lang:'Russian',desc:'Capital of Russia. Population 13 million. Kremlin, Red Square, Bolshoi Theatre. Political, economic, and cultural center. Metro system opened in 1935, known for its architecture.'},
+  'Murmansk':{capital:'Murmansk',lang:'Russian',desc:'Largest city above the Arctic Circle. Ice-free port thanks to the Gulf Stream. Northern Fleet headquarters. Polar night lasts 40 days in winter.'},
+  'Nenets':{capital:'Naryan-Mar',lang:'Russian',desc:'Arctic tundra. Indigenous Nenets are reindeer herders. Massive natural gas reserves. Population under 45,000. One of the least accessible regions in Russia.'},
+  'Nizhegorod':{capital:'Nizhny Novgorod',lang:'Russian',desc:'Third largest city in Russia. Major automotive (GAZ) and military industry. Closed city during Soviet era. Volga and Oka rivers meet here. Historic trade fair.'},
+  'North Ossetia':{capital:'Vladikavkaz',lang:'Russian, Ossetic',desc:'Ossetians are descendants of the ancient Alans. Beslan school siege (2004) killed 334 people, mostly children. Gateway to the Caucasus Mountains.'},
+  'Novgorod':{capital:'Veliky Novgorod',lang:'Russian',desc:'One of the oldest cities in Russia. Novgorod Republic was a medieval trading power. Birch bark letters from the 11th century found here. UNESCO World Heritage sites.'},
+  'Novosibirsk':{capital:'Novosibirsk',lang:'Russian',desc:'Third largest city in Russia. Akademgorodok is a major science hub built in the 1950s. Trans-Siberian Railway. Largest city in Siberia.'},
+  'Omsk':{capital:'Omsk',lang:'Russian',desc:'Dostoevsky served four years of hard labor here. Major petrochemical industry. Irtysh River. Was briefly the capital of anti-Bolshevik White Russia in 1918-19.'},
+  'Orel':{capital:'Oryol',lang:'Russian',desc:'Birthplace of writers Turgenev and Bunin. Battle of Kursk extended into this region. Agricultural center in the Central Black Earth zone.'},
+  'Orenburg':{capital:'Orenburg',lang:'Russian',desc:'On the Europe-Asia border. Famous for Orenburg shawls, so fine they pass through a wedding ring. Yuri Gagarin trained at the local flight school.'},
+  'Penza':{capital:'Penza',lang:'Russian',desc:'Lermontov museum estate at Tarkhany. Central Russian agricultural region. Founded as a frontier fortress in 1663.'},
+  'Perm\'':{capital:'Perm',lang:'Russian',desc:'Ural Mountains. The Permian geological period is named after this city. Gulag museum at Perm-36. Major industrial and chemical production.'},
+  'Primor\'ye':{capital:'Vladivostok',lang:'Russian',desc:'Russia\'s Pacific gateway. Vladivostok is the eastern terminus of the Trans-Siberian Railway. Home of the Pacific Fleet. Siberian tigers roam the forests.'},
+  'Pskov':{capital:'Pskov',lang:'Russian',desc:'One of Russia\'s oldest cities. Pskov Republic was independent for centuries. Nicholas II abdicated at a railway station in Pskov in 1917. Borders Estonia and Latvia.'},
+  'Rostov':{capital:'Rostov-on-Don',lang:'Russian',desc:'Gateway to the Caucasus. Major Don River port. Cossack heartland. Sholokhov wrote "And Quiet Flows the Don" about this region. 2018 World Cup host city.'},
+  'Ryazan\'':{capital:'Ryazan',lang:'Russian',desc:'Medieval principality. Airborne forces training center. Poet Sergei Yesenin was born here. Rich agricultural land south of Moscow.'},
+  'Sakha':{capital:'Yakutsk',lang:'Russian, Yakut',desc:'Largest subnational entity in the world, bigger than Argentina. Yakutsk is the coldest major city on Earth (minus 50C in winter). Diamond mining capital. Permafrost covers everything.'},
+  'Sakhalin':{capital:'Yuzhno-Sakhalinsk',lang:'Russian',desc:'Island off the Pacific coast. Split between Russia and Japan until 1945. Major oil and gas (Sakhalin-1 and Sakhalin-2 projects). Chekhov wrote about the penal colony here.'},
+  'Samara':{capital:'Samara',lang:'Russian',desc:'Space industry center. Soyuz rockets are manufactured here. Was the secret backup capital of the USSR in WWII. Volga River city. Zhiguli Mountains nearby.'},
+  'Saratov':{capital:'Saratov',lang:'Russian',desc:'Gagarin landed near Saratov after the first human spaceflight in 1961. Volga German community lived here until WWII deportation. Major university city.'},
+  'Sevastopol':{capital:'Sevastopol',lang:'Russian',desc:'Annexed from Ukraine in 2014. Home of Russia\'s Black Sea Fleet since 1783. Heroic defense during WWII. Internationally recognized as part of Ukraine.'},
+  'Smolensk':{capital:'Smolensk',lang:'Russian',desc:'Fought over in every major invasion of Russia. Napoleon passed through in 1812. Devastating WWII battles. Polish president\'s plane crashed near here in 2010.'},
+  'Stavropol\'':{capital:'Stavropol',lang:'Russian',desc:'Mikhail Gorbachev was born and raised here. North Caucasus mineral spa towns (Mineralnye Vody, Pyatigorsk). Lermontov was killed in a duel at Pyatigorsk.'},
+  'Sverdlovsk':{capital:'Yekaterinburg',lang:'Russian',desc:'Romanov royal family was executed here in 1918. Fourth largest city in Russia. Boris Yeltsin\'s political base. Major Ural Mountains industrial center.'},
+  'Tambov':{capital:'Tambov',lang:'Russian',desc:'Site of the Tambov Rebellion (1920-21) against Bolshevik grain seizures. Agricultural region. Known for Tambov ham and wolf folklore.'},
+  'Tatarstan':{capital:'Kazan',lang:'Russian, Tatar',desc:'Tatar majority republic. Kazan Kremlin is a UNESCO site. Oil-rich. Negotiated special autonomy from Moscow in the 1990s. Hosted 2013 Universiade and 2018 World Cup.'},
+  'Tomsk':{capital:'Tomsk',lang:'Russian',desc:'University city since 1878. Oldest university in Siberia. Wooden architecture preserved in the old town. Scientific and tech hub.'},
+  'Tula':{capital:'Tula',lang:'Russian',desc:'Arms manufacturing since the 16th century. Famous for samovars and pryaniki (gingerbread). Tolstoy\'s estate Yasnaya Polyana is nearby. Defended Moscow in 1941.'},
+  'Tuva':{capital:'Kyzyl',lang:'Russian, Tuvan',desc:'Geographic center of Asia (monument in Kyzyl). Buddhist and shamanist traditions. Tuvan throat singing is world-famous. Joined Russia only in 1944. Remote and mountainous.'},
+  'Tver\'':{capital:'Tver',lang:'Russian',desc:'Sits between Moscow and St. Petersburg. Medieval rival to Moscow for supremacy. Volga River\'s source is in Tver Oblast. Major railway corridor.'},
+  'Tyumen\'':{capital:'Tyumen',lang:'Russian',desc:'First Russian city in Siberia, founded 1586. Vast oil and gas reserves. One of the wealthiest regions per capita. Covers a huge area extending to the Arctic.'},
+  'Udmurt':{capital:'Izhevsk',lang:'Russian, Udmurt',desc:'Kalashnikov (AK-47) was designed and produced in Izhevsk. Finno-Ugric republic. Arms manufacturing center since the 19th century.'},
+  'Ul\'yanovsk':{capital:'Ulyanovsk',lang:'Russian',desc:'Birthplace of Lenin (born Vladimir Ulyanov). Renamed from Simbirsk in his honor. Volga River city. Aircraft manufacturing (Aviastar).'},
+  'Vladimir':{capital:'Vladimir',lang:'Russian',desc:'Golden Ring city. Was the capital of medieval Russia before Moscow. 12th-century white-stone cathedrals are UNESCO sites. Ancient seat of Russian Orthodoxy.'},
+  'Volgograd':{capital:'Volgograd',lang:'Russian',desc:'Formerly Stalingrad. The Battle of Stalingrad (1942-43) was the deadliest battle in history. The Motherland Calls statue is 85 meters tall. Volga River industrial city.'},
+  'Vologda':{capital:'Vologda',lang:'Russian',desc:'Famous for Vologda butter and lace. Kremlin built by Ivan the Terrible. Northern Russian cultural center. Many wooden churches and monasteries.'},
+  'Voronezh':{capital:'Voronezh',lang:'Russian',desc:'Peter the Great built Russia\'s first navy here. Major WWII battle site. Aerospace industry. One of the largest cities in southern Russia.'},
+  'Yamal-Nenets':{capital:'Salekhard',lang:'Russian',desc:'Produces the majority of Russia\'s natural gas. Nenets reindeer herders. Salekhard sits on the Arctic Circle. Gazprom\'s most important extraction region.'},
+  'Yaroslavl\'':{capital:'Yaroslavl',lang:'Russian',desc:'Golden Ring city, founded 1010. One of the oldest cities in Russia. Historic center is a UNESCO site. First Russian theater was established here in 1750.'},
+  'Yevrey':{capital:'Birobidzhan',lang:'Russian',desc:'Jewish Autonomous Oblast, created in 1934 as a Soviet Jewish homeland alternative to Israel. Few Jewish residents remain. Far Eastern Russia near China.'},
+  'Zabaykal\'ye':{capital:'Chita',lang:'Russian',desc:'Trans-Baikal region east of Lake Baikal. Decembrist exiles were sent here. Borders Mongolia and China. Continental climate with extreme temperature swings.'},
+  'Crimea':{capital:'Simferopol',lang:'Russian, Ukrainian, Crimean Tatar',desc:'Annexed from Ukraine by Russia in 2014, internationally disputed. Black Sea peninsula. Sevastopol naval base. Yalta Conference (1945) shaped the post-WWII world order.'},
 };
 
 makeMap('russia-map', 'russia-info', 700, 450,
@@ -300,84 +335,43 @@ makeMap('russia-map', 'russia-info', 700, 450,
   russiaData
 );
 
-// ── Middle East ──
-// Uses world-atlas, filtered to Middle East countries
-var middleEastNames = [
-  'Saudi Arabia','Iran','Iraq','Israel','Turkey','Syria','Jordan','Lebanon',
-  'Yemen','Oman','United Arab Emirates','Qatar','Bahrain','Kuwait','Palestine',
-  'Cyprus','Egypt','Afghanistan','Pakistan'
-];
-
-var middleEastData = {
-  'Saudi Arabia':{capital:'Riyadh',lang:'Arabic'},
-  'Iran':{capital:'Tehran',lang:'Persian'},
-  'Iraq':{capital:'Baghdad',lang:'Arabic, Kurdish'},
-  'Israel':{capital:'Jerusalem',lang:'Hebrew, Arabic'},
-  'Turkey':{capital:'Ankara',lang:'Turkish'},
-  'Syria':{capital:'Damascus',lang:'Arabic'},
-  'Jordan':{capital:'Amman',lang:'Arabic'},
-  'Lebanon':{capital:'Beirut',lang:'Arabic'},
-  'Yemen':{capital:'Sanaa',lang:'Arabic'},
-  'Oman':{capital:'Muscat',lang:'Arabic'},
-  'United Arab Emirates':{capital:'Abu Dhabi',lang:'Arabic'},
-  'Qatar':{capital:'Doha',lang:'Arabic'},
-  'Bahrain':{capital:'Manama',lang:'Arabic'},
-  'Kuwait':{capital:'Kuwait City',lang:'Arabic'},
-  'Palestine':{capital:'Ramallah',lang:'Arabic'},
-  'Cyprus':{capital:'Nicosia',lang:'Greek, Turkish'},
-  'Egypt':{capital:'Cairo',lang:'Arabic'},
-  'Afghanistan':{capital:'Kabul',lang:'Pashto, Dari'},
-  'Pakistan':{capital:'Islamabad',lang:'Urdu, English'},
+// ── Canada ──
+var canadaData = {
+  'Alberta':{capital:'Edmonton',lang:'English',desc:'Oil sands produce most of Canada\'s crude. Calgary hosted the 1988 Winter Olympics. Banff National Park (1885) was Canada\'s first. The province has no provincial sales tax.'},
+  'British Columbia':{capital:'Victoria',lang:'English',desc:'Pacific coast province. Vancouver is the third largest city in Canada. Film industry hub, often called "Hollywood North." Oldest Chinatown in Canada (Victoria, 1858).'},
+  'Manitoba':{capital:'Winnipeg',lang:'English, French',desc:'Geographic center of Canada. Churchill is the "polar bear capital of the world." The Red River Rebellion (1869) led to Manitoba joining Confederation. Major grain-producing province.'},
+  'New Brunswick':{capital:'Fredericton',lang:'English, French',desc:'Only officially bilingual province. Bay of Fundy has the highest tides in the world, up to 16 meters. One of the original four provinces at Confederation (1867).'},
+  'Newfoundland and Labrador':{capital:'St. John\'s',lang:'English',desc:'Last province to join Canada (1949). St. John\'s is the oldest English-founded city in North America. Vikings landed at L\'Anse aux Meadows around 1000 AD. Grand Banks cod fishery collapsed in 1992.'},
+  'Northwest Territories':{capital:'Yellowknife',lang:'English, French, others',desc:'Diamond mining capital of Canada. Population under 45,000 across an area larger than most countries. Aurora borealis visible over 200 nights a year. Nine official Indigenous languages.'},
+  'Nova Scotia':{capital:'Halifax',lang:'English',desc:'Halifax was the main port for Titanic rescue operations (1912). 150 victims are buried here. Birthplace of ice hockey by some accounts. Alexander Graham Bell lived and worked on Cape Breton.'},
+  'Nunavut':{capital:'Iqaluit',lang:'Inuktitut, English, French',desc:'Created in 1999 from the eastern part of the Northwest Territories. Largest and newest territory. Population of about 40,000, mostly Inuit. Larger than Western Europe by area.'},
+  'Ontario':{capital:'Toronto',lang:'English',desc:'Most populous province. Toronto is the largest city in Canada and the financial capital. Ottawa, the national capital, sits on the Ontario-Quebec border. Niagara Falls draws 12 million visitors a year.'},
+  'Prince Edward Island':{capital:'Charlottetown',lang:'English',desc:'Smallest province. Charlottetown Conference (1864) led to Canadian Confederation. Anne of Green Gables is set here. Connected to the mainland by the 12.9 km Confederation Bridge since 1997.'},
+  'Quebec':{capital:'Quebec City',lang:'French',desc:'Only majority French-speaking province. Nearly voted to separate from Canada in 1995 (49.4% yes). Quebec City (1608) is one of the oldest European settlements in North America. Distinct civil law system based on French law.'},
+  'Saskatchewan':{capital:'Regina',lang:'English',desc:'Breadbasket of Canada. Produces more wheat than any other province. RCMP training depot is in Regina. Flat prairie landscape. Name comes from the Cree word for "swiftly flowing river."'},
+  'Yukon':{capital:'Whitehorse',lang:'English, French',desc:'Klondike Gold Rush (1896) brought 100,000 prospectors. Mount Logan is the highest peak in Canada (5,959m). Population under 45,000. Named after the Yukon River.'},
 };
 
-// Middle East uses world-atlas but zoomed into the region
+// Canada uses GeoJSON (not TopoJSON)
 (function() {
-  var width = 600, height = 450;
-  var svg = d3.select('#mideast-map').append('svg')
+  var width = 700, height = 500;
+  var svg = d3.select('#canada-map').append('svg')
     .attr('width', width).attr('height', height)
     .attr('style', 'display:block; margin: 20px 0; border: 1px solid #ccc;');
 
-  var projection = d3.geoMercator()
-    .center([50, 28])
+  var projection = d3.geoConicConformal()
+    .center([-95, 60])
     .scale(600)
     .translate([width / 2, height / 2]);
 
   var path = d3.geoPath().projection(projection);
   var selected = null;
 
-  d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(function(world) {
-    var allCountries = topojson.feature(world, world.objects.countries).features;
-
-    // Filter to Middle East region by bounding box + name match
-    var meCountries = allCountries.filter(function(f) {
-      var name = f.properties.name;
-      if (middleEastNames.indexOf(name) >= 0) return true;
-      // Also include by centroid location (roughly 25-45E, 10-42N)
-      if (!f.geometry) return false;
-      var c = d3.geoCentroid(f);
-      return c[0] > 24 && c[0] < 75 && c[1] > 10 && c[1] < 42;
-    });
-
-    // Draw neighboring context countries lightly
-    allCountries.forEach(function(f) {
-      if (!f.geometry) return;
-      var c = d3.geoCentroid(f);
-      if (c[0] > 10 && c[0] < 85 && c[1] > 0 && c[1] < 50) {
-        svg.append('path')
-          .datum(f)
-          .attr('d', path)
-          .attr('fill', '#f4f4f4')
-          .attr('stroke', '#ddd')
-          .attr('stroke-width', 0.3)
-          .attr('pointer-events', 'none');
-      }
-    });
-
-    // Draw Middle East countries on top
-    svg.selectAll('path.me')
-      .data(meCountries)
+  d3.json('https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/canada.geojson').then(function(geo) {
+    svg.selectAll('path.region')
+      .data(geo.features)
       .enter().append('path')
-      .attr('class', 'me')
+      .attr('class', 'region')
       .attr('d', path)
       .attr('fill', '#e8e8e8')
       .attr('stroke', '#999')
@@ -390,21 +384,26 @@ var middleEastData = {
         if (this !== selected) d3.select(this).attr('fill', '#e8e8e8');
       })
       .on('click', function(event, d) {
-        svg.selectAll('path.me').attr('fill', '#e8e8e8');
+        svg.selectAll('path.region').attr('fill', '#e8e8e8');
         if (selected === this) {
           selected = null;
-          document.getElementById('mideast-info').textContent = '';
+          document.getElementById('canada-info').innerHTML = '';
           return;
         }
         selected = this;
         d3.select(this).attr('fill', '#888');
         var name = d.properties.name;
-        var info = document.getElementById('mideast-info');
-        var data = middleEastData[name];
+        var info = document.getElementById('canada-info');
+        var data = canadaData[name];
         if (data) {
-          info.innerHTML = '<b>' + name + '</b>. Capital: ' + data.capital + '. Language: ' + data.lang + '.';
+          var html = '<b>' + name + '</b><br>';
+          if (data.capital) html += 'Capital: ' + data.capital + '<br>';
+          if (data.lang) html += 'Language: ' + data.lang + '<br>';
+          if (data.desc) html += '<br>' + data.desc + '<br>';
+          html += '<br><a href="https://www.earth.google.com/web/search/' + encodeURIComponent(name + ', Canada') + '" target="_blank">view on Google Earth</a>';
+          info.innerHTML = html;
         } else {
-          info.innerHTML = '<b>' + name + '</b>.';
+          info.innerHTML = '<b>' + name + '</b>.<br><a href="https://www.earth.google.com/web/search/' + encodeURIComponent(name + ', Canada') + '" target="_blank">view on Google Earth</a>';
         }
       });
   });
