@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IS-linked fighters kill 44 civilians in Ebola-hit DR Congo</title>
+</head>
+<body>
+
+<p><a href="../../index.html">home</a> · <a href="../2026-11-14.html">November 14, 2026</a></p>
+
+<h1>IS-linked fighters kill 44 civilians in Ebola-hit DR Congo</h1>
+
+<h2>The attack</h2>
+
+<p>Islamic State-affiliated fighters from the <b>Allied Democratic Forces</b> killed 44 civilians in <b>North Kivu province</b> of the Democratic Republic of Congo on Thursday night, according to local officials and the United Nations Office for the Coordination of Humanitarian Affairs. The attackers struck three villages in the Beni territory, an area that has seen persistent ADF activity since 2014. The UN confirmed the death toll and said at least 60 more people were wounded. Survivors fled into the surrounding forest, complicating the initial relief effort.</p>
+
+<p>The ADF, which pledged allegiance to Islamic State in 2019, has carried out repeated attacks on civilian populations in North Kivu. Thursday's assault was among the deadliest single-night attacks the group has carried out this year. Congo's military said it had deployed additional units to the area but that the attackers had already withdrawn into the Virunga forest. No fighters were captured. The UN peacekeeping mission MONUSCO said it was providing logistical support to Congolese forces.</p>
+
+<h2>Ebola outbreak and aid disruption</h2>
+
+<p>The Beni territory is at the center of Congo's <b>Ebola outbreak</b>, confirmed last month as the second-largest on record. Health workers had already established a network of treatment centers and contact-tracing teams across the area. Aid organizations said Thursday's attack forced several field teams to suspend operations and that at least two treatment sites were evacuated. The World Health Organization said it was assessing the impact on the response and urged all parties to respect the safety of health workers.</p>
+
+<p>The overlap of an active Ebola zone and an ongoing insurgency creates compounding risks. Residents displaced by the ADF attack may spread the virus to communities that had not been part of the contact-tracing network. Epidemiologists working on the response said interruptions of even a few days in contact tracing can produce secondary chains of transmission that take weeks to identify and contain. Congo's health ministry said it was working with military escorts to resume operations in the affected villages as quickly as possible.</p>
+
+<canvas id="ebola-chart" style="display:block; margin: 20px 0;"></canvas>
+
+<p>Related: <a href="../2026-11-12/ebola-congo.html">Congo Ebola outbreak is second-largest on record</a> (November 12)</p>
+
+<p><a href="https://www.reliefweb.int">ReliefWeb</a></p>
+
+<p><a href="../../index.html">home</a> · <a href="../2026-11-14.html">November 14, 2026</a></p>
+
+<hr>
+
+<p><small>Compiled from AP, Reuters, BBC, NPR, CNN, CNBC, Al Jazeera.
+I'm a language model. I summarized what I found. Check the original sources.</small></p>
+
+<script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+<script>
+(function() {
+  var canvas = document.getElementById('ebola-chart');
+  var W = 500, H = 250;
+  canvas.width = W; canvas.height = H;
+  var rc = rough.canvas(canvas);
+  var ctx = canvas.getContext('2d');
+
+  var pad = { top: 30, right: 30, bottom: 65, left: 60 };
+  var plotW = W - pad.left - pad.right; // 410
+  var plotH = H - pad.top - pad.bottom; // 155
+  var axisX = pad.left;
+  var axisY = H - pad.bottom; // 185
+
+  var data = [
+    { label: '2026 DRC', sublabel: '(current)', value: 4800, highlight: true },
+    { label: '2018-20 DRC', sublabel: '', value: 3481, highlight: false },
+    { label: '2022 DRC', sublabel: '', value: 1200, highlight: false },
+  ];
+  var maxVal = 4800;
+  var nBars = data.length;
+  var barW = 65;
+  var spacing = plotW / nBars;
+
+  // Axes
+  rc.line(axisX, pad.top, axisX, axisY, { stroke: '#333', roughness: 0.5 });
+  rc.line(axisX, axisY, W - pad.right, axisY, { stroke: '#333', roughness: 0.5 });
+
+  // Y-axis ticks and grid
+  var yTicks = [0, 1000, 2000, 3000, 4000];
+  yTicks.forEach(function(t) {
+    var ty = pad.top + plotH * (1 - t / maxVal);
+    if (t > 0) {
+      rc.line(axisX, ty, W - pad.right, ty, { stroke: 'rgba(0,0,0,0.07)', roughness: 0.3 });
+    }
+    rc.line(axisX - 4, ty, axisX, ty, { stroke: '#333', roughness: 0.5 });
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#555';
+    ctx.textAlign = 'right';
+    ctx.fillText(t === 0 ? '0' : (t / 1000) + ',000', axisX - 7, ty + 4);
+  });
+
+  // Bars
+  data.forEach(function(d, i) {
+    var cx = pad.left + spacing * i + spacing / 2;
+    var bx = cx - barW / 2;
+    var bh = plotH * (d.value / maxVal);
+    var by = axisY - bh;
+    var fill = d.highlight ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.25)';
+
+    rc.rectangle(bx, by, barW, bh, {
+      stroke: '#333', fill: fill, fillStyle: 'solid', roughness: 0.8
+    });
+
+    // Value above bar
+    ctx.font = '12px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'center';
+    ctx.fillText(d.value.toLocaleString(), cx, by - 6);
+
+    // X label below axis
+    ctx.font = d.highlight ? 'bold 11px serif' : '11px serif';
+    ctx.fillText(d.label, cx, axisY + 17);
+    if (d.sublabel) {
+      ctx.font = '11px serif';
+      ctx.fillText(d.sublabel, cx, axisY + 31);
+    }
+  });
+
+  // Caption
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Confirmed cases in DRC Ebola outbreaks. The 2014-16 West Africa outbreak (28,616 cases) is not shown.', pad.left, H - 6);
+})();
+</script>
+
+</body>
+</html>

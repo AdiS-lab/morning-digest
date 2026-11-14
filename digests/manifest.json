@@ -252,6 +252,70 @@
           "tags": ["us-politics", "elections", "midterms", "congress"]
         }
       ]
+    },
+    {
+      "date": "2026-11-14",
+      "file": "2026-11/2026-11-14.html",
+      "summary": "FAA grounds all U.S. flights for five hours after a telecom outage. Trump announces a trilateral summit with Xi and Putin at APEC. Turkey and Qatar sign a mutual defense pact. IS fighters kill 44 civilians in Ebola-hit DR Congo. Ukraine says Russia refused to discuss ceasefire at Abu Dhabi talks.",
+      "stories": [
+        {
+          "headline": "FAA grounds all U.S. flights after telecommunications outage",
+          "file": "2026-11/2026-11-14/faa-ground-stop.html",
+          "tags": ["us", "aviation", "faa", "infrastructure", "cyberattack"]
+        },
+        {
+          "headline": "Trump to meet Xi and Putin at APEC. Nuclear arms and Iran on the agenda.",
+          "file": "2026-11/2026-11-14/apec-summit.html",
+          "tags": ["us-politics", "china", "russia", "diplomacy", "nuclear", "iran"]
+        },
+        {
+          "headline": "Turkey and Qatar sign mutual defense pact in Istanbul",
+          "file": "2026-11/2026-11-14/turkey-qatar.html",
+          "tags": ["turkey", "qatar", "middle-east", "military", "iran", "diplomacy"]
+        },
+        {
+          "headline": "IS-linked fighters kill 44 civilians in Ebola-hit DR Congo",
+          "file": "2026-11/2026-11-14/congo-is.html",
+          "tags": ["africa", "drc", "terrorism", "health", "ebola", "islamic-state"]
+        },
+        {
+          "headline": "Ukraine says Russia refused to discuss ceasefire at Abu Dhabi talks",
+          "file": "2026-11/2026-11-14/ukraine-stalled.html",
+          "tags": ["russia", "ukraine", "war", "diplomacy", "ceasefire"]
+        }
+      ]
+    },
+    {
+      "date": "2026-11-13",
+      "file": "2026-11/2026-11-13.html",
+      "summary": "Jensen Huang resigns from Nvidia. Iran claims it hit a U.S. radar in Bahrain. Van Hollen challenges Schumer. U.S. envoys meet Putin. Microsoft outage hits millions.",
+      "stories": [
+        {
+          "headline": "Jensen Huang resigns as Nvidia CEO",
+          "file": "2026-11/2026-11-13/huang-resigns.html",
+          "tags": ["tech", "nvidia", "markets", "espionage", "china"]
+        },
+        {
+          "headline": "Iran claims it destroyed U.S. radar in Bahrain",
+          "file": "2026-11/2026-11-13/iran-bahrain.html",
+          "tags": ["iran", "middle-east", "military", "bahrain", "strait-of-hormuz"]
+        },
+        {
+          "headline": "Van Hollen challenges Schumer for Senate majority leader",
+          "file": "2026-11/2026-11-13/van-hollen.html",
+          "tags": ["us-politics", "congress", "democrats", "senate"]
+        },
+        {
+          "headline": "Kushner and Witkoff meet Putin in Moscow. Europe to join future talks.",
+          "file": "2026-11/2026-11-13/moscow-talks.html",
+          "tags": ["russia", "ukraine", "war", "diplomacy"]
+        },
+        {
+          "headline": "Microsoft outage disrupts services worldwide",
+          "file": "2026-11/2026-11-13/microsoft-outage.html",
+          "tags": ["tech", "microsoft", "infrastructure"]
+        }
+      ]
     }
   ]
 }
