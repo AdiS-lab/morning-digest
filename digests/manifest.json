@@ -316,6 +316,38 @@
           "tags": ["tech", "microsoft", "infrastructure"]
         }
       ]
+    },
+    {
+      "date": "2026-11-15",
+      "file": "2026-11/2026-11-15.html",
+      "summary": "Zelensky reveals U.S. raised Donbas-for-NATO idea. SpaceX catches Starship upper stage for the first time. Two more tankers hit mines in Hormuz. UPS and Copa planes collide at Miami airport. Iran rejects IAEA uranium enrichment halt.",
+      "stories": [
+        {
+          "headline": "Zelensky says U.S. proposed Donbas-for-NATO deal",
+          "file": "2026-11/2026-11-15/donbas-nato.html",
+          "tags": ["russia", "ukraine", "war", "diplomacy", "nato", "us-politics"]
+        },
+        {
+          "headline": "SpaceX catches Starship upper stage in first-ever tower catch",
+          "file": "2026-11/2026-11-15/starship-catch.html",
+          "tags": ["space", "technology", "spacex", "starship"]
+        },
+        {
+          "headline": "Two more tankers hit mines in the Strait of Hormuz",
+          "file": "2026-11/2026-11-15/hormuz-mines.html",
+          "tags": ["iran", "middle-east", "oil", "military", "strait-of-hormuz"]
+        },
+        {
+          "headline": "UPS cargo plane and Copa Airlines jet collide at Miami airport",
+          "file": "2026-11/2026-11-15/miami-collision.html",
+          "tags": ["us", "aviation", "faa", "infrastructure"]
+        },
+        {
+          "headline": "Iran rejects IAEA demand to halt uranium enrichment",
+          "file": "2026-11/2026-11-15/iran-iaea.html",
+          "tags": ["iran", "nuclear", "iaea", "diplomacy", "middle-east"]
+        }
+      ]
     }
   ]
 }
