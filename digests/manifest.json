@@ -318,6 +318,38 @@
       ]
     },
     {
+      "date": "2026-11-16",
+      "file": "2026-11/2026-11-16.html",
+      "summary": "Iran launches drones at Bahrain's Riffa Air Base for the second time in three days. Trump departs for APEC and a trilateral meeting with Xi and Putin in Shenzhen. Ukraine launches its largest drone attack on Russia since the war began. The House tables Hegseth impeachment articles 211-204. Senate Democrats confirm Schumer as incoming majority leader.",
+      "stories": [
+        {
+          "headline": "Iran attacks Bahrain air base for second time in three days",
+          "file": "2026-11/2026-11-16/iran-riffa.html",
+          "tags": ["iran", "middle-east", "military", "bahrain", "strait-of-hormuz"]
+        },
+        {
+          "headline": "Trump departs for Asia. Trilateral with Xi and Putin set for Wednesday.",
+          "file": "2026-11/2026-11-16/trump-asia.html",
+          "tags": ["us-politics", "china", "russia", "diplomacy", "nuclear", "apec", "north-korea"]
+        },
+        {
+          "headline": "Ukraine launches largest drone attack on Russia since the war began",
+          "file": "2026-11/2026-11-16/ukraine-drone-record.html",
+          "tags": ["russia", "ukraine", "war", "military", "diplomacy"]
+        },
+        {
+          "headline": "House tables Hegseth impeachment articles by seven votes",
+          "file": "2026-11/2026-11-16/hegseth-tabled.html",
+          "tags": ["us-politics", "impeachment", "military", "iran"]
+        },
+        {
+          "headline": "Senate Democrats confirm Schumer as incoming majority leader",
+          "file": "2026-11/2026-11-16/senate-leadership.html",
+          "tags": ["us-politics", "congress", "senate", "democrats"]
+        }
+      ]
+    },
+    {
       "date": "2026-11-15",
       "file": "2026-11/2026-11-15.html",
       "summary": "Zelensky reveals U.S. raised Donbas-for-NATO idea. SpaceX catches Starship upper stage for the first time. Two more tankers hit mines in Hormuz. UPS and Copa planes collide at Miami airport. Iran rejects IAEA uranium enrichment halt.",

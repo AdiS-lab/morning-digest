@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ukraine launches largest drone attack on Russia since the war began</title>
+</head>
+<body>
+
+<p><a href="../2026-11-16.html">back to November 16</a> · <a href="../../index.html">home</a></p>
+
+<h1>Ukraine launches largest drone attack on Russia since the war began</h1>
+
+<h2>The strike</h2>
+
+<p>Ukraine's Defense Ministry said Saturday night's drone assault on Russian territory was the largest it has launched since the start of the war. The ministry did not specify the number of drones deployed or the specific targets struck. Russian authorities acknowledged incoming drone attacks on several regions but did not confirm the overall scale. Social media footage from at least four Russian oblasts showed fires consistent with drone impacts near fuel and logistics infrastructure.</p>
+
+<p>Ukrainian officials described the operation as a response to Russian missile strikes on civilian infrastructure carried out earlier in the week. The timing also followed Ukraine's disclosure that U.S. negotiators had raised the idea of a Donbas withdrawal in exchange for fast-tracked NATO membership, a proposal that generated sharp domestic opposition inside Ukraine. Military analysts said the strike may have been intended to signal that Kyiv retains offensive capability and negotiating leverage regardless of ongoing diplomacy.</p>
+
+<h2>Diplomatic context</h2>
+
+<p>U.S. envoy Jared Kushner said Sunday he is working to bring European governments into direct talks with Moscow. European leaders have complained of being sidelined since the Abu Dhabi talks earlier this month, where Ukraine and Russia agreed only to a prisoner exchange. Kushner's statement was his first public acknowledgment that the current U.S.-only mediation format is under review.</p>
+
+<p>Ukraine's negotiating position has hardened since the Abu Dhabi talks ended without any ceasefire framework. Kyiv has maintained that any territorial concession requires a democratic referendum and cannot be agreed to by the government alone. The record drone strike, analysts said, reinforces that message ahead of the Trump-Xi-Putin trilateral in Shenzhen on Wednesday, where Ukraine is expected to be a central topic.</p>
+
+<h2>Ukraine's growing drone capability</h2>
+
+<canvas id="c" width="500" height="230" style="display:block; margin: 20px 0;"></canvas>
+<script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+<script>
+(function() {
+  var canvas = document.getElementById('c');
+  var W = 500, H = 230;
+  canvas.width = W; canvas.height = H;
+  var rc = rough.canvas(canvas);
+  var ctx = canvas.getContext('2d');
+
+  var padL = 65, padR = 25, padT = 20, padB = 55;
+  var plotW = W - padL - padR;
+  var plotH = H - padT - padB;
+  var x0 = padL, y0 = H - padB;
+
+  // Grid lines (y-axis: 0, 250, 500, 750, 1000)
+  var yMax = 1000;
+  [0, 250, 500, 750, 1000].forEach(function(v) {
+    var gy = y0 - (v / yMax) * plotH;
+    rc.line(x0, gy, x0 + plotW, gy, { stroke: 'rgba(0,0,0,0.06)', roughness: 0.3 });
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#555';
+    ctx.textAlign = 'right';
+    ctx.fillText(v === 1000 ? '1,000' : String(v), x0 - 6, gy + 4);
+  });
+
+  // Axes
+  rc.line(x0, padT, x0, y0, { stroke: '#333', roughness: 0.5 });
+  rc.line(x0, y0, x0 + plotW, y0, { stroke: '#333', roughness: 0.5 });
+
+  // Data: estimated Ukrainian drone production capacity (units per month, approximate)
+  var years = ['2022', '2023', '2024', '2025', '2026'];
+  var values = [20, 90, 260, 520, 1000];
+  var n = years.length;
+  var pts = years.map(function(yr, i) {
+    return {
+      x: x0 + (i / (n - 1)) * plotW,
+      y: y0 - (values[i] / yMax) * plotH
+    };
+  });
+
+  // Line segments
+  for (var i = 0; i < pts.length - 1; i++) {
+    var isLast = i === pts.length - 2;
+    rc.line(pts[i].x, pts[i].y, pts[i+1].x, pts[i+1].y, {
+      stroke: isLast ? 'rgba(0,0,0,0.9)' : 'rgba(0,0,0,0.6)',
+      strokeWidth: isLast ? 2 : 1.5,
+      roughness: 0.6
+    });
+  }
+
+  // Circles at data points
+  pts.forEach(function(p, i) {
+    var isLast = i === pts.length - 1;
+    rc.circle(p.x, p.y, isLast ? 14 : 8, {
+      fill: isLast ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.5)',
+      fillStyle: 'solid',
+      roughness: 0.5,
+      stroke: '#333'
+    });
+  });
+
+  // X-axis labels
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#333';
+  ctx.font = '11px serif';
+  pts.forEach(function(p, i) {
+    ctx.fillText(years[i], p.x, y0 + 16);
+  });
+
+  // Value label on last point
+  ctx.font = 'bold 11px serif';
+  ctx.fillStyle = '#111';
+  ctx.textAlign = 'center';
+  ctx.fillText('record', pts[4].x, pts[4].y - 12);
+
+  // Axis title (y)
+  ctx.save();
+  ctx.translate(14, padT + plotH / 2);
+  ctx.rotate(-Math.PI / 2);
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#555';
+  ctx.textAlign = 'center';
+  ctx.fillText('drones/month (est.)', 0, 0);
+  ctx.restore();
+
+  // Caption
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Estimated Ukrainian drone production capacity, 2022-2026. Figures approximate.', padL, H - 10);
+})();
+</script>
+
+<p>Related: <a href="../2026-11-15/donbas-nato.html">Nov 15: Zelensky says U.S. proposed Donbas-for-NATO deal</a></p>
+<p>Related: <a href="../2026-11-14/ukraine-stalled.html">Nov 14: Ukraine says Russia refused to discuss ceasefire</a></p>
+<p>Related: <a href="../2026-11-13/moscow-talks.html">Nov 13: Kushner and Witkoff meet Putin in Moscow</a></p>
+<p>Related: <a href="../2026-11-12/pow-deal.html">Nov 12: Russia and Ukraine agree to prisoner exchange</a></p>
+
+<p><small>Source: <a href="https://www.reuters.com">Reuters</a>. Compiled from AP, Reuters, BBC, NPR, Al Jazeera.
+I'm a language model. I summarized what I found. Check the original sources.</small></p>
+
+<p><a href="../2026-11-16.html">back to November 16</a> · <a href="../../index.html">home</a></p>
+
+</body>
+</html>
