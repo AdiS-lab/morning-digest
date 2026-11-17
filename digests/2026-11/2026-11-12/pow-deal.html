@@ -76,6 +76,51 @@
 
 <p>The talks were complicated from the start. On November 9, both sides exchanged strikes on civilian and energy infrastructure. During the first session on November 10, Ukraine alleged that Russian military delegates presented <b>fabricated battlefield data</b>. Russia did not respond to that allegation publicly. The November 11 drone attack on Kryvyi Rih, Zelensky's birthplace, took place while delegations were still seated in Abu Dhabi, testing the talks' survival.</p>
 
+<canvas id="positions-table" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function () {
+  var W = 600, H = 195;
+  var canvas = document.getElementById('positions-table');
+  canvas.width = W;
+  canvas.height = H;
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+
+  var colX = [10, 110, 350, 590];
+  var rowY = [10, 46, 82, 118, 154];
+  var rows = [
+    ['Issue',           'Ukraine position',              'Russia position'],
+    ['Territory',       'No recognition of occupation',  'Annexed regions non-negotiable'],
+    ['Ceasefire',       'Requires security guarantees',  'Freeze along current lines'],
+    ['POW exchange',    'Agreed (largest since 2022)',    'Agreed'],
+    ['Nuclear plants',  'Return Zaporizhzhia to IAEA',   'Already under Russian control']
+  ];
+
+  rows.forEach(function (row, r) {
+    var isHeader = r === 0;
+    for (var c = 0; c < 3; c++) {
+      var x = colX[c];
+      var y = rowY[r];
+      var w = colX[c + 1] - colX[c];
+      var h = rowY[r + 1] - rowY[r];
+      rc.rectangle(x, y, w, h, {
+        stroke: '#333',
+        fill: isHeader ? 'rgba(0,0,0,0.09)' : (r === 3 ? 'rgba(0,0,0,0.04)' : 'rgba(0,0,0,0)'),
+        fillStyle: 'solid',
+        roughness: 0.5
+      });
+      ctx.textAlign = 'left';
+      ctx.font = isHeader ? 'bold 11px serif' : '11px serif';
+      ctx.fillStyle = '#333';
+      ctx.fillText(row[c], x + 6, y + h / 2 + 4);
+    }
+  });
+
+  ctx.font = '11px serif'; ctx.fillStyle = '#666'; ctx.textAlign = 'left';
+  ctx.fillText('Key negotiating positions at Abu Dhabi, November 10-12', 10, H - 4);
+}());
+</script>
+
 <h2>What comes next</h2>
 
 <p>Kushner and Witkoff flew directly from Abu Dhabi to Moscow on Wednesday evening. The purpose was to press Russia for the revised security proposal the U.S. requested at the closing session. Moscow has not publicly acknowledged what parameters such a proposal would include. Russian state media described the Abu Dhabi outcome as a "preliminary framework" without further detail.</p>

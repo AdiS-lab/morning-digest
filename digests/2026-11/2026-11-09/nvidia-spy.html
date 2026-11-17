@@ -30,6 +30,8 @@
 
 <p>Republican lawmakers called on Huang to <b>testify before Congress on November 18</b>. The hearing will focus on whether China gained access to sensitive chip design or AI model information through the relationship.</p>
 
+<canvas id="nvdaTimeline" width="620" height="150" style="display:block; margin: 20px 0;"></canvas>
+
 <h2>Why it matters</h2>
 
 <p>Nvidia designs the chips that power most of the world's AI systems. If China's intelligence services had access to Huang's communications, the implications go beyond one company. It touches the core of the U.S.-China technology competition. The stock reaction reflects that uncertainty.</p>
@@ -116,6 +118,53 @@
   ctx.fillStyle = '#666';
   ctx.textAlign = 'left';
   ctx.fillText('Nvidia market cap, approximate. Two drops in one week.', pad.left, H - pad.bottom + 36);
+})();
+
+(function() {
+  const canvas = document.getElementById('nvdaTimeline');
+  const ctx = canvas.getContext('2d');
+  const rc = rough.canvas(canvas);
+
+  const W = 620, H = 150;
+  const lineY = 50;
+  const padL = 40, padR = 40;
+  const lineW = W - padL - padR;
+
+  rc.line(padL, lineY, W - padR, lineY, { stroke: '#333', roughness: 0.6, strokeWidth: 1.2 });
+
+  var events = [
+    { t: 0.0,  above: 'Spring 2026',  below: 'Rubio briefed on\nintelligence' },
+    { t: 0.3,  above: 'Nov 5',        below: 'Midterm selloff\n-$450B' },
+    { t: 0.55, above: 'Nov 8 (Sun)',   below: 'Huang admits\naffair in memo' },
+    { t: 0.78, above: 'Nov 9',        below: 'Bloomberg reports\nspy allegations' },
+    { t: 1.0,  above: 'Nov 18',       below: 'Huang called\nto testify', focal: true },
+  ];
+
+  events.forEach(function(e, i) {
+    var x = padL + e.t * lineW;
+    var r = e.focal ? 8 : 6;
+    rc.circle(x, lineY, r * 2, {
+      fill: e.focal ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.35)',
+      fillStyle: 'solid',
+      stroke: '#333', strokeWidth: 1, roughness: 0.6,
+    });
+
+    ctx.font = 'bold 11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'center';
+    ctx.fillText(e.above, x, lineY - 16);
+
+    ctx.font = '11px serif';
+    var lines = e.below.split('\n');
+    lines.forEach(function(ln, li) {
+      ctx.fillText(ln, x, lineY + 22 + li * 13);
+    });
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Key events in the Nvidia spy scandal timeline.', padL, H - 8);
 })();
 </script>
 

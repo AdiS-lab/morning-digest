@@ -91,6 +91,63 @@
 
 <p>Fed Chair Jerome Powell does not speak publicly until Thursday. The last time the Fed hiked rates after a period of pausing was in 2023, and the institutional reluctance to reverse course without clear evidence of re-acceleration means the December decision will be close. Some economists argue the October data is a one-month outlier driven by shelter cost lags and energy disruptions rather than a genuine re-acceleration of underlying inflation, and that the Fed should wait for November data before moving.</p>
 
+<canvas id="hbar2" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function () {
+  var W = 600, H = 230;
+  var canvas = document.getElementById('hbar2');
+  canvas.width = W;
+  canvas.height = H;
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+
+  var pad = { top: 18, right: 55, bottom: 36, left: 185 };
+  var plotW = W - pad.left - pad.right;
+  var plotH = H - pad.top - pad.bottom;
+
+  var items = [
+    { label: 'Motor vehicle insurance', value: 11.0, focal: true  },
+    { label: 'Shelter',                 value: 5.1,  focal: false },
+    { label: 'Medical care services',   value: 4.3,  focal: false },
+    { label: 'Overall CPI',             value: 3.9,  focal: false },
+    { label: 'Food',                    value: 1.8,  focal: false },
+  ];
+
+  var maxVal = 12;
+  var barH = 24, gap = 12;
+  var totalH = items.length * barH + (items.length - 1) * gap;
+  var startY = pad.top + (plotH - totalH) / 2;
+
+  rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+  rc.line(pad.left, H - pad.bottom, W - pad.right, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+  items.forEach(function (a, i) {
+    var y = startY + i * (barH + gap);
+    var bw = (a.value / maxVal) * plotW;
+
+    rc.rectangle(pad.left, y, bw, barH, {
+      fill: a.focal ? 'rgba(180,0,0,0.5)' : 'rgba(0,0,0,0.2)',
+      fillStyle: 'solid',
+      stroke: '#333',
+      roughness: 0.8
+    });
+
+    ctx.textAlign = 'right';
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.fillText(a.label, pad.left - 8, y + barH / 2 + 4);
+
+    ctx.textAlign = 'left';
+    ctx.font = '12px serif';
+    ctx.fillStyle = '#333';
+    ctx.fillText(a.value + '%', pad.left + bw + 6, y + barH / 2 + 4);
+  });
+
+  ctx.font = '11px serif'; ctx.fillStyle = '#666'; ctx.textAlign = 'left';
+  ctx.fillText('October 2026 CPI by category, year-over-year change', pad.left, H - 5);
+}());
+</script>
+
 <h2>Market reaction</h2>
 
 <p>Equities fell sharply after the report. The S&amp;P 500 dropped 1.4 percent, the Nasdaq fell 1.9 percent, and the Dow Jones Industrial Average lost over 400 points by mid-morning. The sell-off came just one day after markets had staged a broad recovery, underscoring the <strong>fragility of recent gains</strong>. Treasury yields rose, with the 10-year hitting 4.65 percent, the highest level since the summer.</p>

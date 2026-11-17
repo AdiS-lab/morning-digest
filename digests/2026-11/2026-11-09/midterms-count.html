@@ -24,6 +24,8 @@
 
 <p>The Senate also flipped. Mississippi and Alaska remain too close to call, but Democrats have already secured enough seats to take the majority.</p>
 
+<canvas id="govChart" width="600" height="280" style="display:block; margin: 20px 0;"></canvas>
+
 <h2>What comes next</h2>
 
 <p>Congress returns this week for a <b>lame-duck session</b>. The outgoing Republican majority still controls both chambers until January. The immediate business: the annual defense authorization bill and government funding. The incoming Democratic majority is already preparing oversight of Defense Secretary Pete Hegseth and discussing impeachment proceedings.</p>
@@ -109,6 +111,84 @@
   ctx.fillStyle = '#666';
   ctx.textAlign = 'left';
   ctx.fillText('House seats, as of November 9. 19 races still undecided.', pad.left, H - pad.bottom + 20);
+})();
+
+(function() {
+  const canvas = document.getElementById('govChart');
+  const ctx = canvas.getContext('2d');
+  const rc = rough.canvas(canvas);
+
+  const W = 600, H = 280;
+  const pad = { top: 30, right: 30, bottom: 50, left: 50 };
+  const plotW = W - pad.left - pad.right;
+  const plotH = H - pad.top - pad.bottom;
+
+  // State government trifectas before vs after 2026 midterms
+  var labels = ['Dem trifectas', 'Rep trifectas', 'Divided'];
+  var before = [16, 23, 11];
+  var after =  [23, 15, 12];
+  var maxVal = 25;
+
+  var groupW = plotW / labels.length;
+  var barW = 36;
+  var barGap = 6;
+
+  // Axes
+  rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+  rc.line(pad.left, H - pad.bottom, W - pad.right, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+  // Y grid
+  for (var v = 5; v <= 25; v += 5) {
+    var gy = pad.top + (1 - v / maxVal) * plotH;
+    rc.line(pad.left, gy, W - pad.right, gy, { stroke: 'rgba(0,0,0,0.06)', roughness: 0.3 });
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'right';
+    ctx.fillText(String(v), pad.left - 8, gy + 4);
+  }
+
+  labels.forEach(function(label, i) {
+    var cx = pad.left + groupW * i + groupW / 2;
+    var x1 = cx - barW - barGap / 2;
+    var x2 = cx + barGap / 2;
+
+    var h1 = (before[i] / maxVal) * plotH;
+    var h2 = (after[i] / maxVal) * plotH;
+    var y1 = pad.top + plotH - h1;
+    var y2 = pad.top + plotH - h2;
+
+    rc.rectangle(x1, y1, barW, h1, {
+      fill: 'rgba(0,0,0,0.25)', fillStyle: 'solid',
+      stroke: '#555', strokeWidth: 1, roughness: 0.8,
+    });
+    rc.rectangle(x2, y2, barW, h2, {
+      fill: 'rgba(0,0,0,0.6)', fillStyle: 'solid',
+      stroke: '#333', strokeWidth: 1, roughness: 0.8,
+    });
+
+    ctx.font = '12px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'center';
+    ctx.fillText(String(before[i]), x1 + barW / 2, y1 - 6);
+    ctx.fillText(String(after[i]), x2 + barW / 2, y2 - 6);
+
+    ctx.font = '11px serif';
+    ctx.fillText(label, cx, H - pad.bottom + 16);
+  });
+
+  // Legend
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#333';
+  ctx.textAlign = 'left';
+  rc.rectangle(W - pad.right - 150, pad.top, 12, 12, { fill: 'rgba(0,0,0,0.25)', fillStyle: 'solid', stroke: '#555', roughness: 0.5 });
+  ctx.fillText('Before', W - pad.right - 134, pad.top + 11);
+  rc.rectangle(W - pad.right - 150, pad.top + 18, 12, 12, { fill: 'rgba(0,0,0,0.6)', fillStyle: 'solid', stroke: '#333', roughness: 0.5 });
+  ctx.fillText('After 2026', W - pad.right - 134, pad.top + 29);
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('State government trifectas, before and after the 2026 midterms.', pad.left, H - pad.bottom + 40);
 })();
 </script>
 

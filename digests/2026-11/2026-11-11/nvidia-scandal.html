@@ -94,6 +94,80 @@
 
 <p>The counterintelligence implications are significant because Nvidia is at the center of ongoing U.S. efforts to restrict advanced chip exports to China. Huang has participated in private briefings with administration officials about which chips should be classified as restricted and at what thresholds. The question investigators are examining is whether information from those discussions ever reached Chinese intelligence through the relationship, <strong>intentionally or otherwise</strong>.</p>
 
+<canvas id="vbar2" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function () {
+  var W = 520, H = 250;
+  var canvas = document.getElementById('vbar2');
+  canvas.width = W;
+  canvas.height = H;
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+
+  var pad = { top: 20, right: 25, bottom: 55, left: 55 };
+  var plotW = W - pad.left - pad.right;
+  var plotH = H - pad.top - pad.bottom;
+
+  var data = [
+    { label: 'Nov 6',  loss: 0 },
+    { label: 'Nov 7',  loss: -50 },
+    { label: 'Nov 8',  loss: -65 },
+    { label: 'Nov 9',  loss: -195 },
+    { label: 'Nov 10', loss: -130 },
+    { label: 'Nov 11', loss: -400 },
+  ];
+
+  var maxVal = 450;
+  var groupW = plotW / data.length;
+  var barW = 48;
+  var barOffset = (groupW - barW) / 2;
+  var baseY = pad.top;
+
+  rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+  rc.line(pad.left, pad.top, W - pad.right, pad.top, { stroke: 'rgba(0,0,0,0.15)', roughness: 0.3 });
+
+  var yTicks = [0, -100, -200, -300, -400];
+  yTicks.forEach(function (v) {
+    var y = pad.top + (Math.abs(v) / maxVal) * plotH;
+    if (v !== 0) {
+      rc.line(pad.left, y, W - pad.right, y, { stroke: 'rgba(0,0,0,0.06)', roughness: 0.3 });
+    }
+    ctx.font = '10px serif'; ctx.fillStyle = '#888'; ctx.textAlign = 'right';
+    ctx.fillText('$' + Math.abs(v) + 'B', pad.left - 6, y + 4);
+  });
+
+  data.forEach(function (d, i) {
+    var isFocal = i === data.length - 1;
+    var bh = (Math.abs(d.loss) / maxVal) * plotH;
+    var x = pad.left + i * groupW + barOffset;
+    var y = baseY;
+
+    if (bh > 0) {
+      rc.rectangle(x, y, barW, bh, {
+        fill: isFocal ? 'rgba(180,0,0,0.6)' : 'rgba(0,0,0,0.2)',
+        fillStyle: 'solid',
+        stroke: '#333',
+        roughness: 0.7
+      });
+    }
+
+    ctx.textAlign = 'center';
+    ctx.font = '10px serif';
+    ctx.fillStyle = '#555';
+    ctx.fillText(d.label, x + barW / 2, H - pad.bottom + 15);
+
+    if (d.loss !== 0) {
+      ctx.font = '11px serif';
+      ctx.fillStyle = isFocal ? '#a00' : '#555';
+      ctx.fillText('$' + Math.abs(d.loss) + 'B', x + barW / 2, y + bh + 14);
+    }
+  });
+
+  ctx.font = '11px serif'; ctx.fillStyle = '#666'; ctx.textAlign = 'left';
+  ctx.fillText('Cumulative Nvidia market cap loss since scandal broke', pad.left, H - 5);
+}());
+</script>
+
 <h2>What happens next</h2>
 
 <p>The FBI and the Commerce Department's Office of Export Enforcement are both reported to be conducting active investigations. Congressional committees have requested Huang's testimony. No criminal charges have been filed, and legal experts note that personal relationships with foreign nationals, even those with intelligence ties, do not automatically constitute a crime without evidence of information transfer.</p>

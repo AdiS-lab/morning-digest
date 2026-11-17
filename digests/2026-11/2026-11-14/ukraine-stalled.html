@@ -19,6 +19,8 @@
 
 <canvas id="ukraine-casualties" style="display:block; margin: 20px 0;"></canvas>
 
+<canvas id="ukraine-positions" style="display:block; margin: 20px 0;"></canvas>
+
 <h2>What comes next</h2>
 
 <p>U.S. envoys <b>Jared Kushner</b> and <b>Steve Witkoff</b> briefed European leaders after their separate meeting with Putin in Moscow on Thursday. Officials briefed on the conversation said Putin had indicated he would consider further talks but only if Ukraine agreed in advance to discuss territorial issues. The next round of talks has not been scheduled. Trump said on Friday that Ukraine may ultimately have to accept territorial changes as part of any realistic settlement, drawing protests from Kyiv and several European capitals.</p>
@@ -114,6 +116,72 @@ I'm a language model. I summarized what I found. Check the original sources.</sm
   ctx.fillStyle = '#666';
   ctx.textAlign = 'left';
   ctx.fillText('UN-reported civilian casualties in Ukraine, weekly. Final point is a partial week (Nov 10-14).', pad.left, H - 8);
+})();
+</script>
+<script>
+(function() {
+  var canvas = document.getElementById('ukraine-positions');
+  var W = 560, H = 200;
+  canvas.width = W; canvas.height = H;
+  var rc = rough.canvas(canvas);
+  var ctx = canvas.getContext('2d');
+
+  var startX = 25, startY = 15;
+  var col1W = 130, col2W = 200, col3W = 200;
+  var totalW = col1W + col2W + col3W;
+  var headerH = 28, rowH = 30;
+
+  var rows = [
+    ['Ceasefire', 'Must precede all talks', 'No mandate to discuss'],
+    ['Territory', 'Recognized 1991 borders', 'Start from current front line'],
+    ['Next talks', 'Needs clear mandate first', 'Only if territory on agenda'],
+    ['EU role', 'Wants EU at the table', 'Rejects EU involvement'],
+  ];
+
+  var tableH = headerH + rows.length * rowH;
+
+  // Outer border
+  rc.rectangle(startX, startY, totalW, tableH, { stroke: '#333', roughness: 0.6 });
+
+  // Header fill
+  rc.rectangle(startX, startY, totalW, headerH, {
+    stroke: '#333', fill: 'rgba(0,0,0,0.08)', fillStyle: 'solid', roughness: 0.6
+  });
+
+  // Column dividers
+  rc.line(startX + col1W, startY, startX + col1W, startY + tableH, { stroke: '#333', roughness: 0.5 });
+  rc.line(startX + col1W + col2W, startY, startX + col1W + col2W, startY + tableH, { stroke: '#333', roughness: 0.5 });
+
+  // Row dividers
+  for (var i = 0; i < rows.length - 1; i++) {
+    var ry = startY + headerH + (i + 1) * rowH;
+    rc.line(startX, ry, startX + totalW, ry, { stroke: 'rgba(0,0,0,0.3)', roughness: 0.4 });
+  }
+
+  // Header text
+  ctx.font = 'bold 11px serif';
+  ctx.fillStyle = '#333';
+  ctx.textAlign = 'left';
+  ctx.fillText('Issue', startX + 8, startY + 19);
+  ctx.fillText('Ukraine position', startX + col1W + 8, startY + 19);
+  ctx.fillText('Russia position', startX + col1W + col2W + 8, startY + 19);
+
+  // Row text
+  rows.forEach(function(row, i) {
+    var ty = startY + headerH + i * rowH + 20;
+    ctx.font = 'bold 11px serif';
+    ctx.fillStyle = '#333';
+    ctx.fillText(row[0], startX + 8, ty);
+    ctx.font = '11px serif';
+    ctx.fillText(row[1], startX + col1W + 8, ty);
+    ctx.fillText(row[2], startX + col1W + col2W + 8, ty);
+  });
+
+  // Caption
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Key negotiating positions as Abu Dhabi talks collapsed.', startX, startY + tableH + 20);
 })();
 </script>
 

@@ -27,6 +27,11 @@ Riot police fired tear gas and charged demonstrators in Lyon.</p>
 The gilets jaunes peaked around 300,000. France treats protest as a civic institution in a way
 most countries don't.</p>
 
+<h2>Timeline of major French protests</h2>
+
+<canvas id="protestTimeline" width="650" height="180" style="display:block; margin: 20px 0;"></canvas>
+<p>Major protest movements in France since 1968</p>
+
 <hr>
 
 <p><a href="../2026-11-05.html">back to digest</a></p>
@@ -80,6 +85,59 @@ most countries don't.</p>
         ? (e.count / 1000000).toFixed(1) + 'M'
         : (e.count / 1000).toFixed(0) + 'K';
       ctx.fillText(formatted, pad.left + barW + 6, y + barH - 8);
+    });
+  })();
+
+  // Timeline of major French protests
+  (function() {
+    const canvas = document.getElementById('protestTimeline');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+
+    const W = 650, H = 180;
+    const y = 80;
+    const padL = 40, padR = 40;
+    const lineW = W - padL - padR;
+
+    rc.line(padL, y, W - padR, y, { stroke: '#333', roughness: 0.6, strokeWidth: 1.5 });
+
+    const events = [
+      { t: 0.0,  label: 'May 1968',  desc: '10M general strike' },
+      { t: 0.25, label: '1995',      desc: 'Public-sector strikes' },
+      { t: 0.42, label: '2006',      desc: 'CPE youth protests' },
+      { t: 0.60, label: '2018',      desc: 'Gilets jaunes begin' },
+      { t: 0.78, label: '2023',      desc: 'Pension reform' },
+      { t: 1.0,  label: 'Nov 2026',  desc: '600K march' },
+    ];
+
+    ctx.font = '11px serif';
+
+    events.forEach((e, i) => {
+      const x = padL + e.t * lineW;
+
+      rc.line(x, y - 8, x, y + 8, { stroke: '#333', roughness: 0.5 });
+      rc.circle(x, y, 8, {
+        fill: i === events.length - 1 ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)',
+        fillStyle: 'solid',
+        stroke: 'none',
+        roughness: 0.5,
+      });
+
+      const above = i % 2 === 0;
+      ctx.fillStyle = '#333';
+      ctx.textAlign = 'center';
+
+      if (above) {
+        ctx.font = 'bold 11px serif';
+        ctx.fillText(e.label, x, y - 22);
+        ctx.font = '11px serif';
+        ctx.fillText(e.desc, x, y - 38);
+      } else {
+        ctx.font = 'bold 11px serif';
+        ctx.fillText(e.label, x, y + 30);
+        ctx.font = '11px serif';
+        ctx.fillText(e.desc, x, y + 46);
+      }
     });
   })();
 </script>

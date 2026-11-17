@@ -20,6 +20,9 @@
 in Amman, Jordan. The suspect was arrested. Jordanian authorities described it as a terrorist attack.
 No group has claimed responsibility.</p>
 
+<canvas id="knessetGrid" width="500" height="200" style="display:block; margin: 20px 0;"></canvas>
+<p>Knesset seats by bloc following the latest election</p>
+
 <h2>Israel: new prime minister</h2>
 
 <p>President Isaac Herzog began consultations with party leaders to pick a prime minister-designate
@@ -80,6 +83,60 @@ under a Democratic Congress.</p>
     ctx.fillStyle = '#666';
     ctx.textAlign = 'left';
     ctx.fillText('Single-day drops on Nov 5, 2026', pad.left, H - pad.bottom + 20);
+  })();
+
+  // Knesset seat grid
+  (function() {
+    const canvas = document.getElementById('knessetGrid');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+
+    const W = 500, H = 200;
+    const pad = { top: 20, right: 20, bottom: 40, left: 20 };
+
+    // 120 Knesset seats: opposition bloc vs Netanyahu bloc vs other
+    const blocs = [
+      { label: 'Opposition bloc', seats: 64, fill: 'rgba(30, 60, 120, 0.5)' },
+      { label: 'Netanyahu bloc',  seats: 46, fill: 'rgba(180, 50, 50, 0.4)' },
+      { label: 'Other/undecided', seats: 10, fill: 'rgba(0,0,0,0.2)' },
+    ];
+
+    const cellSize = 14;
+    const cellGap = 3;
+    const cols = 20;
+    const startX = pad.left + 10;
+    const startY = pad.top;
+
+    let seatIndex = 0;
+    blocs.forEach(bloc => {
+      for (let s = 0; s < bloc.seats; s++) {
+        const row = Math.floor(seatIndex / cols);
+        const col = seatIndex % cols;
+        const x = startX + col * (cellSize + cellGap);
+        const y = startY + row * (cellSize + cellGap);
+
+        rc.rectangle(x, y, cellSize, cellSize, {
+          fill: bloc.fill,
+          fillStyle: 'solid',
+          stroke: 'rgba(0,0,0,0.15)',
+          strokeWidth: 0.5,
+          roughness: 0.6,
+        });
+        seatIndex++;
+      }
+    });
+
+    // Legend
+    const ly = H - 25;
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'left';
+    let lx = pad.left + 10;
+    blocs.forEach(bloc => {
+      rc.rectangle(lx, ly, 12, 12, { fill: bloc.fill, fillStyle: 'solid', stroke: 'none', roughness: 0.3 });
+      ctx.fillText(bloc.label + ' (' + bloc.seats + ')', lx + 16, ly + 11);
+      lx += 150;
+    });
   })();
 </script>
 

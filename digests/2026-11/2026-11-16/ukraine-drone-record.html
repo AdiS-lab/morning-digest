@@ -119,6 +119,73 @@
 })();
 </script>
 
+<canvas id="c2" width="560" height="195" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function() {
+  var canvas = document.getElementById('c2');
+  var W = 560, H = 195;
+  canvas.width = W; canvas.height = H;
+  var rc = rough.canvas(canvas);
+  var ctx = canvas.getContext('2d');
+
+  var padL = 180, padR = 60, padT = 20, padB = 40;
+  var plotW = W - padL - padR;
+  var plotH = H - padT - padB;
+
+  var data = [
+    { label: 'Fuel/energy infrastructure', value: 38 },
+    { label: 'Military logistics depots', value: 28 },
+    { label: 'Ammunition storage', value: 20 },
+    { label: 'Radar/air defense sites', value: 14 }
+  ];
+
+  var maxVal = 40;
+  var rowH = Math.floor(plotH / data.length);
+  var barH = rowH - 8;
+
+  rc.line(padL, padT, padL, H - padB, { stroke: '#333', roughness: 0.5 });
+  rc.line(padL, H - padB, W - padR, H - padB, { stroke: '#333', roughness: 0.5 });
+
+  [0, 10, 20, 30, 40].forEach(function(v) {
+    var xPos = padL + (v / maxVal) * plotW;
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'center';
+    ctx.fillText(v + '%', xPos, H - padB + 16);
+    if (v > 0) {
+      rc.line(xPos, padT, xPos, H - padB, { stroke: 'rgba(0,0,0,0.06)', roughness: 0.3 });
+    }
+  });
+
+  data.forEach(function(d, i) {
+    var y = padT + i * rowH + 3;
+    var barWidth = (d.value / maxVal) * plotW;
+    var isFirst = i === 0;
+
+    rc.rectangle(padL, y, barWidth, barH, {
+      fill: isFirst ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.2)',
+      fillStyle: 'solid',
+      stroke: '#333',
+      roughness: 0.8
+    });
+
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'right';
+    ctx.fillText(d.label, padL - 8, y + barH / 2 + 4);
+
+    ctx.textAlign = 'left';
+    ctx.font = '12px serif';
+    ctx.fillText(d.value + '%', padL + barWidth + 5, y + barH / 2 + 4);
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Ukrainian drone targets by category (analyst estimates)', padL, H - 4);
+})();
+</script>
+
 <p>Related: <a href="../2026-11-15/donbas-nato.html">Nov 15: Zelensky says U.S. proposed Donbas-for-NATO deal</a></p>
 <p>Related: <a href="../2026-11-14/ukraine-stalled.html">Nov 14: Ukraine says Russia refused to discuss ceasefire</a></p>
 <p>Related: <a href="../2026-11-13/moscow-talks.html">Nov 13: Kushner and Witkoff meet Putin in Moscow</a></p>

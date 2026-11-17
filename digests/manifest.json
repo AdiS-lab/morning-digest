@@ -350,6 +350,38 @@
       ]
     },
     {
+      "date": "2026-11-17",
+      "file": "2026-11/2026-11-17.html",
+      "summary": "Russia strikes both Kyiv bridges with ballistic missiles. Ukraine hits the Kerch Bridge. U.S. intelligence warns Iran is planning a dirty bomb attack on Washington. Trump meets ASEAN leaders in Manila before the Shenzhen trilateral with Xi and Putin. Japan scrambles jets after Russian aircraft violate its airspace. U.K. sanctions eight Israeli settlement companies.",
+      "stories": [
+        {
+          "headline": "Russia hits both Kyiv bridges. Ukraine strikes the Kerch Bridge.",
+          "file": "2026-11/2026-11-17/kyiv-bridges.html",
+          "tags": ["russia", "ukraine", "war", "military", "infrastructure"]
+        },
+        {
+          "headline": "U.S. intelligence: Iran is planning a dirty bomb attack on Washington",
+          "file": "2026-11/2026-11-17/iran-dirty-bomb.html",
+          "tags": ["iran", "middle-east", "military", "us-politics", "terrorism", "security"]
+        },
+        {
+          "headline": "Trump in Manila for ASEAN. Shenzhen trilateral set for Thursday.",
+          "file": "2026-11/2026-11-17/trump-manila.html",
+          "tags": ["us-politics", "china", "russia", "diplomacy", "nuclear", "apec", "ukraine"]
+        },
+        {
+          "headline": "Japan scrambles jets after Russian aircraft violate its airspace",
+          "file": "2026-11/2026-11-17/japan-airspace.html",
+          "tags": ["japan", "russia", "military", "asia", "airspace"]
+        },
+        {
+          "headline": "U.K. sanctions eight Israeli companies over West Bank settlements",
+          "file": "2026-11/2026-11-17/uk-west-bank.html",
+          "tags": ["uk", "israel", "west-bank", "middle-east", "settlements", "diplomacy"]
+        }
+      ]
+    },
+    {
       "date": "2026-11-15",
       "file": "2026-11/2026-11-15.html",
       "summary": "Zelensky reveals U.S. raised Donbas-for-NATO idea. SpaceX catches Starship upper stage for the first time. Two more tankers hit mines in Hormuz. UPS and Copa planes collide at Miami airport. Iran rejects IAEA uranium enrichment halt.",

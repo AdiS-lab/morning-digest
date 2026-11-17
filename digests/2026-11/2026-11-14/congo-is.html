@@ -17,6 +17,8 @@
 
 <p>The ADF, which pledged allegiance to Islamic State in 2019, has carried out repeated attacks on civilian populations in North Kivu. Thursday's assault was among the deadliest single-night attacks the group has carried out this year. Congo's military said it had deployed additional units to the area but that the attackers had already withdrawn into the Virunga forest. No fighters were captured. The UN peacekeeping mission MONUSCO said it was providing logistical support to Congolese forces.</p>
 
+<canvas id="adf-timeline" style="display:block; margin: 20px 0;"></canvas>
+
 <h2>Ebola outbreak and aid disruption</h2>
 
 <p>The Beni territory is at the center of Congo's <b>Ebola outbreak</b>, confirmed last month as the second-largest on record. Health workers had already established a network of treatment centers and contact-tracing teams across the area. Aid organizations said Thursday's attack forced several field teams to suspend operations and that at least two treatment sites were evacuated. The World Health Organization said it was assessing the impact on the response and urged all parties to respect the safety of health workers.</p>
@@ -111,6 +113,54 @@ I'm a language model. I summarized what I found. Check the original sources.</sm
   ctx.fillStyle = '#666';
   ctx.textAlign = 'left';
   ctx.fillText('Confirmed cases in DRC Ebola outbreaks. The 2014-16 West Africa outbreak (28,616 cases) is not shown.', pad.left, H - 6);
+})();
+</script>
+<script>
+(function() {
+  var canvas = document.getElementById('adf-timeline');
+  var W = 600, H = 160;
+  canvas.width = W; canvas.height = H;
+  var rc = rough.canvas(canvas);
+  var ctx = canvas.getContext('2d');
+
+  // Timeline axis
+  rc.line(40, 78, 570, 78, { stroke: '#333', roughness: 0.5, strokeWidth: 1.5 });
+
+  var events = [
+    { x: 70,  time: '2014', label: 'ADF attacks begin in Beni', above: true },
+    { x: 195, time: '2019', label: 'ADF pledges allegiance to IS', above: false },
+    { x: 340, time: 'Oct 2026', label: 'Ebola outbreak confirmed', above: true },
+    { x: 500, time: 'Nov 14', label: 'ADF kills 44 in Beni territory', above: false },
+  ];
+
+  events.forEach(function(e) {
+    rc.line(e.x, 71, e.x, 85, { stroke: '#333', roughness: 0.5, strokeWidth: 1.5 });
+    var isLast = e.x === 500;
+    rc.circle(e.x, 78, isLast ? 10 : 7, {
+      stroke: '#333',
+      fill: isLast ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.2)',
+      fillStyle: 'solid', roughness: 0.5
+    });
+    ctx.textAlign = 'center';
+    if (e.above) {
+      ctx.font = 'bold 11px serif';
+      ctx.fillStyle = '#333';
+      ctx.fillText(e.time, e.x, 58);
+      ctx.font = '11px serif';
+      ctx.fillText(e.label, e.x, 44);
+    } else {
+      ctx.font = 'bold 11px serif';
+      ctx.fillStyle = '#333';
+      ctx.fillText(e.time, e.x, 100);
+      ctx.font = '11px serif';
+      ctx.fillText(e.label, e.x, 114);
+    }
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('ADF insurgency and Ebola outbreak timeline in North Kivu, DR Congo.', 40, H - 6);
 })();
 </script>
 

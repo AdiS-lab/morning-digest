@@ -78,6 +78,66 @@
 })();
 </script>
 
+<canvas id="c2" width="600" height="175" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function() {
+  var canvas = document.getElementById('c2');
+  var W = 600, H = 175;
+  canvas.width = W; canvas.height = H;
+  var rc = rough.canvas(canvas);
+  var ctx = canvas.getContext('2d');
+
+  var cols = [10, 110, 290, 490];
+  var headers = ['Date', 'Target', 'Detail'];
+  var rows = [
+    ['Nov 5', 'Strait of Hormuz', '2 tankers hit mines'],
+    ['Nov 7', 'Iran (U.S. response)', 'Limited U.S. strikes on Iran'],
+    ['Nov 12', 'Strait of Hormuz', '3 tankers catch fire'],
+    ['Nov 13', 'Bahrain (1st strike)', 'IRGC drones hit radar site'],
+    ['Nov 15', 'Strait of Hormuz', '2 more tankers mined'],
+    ['Nov 16', 'Riffa Air Base', 'IRGC drones hit base again']
+  ];
+
+  var rowH = 22;
+  var startY = 10;
+
+  ctx.font = 'bold 11px serif';
+  ctx.fillStyle = '#333';
+  headers.forEach(function(h, i) {
+    ctx.fillText(h, cols[i], startY + 12);
+  });
+  rc.line(10, startY + 18, W - 10, startY + 18, { stroke: '#333', roughness: 0.5 });
+
+  rows.forEach(function(row, ri) {
+    var y = startY + 20 + (ri + 1) * rowH;
+    var isLast = ri === rows.length - 1;
+
+    if (isLast) {
+      rc.rectangle(5, y - rowH + 8, W - 15, rowH - 2, {
+        fill: 'rgba(0,0,0,0.07)',
+        fillStyle: 'solid',
+        stroke: 'rgba(0,0,0,0.3)',
+        roughness: 0.5
+      });
+    }
+
+    ctx.font = isLast ? 'bold 11px serif' : '11px serif';
+    ctx.fillStyle = '#333';
+    row.forEach(function(cell, ci) {
+      ctx.fillText(cell, cols[ci], y);
+    });
+
+    if (ri < rows.length - 1) {
+      rc.line(10, y + 6, W - 10, y + 6, { stroke: 'rgba(0,0,0,0.1)', roughness: 0.4 });
+    }
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.fillText('Iran-related military incidents in the Gulf, November 2026', 10, H - 6);
+})();
+</script>
+
 <p>Related: <a href="../2026-11-13/iran-bahrain.html">Nov 13: Iran claims it destroyed a U.S. radar in Bahrain</a></p>
 <p>Related: <a href="../2026-11-12/hormuz-tankers.html">Nov 12: Three tankers on fire in the Strait of Hormuz</a></p>
 <p>Related: <a href="../2026-11-15/hormuz-mines.html">Nov 15: Two more tankers hit mines in Hormuz</a></p>

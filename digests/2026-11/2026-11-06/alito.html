@@ -28,6 +28,9 @@ Alito is staying.</p>
 
 <h2>Strategic retirements</h2>
 
+<canvas id="retirements" width="650" height="180" style="display:block; margin: 20px 0;"></canvas>
+<p>Recent Supreme Court departures and the politics behind them</p>
+
 <p>Justices time their retirements to let ideologically aligned presidents pick their replacements.
 Breyer retired under Biden. Kennedy retired under Trump. Ginsburg tried to wait for a Democratic
 president and died during Trump's term. Alito is not making Ginsburg's mistake.</p>
@@ -102,6 +105,62 @@ president and died during Trump's term. Alito is not making Ginsburg's mistake.<
     ctx.fillText('Conservative', pad.left + nameColW + 16, ly + 11);
     rc.rectangle(pad.left + nameColW + 120, ly, 12, 12, { fill: 'rgba(30, 60, 120, 0.5)', fillStyle: 'solid', stroke: 'none', roughness: 0.3 });
     ctx.fillText('Liberal', pad.left + nameColW + 136, ly + 11);
+  })();
+
+  // Strategic retirements timeline
+  (function() {
+    const canvas = document.getElementById('retirements');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+
+    const W = 650, H = 180;
+    const y = 80;
+    const padL = 40, padR = 40;
+    const lineW = W - padL - padR;
+
+    rc.line(padL, y, W - padR, y, { stroke: '#333', roughness: 0.6, strokeWidth: 1.5 });
+
+    const events = [
+      { t: 0.0,  label: '2010',     desc: 'Stevens retires (Obama)' },
+      { t: 0.22, label: '2018',     desc: 'Kennedy retires (Trump)' },
+      { t: 0.44, label: '2020',     desc: 'Ginsburg dies (Trump)' },
+      { t: 0.60, label: '2022',     desc: 'Breyer retires (Biden)' },
+      { t: 0.80, label: '2026',     desc: 'Dems take Senate' },
+      { t: 1.0,  label: 'Now',      desc: 'Alito stays put' },
+    ];
+
+    ctx.font = '11px serif';
+
+    events.forEach((e, i) => {
+      const x = padL + e.t * lineW;
+
+      rc.line(x, y - 8, x, y + 8, { stroke: '#333', roughness: 0.5 });
+
+      const isGinsburg = e.desc.includes('Ginsburg');
+      const isCurrent = e.label === 'Now';
+      rc.circle(x, y, 8, {
+        fill: isCurrent ? 'rgba(0,0,0,0.8)' : isGinsburg ? 'rgba(180,50,50,0.6)' : 'rgba(0,0,0,0.4)',
+        fillStyle: 'solid',
+        stroke: 'none',
+        roughness: 0.5,
+      });
+
+      const above = i % 2 === 0;
+      ctx.fillStyle = '#333';
+      ctx.textAlign = 'center';
+
+      if (above) {
+        ctx.font = 'bold 11px serif';
+        ctx.fillText(e.label, x, y - 22);
+        ctx.font = '11px serif';
+        ctx.fillText(e.desc, x, y - 38);
+      } else {
+        ctx.font = 'bold 11px serif';
+        ctx.fillText(e.label, x, y + 30);
+        ctx.font = '11px serif';
+        ctx.fillText(e.desc, x, y + 46);
+      }
+    });
   })();
 </script>
 

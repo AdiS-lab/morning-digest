@@ -103,6 +103,68 @@
 
 <p>The company's stock had already been under pressure from the broader market downturn triggered by the midterm election results and the Iran crisis. The spy scandal added a corporate governance dimension that rattled institutional investors. <strong>Nvidia supplies the majority of the world's AI training chips</strong>, and any disruption to its leadership or business would reverberate across the technology sector.</p>
 
+<canvas id="sector-bars" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function () {
+  var W = 560, H = 220;
+  var canvas = document.getElementById('sector-bars');
+  canvas.width = W;
+  canvas.height = H;
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+
+  var pad = { top: 24, right: 70, bottom: 40, left: 125 };
+  var plotW = W - pad.left - pad.right;
+  var barH = 22;
+  var gap = 12;
+  var maxVal = 3.5;
+
+  var data = [
+    { label: 'S&P 500',      value: 1.6,  color: 'rgba(0,0,0,0.5)' },
+    { label: 'Nasdaq',        value: 1.8,  color: 'rgba(0,0,0,0.5)' },
+    { label: 'AMD',           value: 2.1,  color: 'rgba(0,0,0,0.35)' },
+    { label: 'Broadcom',      value: 1.4,  color: 'rgba(0,0,0,0.35)' },
+    { label: 'Nvidia (NVDA)', value: -5.47, color: '#c33' },
+  ];
+
+  // Axes
+  var zeroX = pad.left + (0 - (-6)) / (maxVal - (-6)) * plotW;
+  rc.line(zeroX, pad.top - 5, zeroX, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+  data.forEach(function (d, i) {
+    var y = pad.top + i * (barH + gap);
+    var xStart, bw;
+    if (d.value >= 0) {
+      xStart = zeroX;
+      bw = d.value / (maxVal - (-6)) * plotW;
+    } else {
+      bw = Math.abs(d.value) / (maxVal - (-6)) * plotW;
+      xStart = zeroX - bw;
+    }
+    rc.rectangle(xStart, y, bw, barH, {
+      fill: d.color,
+      fillStyle: 'solid',
+      stroke: '#333',
+      roughness: 0.8
+    });
+    ctx.font = '11px serif'; ctx.fillStyle = '#333'; ctx.textAlign = 'right';
+    ctx.fillText(d.label, pad.left - 7, y + barH / 2 + 4);
+    ctx.font = '12px serif'; ctx.textAlign = 'left';
+    var sign = d.value >= 0 ? '+' : '';
+    if (d.value >= 0) {
+      ctx.fillText(sign + d.value.toFixed(1) + '%', xStart + bw + 5, y + barH / 2 + 4);
+    } else {
+      ctx.textAlign = 'right';
+      ctx.fillStyle = '#c33';
+      ctx.fillText(d.value.toFixed(2) + '%', xStart - 5, y + barH / 2 + 4);
+    }
+  });
+
+  ctx.font = '11px serif'; ctx.fillStyle = '#666'; ctx.textAlign = 'left';
+  ctx.fillText('Monday Nov 10 closing change: indices and selected chip stocks', pad.left, H - 8);
+}());
+</script>
+
 <h2>What happens next</h2>
 
 <p>Analysts are divided on whether Monday's market bounce is a durable recovery or a brief relief rally. <strong>The core inflation reading of 0.3 percent</strong> suggests the Fed will keep rates elevated into the first quarter of 2027, limiting the tailwind that falling rates would otherwise provide for high-multiple tech stocks. Options markets imply continued high volatility in both Nvidia and the broader Nasdaq through year-end.</p>

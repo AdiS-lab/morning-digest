@@ -89,6 +89,62 @@
 
 <p>Russia and Ukraine did confirm the prisoner-of-war exchange agreed to in Abu Dhabi. Zelensky called it the <b>largest swap since Russia's full-scale invasion</b> began. Kushner said he and Witkoff would work to finalize humanitarian relief alongside the exchange.</p>
 
+<canvas id="timeline2" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function () {
+  var W = 620, H = 200;
+  var canvas = document.getElementById('timeline2');
+  canvas.width = W;
+  canvas.height = H;
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+
+  var pad = { left: 30, right: 30, top: 30, bottom: 40 };
+  var lineY = 90;
+  var plotW = W - pad.left - pad.right;
+
+  var events = [
+    { label: 'Abu Dhabi\ntalks set', date: 'Nov 8', pos: 0 },
+    { label: 'Abu Dhabi\ntalks held', date: 'Nov 10-11', pos: 0.35 },
+    { label: 'POW swap\nagreed', date: 'Nov 12', pos: 0.6 },
+    { label: 'Kushner meets\nPutin', date: 'Nov 13', pos: 0.8 },
+    { label: 'Brief\nZelensky', date: 'Nov 13 eve', pos: 1 },
+  ];
+
+  rc.line(pad.left, lineY, W - pad.right, lineY, { stroke: '#333', roughness: 0.5, strokeWidth: 1.5 });
+
+  events.forEach(function (e, i) {
+    var x = pad.left + e.pos * plotW;
+    var above = i % 2 === 0;
+    var tickTop = above ? lineY - 15 : lineY;
+    var tickBot = above ? lineY : lineY + 15;
+    var isFocal = i === 3;
+
+    rc.line(x, tickTop, x, tickBot, { stroke: '#333', roughness: 0.5 });
+    rc.circle(x, lineY, isFocal ? 10 : 7, {
+      stroke: '#333',
+      fill: isFocal ? 'rgba(34,85,170,0.7)' : 'rgba(0,0,0,0.5)',
+      fillStyle: 'solid',
+      roughness: 0.7
+    });
+
+    ctx.font = 'bold 10px serif'; ctx.fillStyle = '#333'; ctx.textAlign = 'center';
+    var dateY = above ? lineY - 22 : lineY + 28;
+    ctx.fillText(e.date, x, dateY);
+
+    ctx.font = '10px serif'; ctx.fillStyle = '#555';
+    var lines = e.label.split('\n');
+    lines.forEach(function (line, li) {
+      var labelY = above ? lineY - 34 - (lines.length - 1 - li) * 13 : lineY + 42 + li * 13;
+      ctx.fillText(line, x, labelY);
+    });
+  });
+
+  ctx.font = '11px serif'; ctx.fillStyle = '#666'; ctx.textAlign = 'left';
+  ctx.fillText('Kushner-Witkoff shuttle diplomacy, November 2026', pad.left, H - 8);
+}());
+</script>
+
 <h2>Next steps</h2>
 
 <p>Witkoff and Kushner flew to Dublin after the Moscow meeting to brief Zelensky. The next round of talks has not been scheduled, but both the U.S. and EU expect European representatives to participate. Russia has not publicly confirmed it will accept the expanded format. Meanwhile, drone and missile attacks continued overnight, with Russia sending 317 drones at Ukraine. Ukraine has disrupted nine of Russia's 35 major refineries, about 30 percent of capacity.</p>

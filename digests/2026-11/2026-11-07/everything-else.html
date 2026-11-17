@@ -34,6 +34,8 @@ The problem is finding replacement hardware. Nobody makes floppy drives anymore.
 
 <canvas id="floppy" width="500" height="200" style="display:block; margin: 20px 0;"></canvas>
 
+<canvas id="dealsBars" width="550" height="220" style="display:block; margin: 20px 0;"></canvas>
+
 <h2>The rest</h2>
 
 <ul>
@@ -89,6 +91,54 @@ The problem is finding replacement hardware. Nobody makes floppy drives anymore.
         ctx.fillText(line, x, y + 28 + li * 13);
       });
     });
+  })();
+
+  (function() {
+    const canvas = document.getElementById('dealsBars');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+
+    const W = 550, H = 220;
+    const pad = { top: 20, right: 60, bottom: 35, left: 150 };
+    const plotW = W - pad.left - pad.right;
+
+    // Dollar amounts mentioned in today's stories (millions)
+    var data = [
+      { label: 'RealPage settlement',   val: 360 },
+      { label: '42AI funding round',    val: 62.5 },
+      { label: 'Google data center',    val: 17000 },
+    ];
+    var maxVal = 18000;
+    var barH = 30, gap = 16;
+
+    // Axis
+    rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+    rc.line(pad.left, H - pad.bottom, W - pad.right, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+    data.forEach(function(d, i) {
+      var y = pad.top + i * (barH + gap);
+      var bw = Math.max((d.val / maxVal) * plotW, 8);
+
+      rc.rectangle(pad.left, y, bw, barH, {
+        fill: 'rgba(0,0,0,0.5)', fillStyle: 'solid',
+        stroke: '#333', strokeWidth: 1, roughness: 0.8,
+      });
+
+      ctx.font = '11px serif';
+      ctx.fillStyle = '#333';
+      ctx.textAlign = 'right';
+      ctx.fillText(d.label, pad.left - 8, y + barH / 2 + 4);
+
+      ctx.textAlign = 'left';
+      ctx.font = '12px serif';
+      var label = d.val >= 1000 ? '$' + (d.val / 1000) + 'B' : '$' + d.val + 'M';
+      ctx.fillText(label, pad.left + bw + 6, y + barH / 2 + 4);
+    });
+
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#666';
+    ctx.textAlign = 'left';
+    ctx.fillText('Dollar figures from today\'s stories (not to the same scale of impact).', pad.left, H - pad.bottom + 22);
   })();
 </script>
 

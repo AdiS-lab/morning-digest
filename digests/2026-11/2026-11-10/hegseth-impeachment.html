@@ -76,6 +76,49 @@
 
 <p>The Trump administration launched strikes on Iranian military infrastructure in late October 2026, citing an imminent threat to American vessels transiting the Strait of Hormuz. After both the House and Senate passed concurrent resolutions ordering a halt, the White House argued those resolutions were non-binding policy expressions rather than enforceable law. Operations continued. That gap between what Congress ordered and what the executive did is the constitutional core of Massie's eight articles.</p>
 
+<canvas id="vote-math" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function () {
+  var W = 540, H = 185;
+  var canvas = document.getElementById('vote-math');
+  canvas.width = W;
+  canvas.height = H;
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+
+  var pad = { top: 28, right: 60, bottom: 42, left: 160 };
+  var plotW = W - pad.left - pad.right;
+  var barH = 26;
+  var gap = 18;
+  var maxVal = 270;
+
+  var data = [
+    { label: 'House majority needed', value: 218, fill: 'rgba(0,0,0,0.15)', note: '218' },
+    { label: 'Est. GOP support',      value: 12,  fill: 'rgba(0,0,0,0.5)',  note: '~12' },
+    { label: 'Est. Dem support',       value: 45,  fill: 'rgba(0,0,0,0.35)', note: '~45' },
+    { label: 'Senate 2/3 needed',      value: 67,  fill: 'rgba(0,0,0,0.15)', note: '67' },
+  ];
+
+  data.forEach(function (d, i) {
+    var bw = d.value / maxVal * plotW;
+    var y = pad.top + i * (barH + gap);
+    rc.rectangle(pad.left, y, bw, barH, {
+      fill: d.fill,
+      fillStyle: 'solid',
+      stroke: '#333',
+      roughness: 0.8
+    });
+    ctx.font = '11px serif'; ctx.fillStyle = '#333'; ctx.textAlign = 'right';
+    ctx.fillText(d.label, pad.left - 7, y + barH / 2 + 4);
+    ctx.font = '12px serif'; ctx.textAlign = 'left';
+    ctx.fillText(d.note, pad.left + bw + 7, y + barH / 2 + 4);
+  });
+
+  ctx.font = '11px serif'; ctx.fillStyle = '#666'; ctx.textAlign = 'left';
+  ctx.fillText('Impeachment vote math: estimated support vs. thresholds', pad.left, H - 8);
+}());
+</script>
+
 <h2>What happens next</h2>
 
 <p>The articles face an almost certain procedural block in the House. Speaker-designate Jim Jordan and the House Freedom Caucus have <strong>not endorsed the effort</strong> and are unlikely to schedule a floor vote. Under House rules, Massie can force a privileged resolution to the floor, but leadership can table it with a simple majority. The math is unfavorable: most Republicans oppose removing Hegseth, and Democrats who might support impeachment on principle have largely declined to co-sponsor articles authored by a Republican member.</p>

@@ -77,6 +77,56 @@
 }());
 </script>
 
+<canvas id="timeline-hormuz" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function () {
+  var W = 640, H = 170;
+  var canvas = document.getElementById('timeline-hormuz');
+  canvas.width = W;
+  canvas.height = H;
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+
+  var y = 75;
+  rc.line(30, y, W - 20, y, { stroke: '#333', roughness: 0.5 });
+
+  var events = [
+    { x: 70,  a: ['Tankers hit mines', 'in strait'],       b: 'Nov 5',  above: true  },
+    { x: 195, a: ['U.S. carries out',  'minor strikes'],   b: 'Nov 7',  above: false },
+    { x: 320, a: ['Qatar plan has',    'no takers'],        b: 'Nov 8',  above: true  },
+    { x: 445, a: ['Pentagon evacuates', 'U.K. base'],       b: 'Nov 10', above: false },
+    { x: 570, a: ['Three tankers',     'catch fire'],       b: 'Nov 12', above: true  }
+  ];
+
+  events.forEach(function (e, idx) {
+    var isFocal = idx === events.length - 1;
+    rc.circle(e.x, y, 10, {
+      stroke: '#333',
+      fill: isFocal ? 'rgba(0,0,0,0.65)' : 'rgba(0,0,0,0.12)',
+      fillStyle: 'solid',
+      roughness: 0.8
+    });
+    ctx.textAlign = 'center';
+    if (e.above) {
+      ctx.font = isFocal ? 'bold 11px serif' : '11px serif'; ctx.fillStyle = '#333';
+      ctx.fillText(e.a[0], e.x, y - 34);
+      ctx.fillText(e.a[1], e.x, y - 21);
+      ctx.font = '10px serif'; ctx.fillStyle = '#888';
+      ctx.fillText(e.b, e.x, y - 9);
+    } else {
+      ctx.font = '10px serif'; ctx.fillStyle = '#888';
+      ctx.fillText(e.b, e.x, y + 15);
+      ctx.font = '11px serif'; ctx.fillStyle = '#333';
+      ctx.fillText(e.a[0], e.x, y + 28);
+      ctx.fillText(e.a[1], e.x, y + 41);
+    }
+  });
+
+  ctx.font = '11px serif'; ctx.fillStyle = '#666'; ctx.textAlign = 'left';
+  ctx.fillText('Strait of Hormuz crisis escalation, November 2026', 30, H - 8);
+}());
+</script>
+
 <h2>The Bessent development</h2>
 
 <p>Treasury Secretary Scott Bessent moved his family to a military installation Wednesday. A senior administration official said threats against Bessent had reached an <b>advanced and credible stage</b>, without elaborating on the source. The move follows a pattern: at least three other senior cabinet officials have relocated their families or increased personal security detail since the Iran standoff began. The White House said the relocation was a precautionary measure and that Bessent is continuing to perform his duties normally.</p>

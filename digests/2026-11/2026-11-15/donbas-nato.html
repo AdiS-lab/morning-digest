@@ -64,6 +64,73 @@
 })();
 </script>
 
+<canvas id="chart2" width="580" height="200" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function() {
+  var canvas = document.getElementById('chart2');
+  var W = 580, H = 200;
+  canvas.width = W; canvas.height = H;
+  var rc = rough.canvas(canvas);
+  var ctx = canvas.getContext('2d');
+
+  var padL = 180, padR = 50, padT = 20, padB = 40;
+  var plotW = W - padL - padR;
+  var plotH = H - padT - padB;
+
+  var data = [
+    { label: 'Donetsk oblast', value: 57, note: '57% Russian-held' },
+    { label: 'Luhansk oblast', value: 95, note: '95% Russian-held' },
+    { label: 'Zaporizhzhia oblast', value: 72, note: '72% Russian-held' },
+    { label: 'Kherson oblast', value: 68, note: '68% Russian-held' }
+  ];
+
+  var maxVal = 100;
+  var rowH = Math.floor(plotH / data.length);
+  var barH = rowH - 10;
+
+  rc.line(padL, padT, padL, H - padB, { stroke: '#333', roughness: 0.5 });
+  rc.line(padL, H - padB, W - padR, H - padB, { stroke: '#333', roughness: 0.5 });
+
+  [0, 25, 50, 75, 100].forEach(function(v) {
+    var xPos = padL + (v / maxVal) * plotW;
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'center';
+    ctx.fillText(v + '%', xPos, H - padB + 16);
+    if (v > 0) {
+      rc.line(xPos, padT, xPos, H - padB, { stroke: 'rgba(0,0,0,0.06)', roughness: 0.3 });
+    }
+  });
+
+  data.forEach(function(d, i) {
+    var y = padT + i * rowH + 4;
+    var barWidth = (d.value / maxVal) * plotW;
+    var isDonbas = i < 2;
+
+    rc.rectangle(padL, y, barWidth, barH, {
+      fill: isDonbas ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.2)',
+      fillStyle: 'solid',
+      stroke: '#333',
+      roughness: 0.9
+    });
+
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'right';
+    ctx.fillText(d.label, padL - 8, y + barH / 2 + 4);
+
+    ctx.textAlign = 'left';
+    ctx.font = '12px serif';
+    ctx.fillText(d.note, padL + barWidth + 6, y + barH / 2 + 4);
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Estimated Russian control of annexed oblasts (Donbas highlighted)', padL, H - 4);
+})();
+</script>
+
 <h2>Background</h2>
 
 <p>The Donbas, comprising Donetsk and Luhansk oblasts, has been partially occupied by Russian-backed forces since 2014. Russia formally annexed both oblasts in September 2022 along with Zaporizhzhia and Kherson, though it does not control all of their territory. Ukraine has never recognized any annexation and its constitution prohibits the government from conceding territory without a national referendum.</p>

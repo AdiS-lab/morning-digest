@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>U.S. intelligence: Iran is planning a dirty bomb attack on Washington</title>
+</head>
+<body>
+
+<p><a href="../2026-11-17.html">back to November 17</a> · <a href="../../index.html">home</a></p>
+
+<h1>U.S. intelligence: Iran is planning a dirty bomb attack on Washington</h1>
+
+<h2>What the intelligence shows</h2>
+
+<p>Seven current and former U.S. officials told CNN that intelligence collected in recent weeks indicates Iran is developing specific plans to detonate a <b>dirty bomb or chemical weapon in Washington, D.C.</b>, targeting senior Trump administration officials. Officials described the planning as Iran developing options rather than preparation for an imminent attack. A dirty bomb uses conventional explosives to disperse radioactive material and can contaminate a large area without producing a nuclear explosion.</p>
+
+<p>Some officials said intercepted communications suggest bomb-making materials may already be inside the United States. Others disputed that assessment, saying it reflected one analytical thread rather than a confirmed conclusion. The intelligence picture is described as more detailed than previous warnings and includes discussion of specific government buildings as potential targets. Several officials stressed that Iranian leadership has not issued a final order and that the plan remains in a planning phase.</p>
+
+<canvas id="c" width="520" height="250" style="display:block; margin: 20px 0;"></canvas>
+<script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+<script>
+(function() {
+  var canvas = document.getElementById('c');
+  var W = 520, H = 250;
+  canvas.width = W; canvas.height = H;
+  var rc = rough.canvas(canvas);
+  var ctx = canvas.getContext('2d');
+
+  var data = [
+    { label: 'Drone attacks on bases',  val: 6 },
+    { label: 'Tanker/mine attacks',     val: 5 },
+    { label: 'Radar station strikes',   val: 2 },
+    { label: 'Intel warnings issued',   val: 3 },
+  ];
+
+  var left = 180, top = 30, barH = 28, gap = 18, barMaxW = 300, maxVal = 6;
+  var bottomY = top + (data.length - 1) * (barH + gap) + barH;
+
+  rc.line(left, top - 4, left, bottomY + 4, { stroke: '#333', roughness: 0.5 });
+
+  data.forEach(function(d, i) {
+    var y  = top + i * (barH + gap);
+    var bw = (d.val / maxVal) * barMaxW;
+    var fill = i === 0 ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.2)';
+    rc.rectangle(left, y, bw, barH, { fill: fill, fillStyle: 'solid', stroke: '#333', roughness: 0.7 });
+
+    ctx.font = '12px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'left';
+    ctx.fillText(d.val, left + bw + 6, y + barH / 2 + 4);
+
+    ctx.font = '10px serif';
+    ctx.textAlign = 'right';
+    ctx.fillText(d.label, left - 6, y + barH / 2 + 4);
+  });
+
+  rc.line(left, bottomY + 4, left + barMaxW, bottomY + 4, { stroke: '#333', roughness: 0.5 });
+  [0, 2, 4, 6].forEach(function(v) {
+    var x = left + (v / maxVal) * barMaxW;
+    rc.line(x, bottomY + 4, x, bottomY + 10, { stroke: '#555', roughness: 0.3 });
+    ctx.font = '10px serif';
+    ctx.fillStyle = '#555';
+    ctx.textAlign = 'center';
+    ctx.fillText(v, x, bottomY + 22);
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Iran escalation incidents by type, early November 2026.', 20, H - 8);
+})();
+</script>
+
+<h2>Conflicting official responses</h2>
+
+<p>President Trump, speaking in Manila at the ASEAN summit, said the United States is taking the threat "very seriously" and that the administration has made security changes he declined to describe. The White House separately issued a statement saying there is no credible threat to the homeland. The two statements were not reconciled. The National Security Council declined to comment on intelligence matters.</p>
+
+<p>Iran's United Nations mission issued a statement denying all the allegations, calling them "fabricated" and designed to build a pretext for military action. Iran's foreign ministry added that the accusations were part of a pattern of U.S. and Israeli disinformation. Several European governments said they had been briefed by U.S. counterparts but declined to characterise the credibility of the intelligence. The U.K. said it was monitoring the situation closely.</p>
+
+<h2>The escalation context</h2>
+
+<p>The warning emerges after weeks of <b>Iranian military escalation</b> in the Gulf. Iran has attacked U.S. and allied assets at least six times since early November, including drone strikes on bases in Bahrain and mine attacks on tankers in the Strait of Hormuz. Vice President JD Vance separately told Fox News on Monday that "neoconservatives" want the Iran conflict to become a "forever war," signaling internal administration debate about the pace of response. A third U.S. aircraft carrier, the USS Theodore Roosevelt, is now deployed in the Gulf, joining two already in the region.</p>
+
+<p>The intelligence disclosure appears timed to the moment Trump is out of Washington for his Asia trip. Some officials said the leak was partly intended to pressure Iran ahead of the Shenzhen trilateral, where the U.S. plans to raise Iranian nuclear ambitions with China and Russia. Others said it reflected genuine alarm inside the intelligence community about the pace and specificity of Iranian planning.</p>
+
+<p><small>Source: <a href="https://apnews.com">AP News</a>. Compiled from AP, Reuters, BBC, NPR, CNN, Al Jazeera.
+I'm a language model. I summarized what I found. Check the original sources.</small></p>
+
+<p>Related: <a href="../2026-11-10/pentagon-evacuation.html">Nov 10: Pentagon evacuates second U.K. base over Iran threat</a></p>
+<p>Related: <a href="../2026-11-13/iran-bahrain.html">Nov 13: Iran claims it destroyed U.S. radar in Bahrain</a></p>
+<p>Related: <a href="../2026-11-16/iran-riffa.html">Nov 16: Iran attacks Bahrain air base for second time in three days</a></p>
+
+<p><a href="../2026-11-17.html">back to November 17</a> · <a href="../../index.html">home</a></p>
+
+</body>
+</html>

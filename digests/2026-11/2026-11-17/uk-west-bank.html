@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>U.K. sanctions eight Israeli companies over West Bank settlements</title>
+</head>
+<body>
+
+<p><a href="../2026-11-17.html">back to November 17</a> · <a href="../../index.html">home</a></p>
+
+<h1>U.K. sanctions eight Israeli companies over West Bank settlements</h1>
+
+<h2>The sanctions announcement</h2>
+
+<p>The U.K. government announced sanctions on <b>eight Israeli construction companies</b> involved in building settlements in the occupied West Bank. The measures freeze U.K.-held assets and ban the companies from doing business with British entities. Foreign Secretary Ed Miliband said the action was taken ahead of the final deadline on a major settlement tender, the E1 construction project near Ma'ale Adumim, one of the largest Israeli settlement blocs in the West Bank. Miliband said the government had been monitoring the tender process for weeks and acted once it became clear construction authorisation was imminent.</p>
+
+<p>The U.K. also sanctioned one Israeli settler activist organisation that British officials said had been systematically blocking aid deliveries into Gaza. That organisation operates checkpoints and staging areas on roads used by humanitarian convoys, according to the Foreign Office briefing. The sanctions were coordinated with Canada and Australia, which announced parallel measures against three of the same construction companies. The European Union said it was considering its own response but had not reached a consensus among member states.</p>
+
+<canvas id="c" width="560" height="280" style="display:block; margin: 20px 0;"></canvas>
+<script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+<script>
+(function() {
+  var canvas = document.getElementById('c');
+  var W = 560, H = 280;
+  canvas.width = W; canvas.height = H;
+  var rc = rough.canvas(canvas);
+  var ctx = canvas.getContext('2d');
+
+  var pad = { top: 20, right: 20, bottom: 50, left: 70 };
+  var plotW = W - pad.left - pad.right;
+  var plotH = H - pad.top - pad.bottom;
+  var xLeft   = pad.left;
+  var yBottom = H - pad.bottom;
+  var maxY = 800;
+
+  var data = [
+    { year: 2000, val: 196 },
+    { year: 2005, val: 258 },
+    { year: 2010, val: 310 },
+    { year: 2015, val: 385 },
+    { year: 2020, val: 465 },
+    { year: 2025, val: 700 },
+    { year: 2026, val: 720 },
+  ];
+
+  var xScale = plotW / 26;
+  var yScale = plotH / maxY;
+
+  function xp(yr) { return xLeft + (yr - 2000) * xScale; }
+  function yp(v)  { return yBottom - v * yScale; }
+
+  rc.line(xLeft, pad.top, xLeft, yBottom, { stroke: '#333', roughness: 0.5 });
+  rc.line(xLeft, yBottom, W - pad.right, yBottom, { stroke: '#333', roughness: 0.5 });
+
+  [0, 200, 400, 600, 800].forEach(function(v) {
+    var y = yp(v);
+    if (v > 0) rc.line(xLeft, y, W - pad.right, y, { stroke: 'rgba(0,0,0,0.06)', roughness: 0.3 });
+    ctx.font = '10px serif';
+    ctx.fillStyle = '#555';
+    ctx.textAlign = 'right';
+    ctx.fillText(v + 'k', xLeft - 5, y + 4);
+  });
+
+  [2000, 2010, 2020, 2026].forEach(function(yr) {
+    ctx.font = '10px serif';
+    ctx.fillStyle = '#555';
+    ctx.textAlign = 'center';
+    ctx.fillText(yr, xp(yr), yBottom + 15);
+  });
+
+  for (var i = 0; i < data.length - 1; i++) {
+    rc.line(xp(data[i].year), yp(data[i].val),
+            xp(data[i + 1].year), yp(data[i + 1].val),
+            { stroke: 'rgba(0,0,0,0.6)', roughness: 0.8 });
+  }
+
+  data.forEach(function(d) {
+    rc.circle(xp(d.year), yp(d.val), 6,
+      { fill: 'rgba(0,0,0,0.5)', fillStyle: 'solid', stroke: '#333', roughness: 0.5 });
+  });
+
+  ctx.font = '10px serif';
+  ctx.fillStyle = '#333';
+  ctx.textAlign = 'left';
+  ctx.fillText('~720k', xp(2026) + 6, yp(720) - 6);
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('West Bank settler population, 2000-2026. Estimated figures.', xLeft, H - 8);
+})();
+</script>
+
+<h2>The E1 project and what it would mean</h2>
+
+<p>The E1 project, formally called the Eastern 1 corridor, would connect the Ma'ale Adumim settlement to Jerusalem through a strip of construction that would divide the northern West Bank from the southern West Bank. Palestinian negotiators and international legal experts have long argued that completing E1 would make a territorially contiguous Palestinian state geographically impossible. Israel has held the E1 tender for decades under periodic U.S. and European pressure to leave it unfiled.</p>
+
+<p>Miliband described the E1 deadline as the trigger for Tuesday's action, saying the U.K. government could not stand by while a decision was made that would "lock in" the destruction of the two-state solution. He said protecting the possibility of a Palestinian state remains the government's "North Star" and that the sanctions were "not symbolic." The Israeli government responded by summoning the British ambassador and describing the sanctions as an interference in Israeli planning law and an act of hostility.</p>
+
+<h2>Broader international context</h2>
+
+<p>Germany separately called on Israel on Tuesday to allow more humanitarian aid into Gaza before the winter months, citing WHO warnings that hospital capacity in northern Gaza is below 20 percent. Germany stopped short of sanctions but said it was reviewing arms export licences. The European Court of Human Rights agreed this week to hear a case brought by Palestinian residents of the West Bank challenging settlement construction under the European Convention on Human Rights, the first such case accepted by the court.</p>
+
+<p>The U.K.'s action marks a sharper tone than the previous Conservative government, which had avoided sanctions on Israeli entities throughout the Gaza conflict. <b>Settler population in the West Bank has grown</b> from under 200,000 in 2000 to an estimated 720,000 today, excluding East Jerusalem. The pace of growth has accelerated since 2020. Critics of the U.K. action said it was largely symbolic given the scale of construction already completed. Supporters said it set a precedent for holding construction companies directly accountable.</p>
+
+<p><small>Source: <a href="https://apnews.com">AP News</a>. Compiled from AP, Reuters, BBC, NPR, Al Jazeera.
+I'm a language model. I summarized what I found. Check the original sources.</small></p>
+
+<p>Related: <a href="../2026-11-06/israel-aid.html">Nov 6: Trump cuts $4 billion in Israel aid</a></p>
+
+<p><a href="../2026-11-17.html">back to November 17</a> · <a href="../../index.html">home</a></p>
+
+</body>
+</html>

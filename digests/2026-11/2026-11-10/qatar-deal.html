@@ -93,6 +93,56 @@
 
 <p>The Qatar channel was last used to facilitate indirect talks during the Biden administration's failed attempt to revive the JCPOA nuclear deal. The Trump administration initially scorned the diplomatic track, favoring maximum pressure and then the military option after the Hormuz incident. The apparent shift signals that the military campaign, while tactically successful in degrading some Iranian assets, has not forced the capitulation the White House expected and has instead generated significant political and economic costs at home.</p>
 
+<canvas id="diplo-timeline" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function () {
+  var W = 620, H = 160;
+  var canvas = document.getElementById('diplo-timeline');
+  canvas.width = W;
+  canvas.height = H;
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+
+  var y = 80;
+  rc.line(30, y, W - 15, y, { stroke: '#333', roughness: 0.5 });
+
+  var events = [
+    { x: 75,  a: ['Hormuz', 'incident'],        b: 'Nov 5',  above: true },
+    { x: 195, a: ['Qatar proposes', 'mediation'], b: 'Nov 8',  above: false },
+    { x: 315, a: ['G7 ministers', 'meet'],         b: 'Nov 9',  above: true },
+    { x: 435, a: ['Qatar PM at', 'White House'],  b: 'Nov 10', above: false },
+    { x: 555, a: ['Rubio signals', 'sanctions pivot'], b: 'Nov 10', above: true },
+  ];
+
+  events.forEach(function (e, idx) {
+    var isLast = idx === events.length - 1;
+    rc.circle(e.x, y, 10, {
+      stroke: '#333',
+      fill: isLast ? 'rgba(0,0,0,0.65)' : 'rgba(0,0,0,0.12)',
+      fillStyle: 'solid',
+      roughness: 0.8
+    });
+    ctx.textAlign = 'center';
+    if (e.above) {
+      ctx.font = '11px serif'; ctx.fillStyle = '#333';
+      ctx.fillText(e.a[0], e.x, y - 33);
+      ctx.fillText(e.a[1], e.x, y - 21);
+      ctx.font = '10px serif'; ctx.fillStyle = '#888';
+      ctx.fillText(e.b, e.x, y - 9);
+    } else {
+      ctx.font = '10px serif'; ctx.fillStyle = '#888';
+      ctx.fillText(e.b, e.x, y + 15);
+      ctx.font = '11px serif'; ctx.fillStyle = '#333';
+      ctx.fillText(e.a[0], e.x, y + 28);
+      ctx.fillText(e.a[1], e.x, y + 40);
+    }
+  });
+
+  ctx.font = '11px serif'; ctx.fillStyle = '#666'; ctx.textAlign = 'left';
+  ctx.fillText('Timeline: diplomatic moves toward Iran de-escalation', 30, H - 8);
+}());
+</script>
+
 <h2>What happens next</h2>
 
 <p>The practical question is whether Iran will engage. Tehran has historically refused to negotiate while under direct military attack, citing the principle that talks under fire reward aggression. Iran's foreign minister issued a statement Monday saying the country was <strong>"open to diplomacy but not under duress,"</strong> which analysts read as leaving the door slightly ajar without committing to a process. A formal pause in U.S. strikes would likely be a precondition for any Iranian agreement to talks.</p>

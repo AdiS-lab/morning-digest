@@ -31,6 +31,11 @@
 <li>No confirmation from the Kremlin either</li>
 </ul>
 
+<h2>Key unknowns at a glance</h2>
+
+<canvas id="unknowns" width="600" height="260" style="display:block; margin: 20px 0;"></canvas>
+<p>Confirmed vs. unconfirmed claims about the deal</p>
+
 <h2>What's not been said</h2>
 
 <p>What Ukraine gives up. Whether Crimea is on the table. Whether NATO membership is off the table.
@@ -96,6 +101,55 @@ The gap between what's claimed and what's confirmed is large.</p>
         ctx.font = '11px serif';
         ctx.fillText(e.desc, x, y + 46);
       }
+    });
+  })();
+
+  // Table: confirmed vs unconfirmed
+  (function() {
+    const canvas = document.getElementById('unknowns');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+
+    const W = 600, H = 260;
+    const pad = { top: 30, right: 20, bottom: 20, left: 20 };
+
+    const rows = [
+      { claim: 'Trump met Putin envoy',          status: 'Trump only' },
+      { claim: 'Deal covers "all of Europe"',     status: 'Trump only' },
+      { claim: 'Ukraine consulted',               status: 'No confirmation' },
+      { claim: 'Kremlin confirms talks',           status: 'No confirmation' },
+      { claim: 'Territorial terms discussed',      status: 'No details' },
+      { claim: 'NATO membership addressed',        status: 'No details' },
+      { claim: 'Crimea status resolved',           status: 'No details' },
+    ];
+
+    const rowH = 28;
+    const startY = pad.top;
+    const col1X = pad.left + 10;
+    const col2X = 340;
+
+    // Headers
+    ctx.font = 'bold 11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'left';
+    ctx.fillText('Claim', col1X, startY);
+    ctx.fillText('Status', col2X, startY);
+
+    rc.line(pad.left, startY + 8, W - pad.right, startY + 8, { stroke: '#333', roughness: 0.5 });
+
+    ctx.font = '11px serif';
+    rows.forEach((r, i) => {
+      const y = startY + (i + 1) * rowH + 5;
+
+      if (i % 2 === 0) {
+        rc.rectangle(pad.left, y - 14, W - pad.left - pad.right, rowH, {
+          fill: 'rgba(0,0,0,0.04)', fillStyle: 'solid', stroke: 'none', roughness: 0.3,
+        });
+      }
+
+      ctx.fillStyle = '#333';
+      ctx.fillText(r.claim, col1X, y);
+      ctx.fillText(r.status, col2X, y);
     });
   })();
 </script>

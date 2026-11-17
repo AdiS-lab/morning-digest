@@ -86,6 +86,60 @@
 
 <p>Van Hollen has served in the Senate since 2017 and spent 14 years in the House before that. He is a progressive who has previously said he is considering running for president in 2028. Schumer has led the Senate Democratic caucus since 2017 and has not faced a serious leadership challenge during that time.</p>
 
+<canvas id="seatgrid" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function () {
+  var W = 520, H = 180;
+  var canvas = document.getElementById('seatgrid');
+  canvas.width = W;
+  canvas.height = H;
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+
+  var pad = { top: 30, left: 20, right: 20, bottom: 40 };
+  var cols = 20, cellSize = 18, gap = 4;
+
+  // 55 Dem, 45 Rep = 100 total
+  var demSeats = 55;
+  var repSeats = 45;
+  var majority = 51;
+
+  ctx.font = 'bold 11px serif'; ctx.fillStyle = '#333'; ctx.textAlign = 'left';
+  ctx.fillText('Democrats: 55', pad.left, pad.top - 10);
+  ctx.textAlign = 'right';
+  ctx.fillText('Republicans: 45', W - pad.right, pad.top - 10);
+
+  for (var i = 0; i < 100; i++) {
+    var col = i % cols;
+    var row = Math.floor(i / cols);
+    var x = pad.left + col * (cellSize + gap);
+    var y = pad.top + row * (cellSize + gap);
+    var isDem = i < demSeats;
+    var isMajorityLine = i === majority - 1;
+
+    rc.rectangle(x, y, cellSize, cellSize, {
+      fill: isDem ? 'rgba(34,85,170,0.5)' : 'rgba(200,50,50,0.35)',
+      fillStyle: 'solid',
+      stroke: isDem ? 'rgba(34,85,170,0.7)' : 'rgba(200,50,50,0.5)',
+      roughness: 0.6
+    });
+  }
+
+  // Majority threshold marker
+  var majCol = (majority - 1) % cols;
+  var majRow = Math.floor((majority - 1) / cols);
+  var markerX = pad.left + (majCol + 1) * (cellSize + gap) - gap / 2;
+  var markerTop = pad.top - 2;
+  var markerBot = pad.top + 5 * (cellSize + gap) - gap + 2;
+  rc.line(markerX, markerTop, markerX, markerBot, { stroke: '#333', roughness: 0.4, strokeWidth: 1.5 });
+  ctx.font = '10px serif'; ctx.fillStyle = '#555'; ctx.textAlign = 'center';
+  ctx.fillText('51 (majority)', markerX, markerBot + 14);
+
+  ctx.font = '11px serif'; ctx.fillStyle = '#666'; ctx.textAlign = 'left';
+  ctx.fillText('119th Senate seats: blue = Democratic, red = Republican', pad.left, H - 5);
+}());
+</script>
+
 <h2>What it means</h2>
 
 <p>The challenge reflects frustration among progressive Democrats who believe the party's midterm sweep demands bolder leadership. Democrats now hold at least 55 Senate seats after Scott Colom's win in Mississippi. The leadership vote is by secret ballot, which means public endorsements may not match the final count. Schumer allies say he has privately locked down enough commitments to win.</p>

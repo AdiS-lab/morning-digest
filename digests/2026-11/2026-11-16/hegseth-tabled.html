@@ -93,6 +93,60 @@
 })();
 </script>
 
+<canvas id="c2" width="600" height="200" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function() {
+  var canvas = document.getElementById('c2');
+  var W = 600, H = 200;
+  canvas.width = W; canvas.height = H;
+  var rc = rough.canvas(canvas);
+  var ctx = canvas.getContext('2d');
+
+  var events = [
+    { label: 'Articles introduced', sub: 'Nov 6', hi: false },
+    { label: 'Hegseth defends', sub: 'Nov 10', hi: false },
+    { label: 'Committee hearing', sub: 'Nov 11', hi: false },
+    { label: 'Massie files tabling motion', sub: 'Nov 15', hi: false },
+    { label: 'House tables 211-204', sub: 'Nov 16', hi: true }
+  ];
+
+  var padL = 60, padR = 60;
+  var ty = 80;
+  var totalW = W - padL - padR;
+  var n = events.length;
+
+  rc.line(padL, ty, W - padR, ty, { stroke: '#333', roughness: 0.5 });
+
+  events.forEach(function(e, i) {
+    var x = padL + (i / (n - 1)) * totalW;
+    var diam = e.hi ? 18 : 12;
+    var fillC = e.hi ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.15)';
+    rc.circle(x, ty, diam, { fill: fillC, fillStyle: 'solid', roughness: 0.6, stroke: '#333' });
+
+    ctx.textAlign = 'center';
+    var above = i % 2 === 0;
+    if (above) {
+      ctx.font = 'bold 11px serif';
+      ctx.fillStyle = '#333';
+      ctx.fillText(e.sub, x, ty - 24);
+      ctx.font = '11px serif';
+      ctx.fillText(e.label, x, ty - 12);
+    } else {
+      ctx.font = e.hi ? 'bold 11px serif' : '11px serif';
+      ctx.fillStyle = e.hi ? '#111' : '#333';
+      ctx.fillText(e.sub, x, ty + 18);
+      ctx.font = '11px serif';
+      ctx.fillText(e.label, x, ty + 30);
+    }
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Hegseth impeachment timeline, Nov 6-16, 2026', padL, H - 8);
+})();
+</script>
+
 <p>Senator Thom Tillis of North Carolina said Sunday he would likely vote to remove Hegseth if the matter had reached the Senate. No other Senate Republican made a similar statement. Senate Majority Leader Mitch McConnell declined to comment.</p>
 
 <p>Related: <a href="../2026-11-11/hegseth-defends.html">Nov 11: Hegseth lashes out at "political show" over impeachment</a></p>

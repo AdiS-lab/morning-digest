@@ -76,6 +76,60 @@
 })();
 </script>
 
+<canvas id="c2" width="600" height="200" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function() {
+  var canvas = document.getElementById('c2');
+  var W = 600, H = 200;
+  canvas.width = W; canvas.height = H;
+  var rc = rough.canvas(canvas);
+  var ctx = canvas.getContext('2d');
+
+  var events = [
+    { label: 'Depart Washington', sub: 'Nov 16', hi: false },
+    { label: 'ASEAN Manila (Day 1)', sub: 'Nov 17', hi: false },
+    { label: 'ASEAN Manila (Day 2)', sub: 'Nov 18', hi: false },
+    { label: 'Trilateral: Trump-Xi-Putin', sub: 'Nov 19', hi: true },
+    { label: 'Return to Washington', sub: 'Nov 21', hi: false }
+  ];
+
+  var padL = 60, padR = 60;
+  var ty = 80;
+  var totalW = W - padL - padR;
+  var n = events.length;
+
+  rc.line(padL, ty, W - padR, ty, { stroke: '#333', roughness: 0.5 });
+
+  events.forEach(function(e, i) {
+    var x = padL + (i / (n - 1)) * totalW;
+    var diam = e.hi ? 18 : 12;
+    var fillC = e.hi ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.15)';
+    rc.circle(x, ty, diam, { fill: fillC, fillStyle: 'solid', roughness: 0.6, stroke: '#333' });
+
+    ctx.textAlign = 'center';
+    var above = i % 2 === 0;
+    if (above) {
+      ctx.font = 'bold 11px serif';
+      ctx.fillStyle = '#333';
+      ctx.fillText(e.sub, x, ty - 24);
+      ctx.font = '11px serif';
+      ctx.fillText(e.label, x, ty - 12);
+    } else {
+      ctx.font = e.hi ? 'bold 11px serif' : '11px serif';
+      ctx.fillStyle = e.hi ? '#111' : '#333';
+      ctx.fillText(e.sub, x, ty + 18);
+      ctx.font = '11px serif';
+      ctx.fillText(e.label, x, ty + 30);
+    }
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Trump Asia trip itinerary, Nov 16-21, 2026', padL, H - 8);
+})();
+</script>
+
 <p>Related: <a href="../2026-11-14/apec-summit.html">Nov 14: Trump to meet Xi and Putin at APEC</a></p>
 <p>Related: <a href="../2026-11-15/iran-iaea.html">Nov 15: Iran rejects IAEA uranium enrichment halt</a></p>
 <p>Related: <a href="../2026-11-15/donbas-nato.html">Nov 15: Zelensky says U.S. proposed Donbas-for-NATO deal</a></p>

@@ -75,6 +75,61 @@
 
 <p>The Abu Dhabi talks, which began November 10 with U.S. mediation, hit immediate turbulence when Zelensky alleged that Russian military and intelligence officials had presented <strong>fabricated battlefield reports</strong> during the first session. The drone attack on Kryvyi Rih overnight, while talks were still technically active, reinforced Ukraine's contention that Russia was not negotiating in good faith. The U.S. mediating team did not publicly comment on the overnight strikes.</p>
 
+<canvas id="hbar3" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function () {
+  var W = 580, H = 170;
+  var canvas = document.getElementById('hbar3');
+  canvas.width = W;
+  canvas.height = H;
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+
+  var pad = { top: 18, right: 55, bottom: 36, left: 180 };
+  var plotW = W - pad.left - pad.right;
+  var plotH = H - pad.top - pad.bottom;
+
+  var items = [
+    { label: 'Drones launched',      value: 85, focal: false },
+    { label: 'Intercepted',          value: 53, focal: true  },
+    { label: 'Reached targets',      value: 32, focal: false },
+  ];
+
+  var maxVal = 90;
+  var barH = 26, gap = 14;
+  var totalH = items.length * barH + (items.length - 1) * gap;
+  var startY = pad.top + (plotH - totalH) / 2;
+
+  rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+  rc.line(pad.left, H - pad.bottom, W - pad.right, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+  items.forEach(function (a, i) {
+    var y = startY + i * (barH + gap);
+    var bw = (a.value / maxVal) * plotW;
+
+    rc.rectangle(pad.left, y, bw, barH, {
+      fill: a.focal ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.2)',
+      fillStyle: 'solid',
+      stroke: '#333',
+      roughness: 0.8
+    });
+
+    ctx.textAlign = 'right';
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.fillText(a.label, pad.left - 8, y + barH / 2 + 4);
+
+    ctx.textAlign = 'left';
+    ctx.font = '12px serif';
+    ctx.fillStyle = '#333';
+    ctx.fillText(a.value, pad.left + bw + 6, y + barH / 2 + 4);
+  });
+
+  ctx.font = '11px serif'; ctx.fillStyle = '#666'; ctx.textAlign = 'left';
+  ctx.fillText('Shahed drone attack on Kryvyi Rih, estimated totals', pad.left, H - 5);
+}());
+</script>
+
 <h2>What happens next</h2>
 
 <p>Ukrainian officials indicated the Abu Dhabi talks would continue despite the attack, but Zelensky's negotiating delegation has asked the U.S. team to formally <strong>register Russian bad faith</strong> as part of the diplomatic record. Western allies are watching the talks closely: any ceasefire framework would require verification mechanisms that the overnight strikes suggest Russia may not honor.</p>

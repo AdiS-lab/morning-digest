@@ -92,6 +92,62 @@
 
 <p>Microsoft has faced growing scrutiny over the reliability of its cloud services. A Senate subcommittee held hearings in September on federal agencies' dependence on a single cloud provider. This outage is likely to renew those concerns. CNN reported that Microsoft's email service was "approaching normal levels" by late Friday, but full restoration had not been confirmed.</p>
 
+<canvas id="timeline" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function () {
+  var W = 620, H = 200;
+  var canvas = document.getElementById('timeline');
+  canvas.width = W;
+  canvas.height = H;
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+
+  var pad = { left: 30, right: 30, top: 30, bottom: 40 };
+  var lineY = 90;
+  var plotW = W - pad.left - pad.right;
+
+  var events = [
+    { label: 'Outlook\nfails', date: 'Thu 16:00', pos: 0 },
+    { label: '74 countries\naffected', date: 'Thu 17:00', pos: 0.2 },
+    { label: 'Full M365\ndown', date: 'Thu 20:00', pos: 0.45 },
+    { label: 'Partial\nrestore', date: 'Fri 06:00', pos: 0.75 },
+    { label: 'Servers\nfail again', date: 'Fri 09:00', pos: 1 },
+  ];
+
+  rc.line(pad.left, lineY, W - pad.right, lineY, { stroke: '#333', roughness: 0.5, strokeWidth: 1.5 });
+
+  events.forEach(function (e, i) {
+    var x = pad.left + e.pos * plotW;
+    var above = i % 2 === 0;
+    var tickTop = above ? lineY - 15 : lineY;
+    var tickBot = above ? lineY : lineY + 15;
+    var isFocal = i === events.length - 1;
+
+    rc.line(x, tickTop, x, tickBot, { stroke: '#333', roughness: 0.5 });
+    rc.circle(x, lineY, isFocal ? 10 : 7, {
+      stroke: '#333',
+      fill: isFocal ? '#c33' : 'rgba(0,0,0,0.5)',
+      fillStyle: 'solid',
+      roughness: 0.7
+    });
+
+    ctx.font = 'bold 10px serif'; ctx.fillStyle = '#333'; ctx.textAlign = 'center';
+    var dateY = above ? lineY - 22 : lineY + 28;
+    ctx.fillText(e.date, x, dateY);
+
+    ctx.font = '10px serif'; ctx.fillStyle = '#555';
+    var lines = e.label.split('\n');
+    lines.forEach(function (line, li) {
+      var labelY = above ? lineY - 34 - (lines.length - 1 - li) * 13 : lineY + 42 + li * 13;
+      ctx.fillText(line, x, labelY);
+    });
+  });
+
+  ctx.font = '11px serif'; ctx.fillStyle = '#666'; ctx.textAlign = 'left';
+  ctx.fillText('Timeline of the Microsoft 365 outage, Nov 13-14', pad.left, H - 8);
+}());
+</script>
+
 <h2>No root cause yet</h2>
 
 <p>Microsoft has not explained what caused the failure. The company said only that it was not malicious. Engineers attempted to restore services overnight but some recovered servers failed again on Friday morning. A full post-incident report is expected but no timeline has been given.</p>

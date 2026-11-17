@@ -61,6 +61,56 @@
 }());
 </script>
 
+<canvas id="talks-timeline" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function () {
+  var W = 620, H = 160;
+  var canvas = document.getElementById('talks-timeline');
+  canvas.width = W;
+  canvas.height = H;
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+
+  var y = 80;
+  rc.line(30, y, W - 15, y, { stroke: '#333', roughness: 0.5 });
+
+  var events = [
+    { x: 70,  a: ['Istanbul talks', 'collapse'],     b: 'Mar 2022', above: true },
+    { x: 195, a: ['Front lines', 'stabilize'],       b: 'Mid-2025', above: false },
+    { x: 320, a: ['Feb talks', 'collapse'],           b: 'Feb 2026', above: true },
+    { x: 445, a: ['Drone campaign', 'begins'],        b: 'Oct 2026', above: false },
+    { x: 565, a: ['Abu Dhabi', 'session'],             b: 'Nov 10',   above: true },
+  ];
+
+  events.forEach(function (e, idx) {
+    var isLast = idx === events.length - 1;
+    rc.circle(e.x, y, 10, {
+      stroke: '#333',
+      fill: isLast ? 'rgba(0,0,0,0.65)' : 'rgba(0,0,0,0.12)',
+      fillStyle: 'solid',
+      roughness: 0.8
+    });
+    ctx.textAlign = 'center';
+    if (e.above) {
+      ctx.font = '11px serif'; ctx.fillStyle = '#333';
+      ctx.fillText(e.a[0], e.x, y - 33);
+      ctx.fillText(e.a[1], e.x, y - 21);
+      ctx.font = '10px serif'; ctx.fillStyle = '#888';
+      ctx.fillText(e.b, e.x, y - 9);
+    } else {
+      ctx.font = '10px serif'; ctx.fillStyle = '#888';
+      ctx.fillText(e.b, e.x, y + 15);
+      ctx.font = '11px serif'; ctx.fillStyle = '#333';
+      ctx.fillText(e.a[0], e.x, y + 28);
+      ctx.fillText(e.a[1], e.x, y + 40);
+    }
+  });
+
+  ctx.font = '11px serif'; ctx.fillStyle = '#666'; ctx.textAlign = 'left';
+  ctx.fillText('Timeline: Russia-Ukraine negotiation attempts', 30, H - 8);
+}());
+</script>
+
 <h2>Background</h2>
 
 <p>The last formal negotiation session between the two countries had collapsed in February 2026 over disagreements on the size of a neutral buffer zone and Ukraine's demand for NATO-equivalent security guarantees. The front lines have remained largely static since mid-2025, with Russia controlling roughly 20 percent of Ukraine's pre-war territory. <strong>Ukraine's drone campaign against Russian oil infrastructure</strong>, which began in late October 2026, has been widely read as a pressure tactic ahead of these talks, forcing Moscow to come to the table with its energy exports visibly degraded.</p>

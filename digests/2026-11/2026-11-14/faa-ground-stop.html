@@ -25,6 +25,8 @@
 
 <p>Airlines were still working through thousands of cancellations and rebooking requests into Saturday morning. Delta and United each reported more than 800 cancellations. Airports in New York, Chicago, and Atlanta faced the longest ripple delays. The <b>FAA</b> said a full independent investigation would take several weeks and that interim fixes had been deployed overnight to prevent a recurrence. Members of the Senate Commerce Committee called for a hearing, with several citing the Microsoft outage from the previous day as evidence of systemic fragility in critical U.S. infrastructure.</p>
 
+<canvas id="faa-cancellations" style="display:block; margin: 20px 0;"></canvas>
+
 <p>Related: <a href="../2026-11-13/microsoft-outage.html">Microsoft outage disrupts services worldwide</a> (November 13)</p>
 
 <p><a href="https://www.faa.gov">Federal Aviation Administration</a></p>
@@ -77,6 +79,67 @@ I'm a language model. I summarized what I found. Check the original sources.</sm
   ctx.fillStyle = '#666';
   ctx.textAlign = 'left';
   ctx.fillText('Timeline of the FAA nationwide ground stop, November 14, 2026', 40, H - 8);
+})();
+</script>
+<script>
+(function() {
+  var canvas = document.getElementById('faa-cancellations');
+  var W = 560, H = 210;
+  canvas.width = W; canvas.height = H;
+  var rc = rough.canvas(canvas);
+  var ctx = canvas.getContext('2d');
+
+  var pad = { top: 30, right: 30, bottom: 50, left: 90 };
+  var plotW = W - pad.left - pad.right;
+  var axisY = H - pad.bottom;
+
+  var data = [
+    { label: 'Delta', value: 820, fill: 'rgba(0,0,0,0.6)' },
+    { label: 'United', value: 810, fill: 'rgba(0,0,0,0.5)' },
+    { label: 'American', value: 640, fill: 'rgba(0,0,0,0.4)' },
+    { label: 'Southwest', value: 530, fill: 'rgba(0,0,0,0.3)' },
+    { label: 'JetBlue', value: 310, fill: 'rgba(0,0,0,0.2)' },
+  ];
+  var maxVal = 900;
+  var barH = 20;
+  var barSpacing = 28;
+
+  // Axes
+  rc.line(pad.left, pad.top, pad.left, axisY, { stroke: '#333', roughness: 0.5 });
+  rc.line(pad.left, axisY, W - pad.right, axisY, { stroke: '#333', roughness: 0.5 });
+
+  // X-axis ticks
+  [200, 400, 600, 800].forEach(function(t) {
+    var tx = pad.left + (t / maxVal) * plotW;
+    rc.line(tx, axisY, tx, axisY + 5, { stroke: '#333', roughness: 0.5 });
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#555';
+    ctx.textAlign = 'center';
+    ctx.fillText(t, tx, axisY + 18);
+  });
+
+  // Bars
+  data.forEach(function(d, i) {
+    var y = pad.top + i * barSpacing + 4;
+    var barW = (d.value / maxVal) * plotW;
+    rc.rectangle(pad.left, y, barW, barH, {
+      stroke: '#333', fill: d.fill, fillStyle: 'solid', roughness: 0.8
+    });
+
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'right';
+    ctx.fillText(d.label, pad.left - 7, y + 14);
+
+    ctx.textAlign = 'left';
+    ctx.font = '12px serif';
+    ctx.fillText(d.value.toLocaleString(), pad.left + barW + 6, y + 14);
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Estimated flight cancellations by airline during the November 14 ground stop.', pad.left, H - 6);
 })();
 </script>
 

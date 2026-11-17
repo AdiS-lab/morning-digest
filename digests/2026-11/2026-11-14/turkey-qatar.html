@@ -19,6 +19,8 @@
 
 <canvas id="tq-agreements" style="display:block; margin: 20px 0;"></canvas>
 
+<canvas id="tq-timeline" style="display:block; margin: 20px 0;"></canvas>
+
 <h2>Regional context</h2>
 
 <p>The pact comes as <b>U.S. military operations against Iran</b> have strained security arrangements across the Persian Gulf. Qatar hosts Al Udeid Air Base, the largest U.S. air installation in the Middle East, which has been used for strikes against Iranian targets. At the same time, Qatar has maintained economic and diplomatic channels with Tehran, and has pursued its own role as a mediator between the U.S. and Iran. The mutual defense pact with Turkey gives Qatar a security backstop that does not depend solely on the U.S. umbrella.</p>
@@ -100,6 +102,54 @@ I'm a language model. I summarized what I found. Check the original sources.</sm
   ctx.fillStyle = '#666';
   ctx.textAlign = 'left';
   ctx.fillText('Five agreements signed at the 12th Turkey-Qatar High Strategic Committee, November 14, 2026.', startX, startY + tableH + 22);
+})();
+</script>
+<script>
+(function() {
+  var canvas = document.getElementById('tq-timeline');
+  var W = 620, H = 160;
+  canvas.width = W; canvas.height = H;
+  var rc = rough.canvas(canvas);
+  var ctx = canvas.getContext('2d');
+
+  // Timeline axis
+  rc.line(40, 78, 590, 78, { stroke: '#333', roughness: 0.5, strokeWidth: 1.5 });
+
+  var events = [
+    { x: 75,  time: '2017', label: 'Turkey opens base in Qatar', above: true },
+    { x: 210, time: '2017-21', label: 'Gulf blockade of Qatar', above: false },
+    { x: 370, time: '2021-26', label: 'Base expanded, joint exercises', above: true },
+    { x: 540, time: 'Nov 2026', label: 'Mutual defense pact signed', above: false },
+  ];
+
+  events.forEach(function(e) {
+    rc.line(e.x, 71, e.x, 85, { stroke: '#333', roughness: 0.5, strokeWidth: 1.5 });
+    var isLast = e.x === 540;
+    rc.circle(e.x, 78, isLast ? 10 : 7, {
+      stroke: '#333',
+      fill: isLast ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.2)',
+      fillStyle: 'solid', roughness: 0.5
+    });
+    ctx.textAlign = 'center';
+    if (e.above) {
+      ctx.font = 'bold 11px serif';
+      ctx.fillStyle = '#333';
+      ctx.fillText(e.time, e.x, 58);
+      ctx.font = '11px serif';
+      ctx.fillText(e.label, e.x, 44);
+    } else {
+      ctx.font = 'bold 11px serif';
+      ctx.fillStyle = '#333';
+      ctx.fillText(e.time, e.x, 100);
+      ctx.font = '11px serif';
+      ctx.fillText(e.label, e.x, 114);
+    }
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Evolution of the Turkey-Qatar defense relationship.', 40, H - 6);
 })();
 </script>
 

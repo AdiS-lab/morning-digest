@@ -82,6 +82,69 @@
 
 <p>Iran has said the strait will remain closed until the U.S. lifts its port blockade, eases sanctions, and stops bombing. Secretary of State Marco Rubio called Iran's conditions "outrageous and ridiculous and really not realistic." Treasury Secretary Scott Bessent, who leads the sanctions campaign dubbed Operation Economic Outcast, said he would not be cowed by Iranian death threats. Trump said Thursday that "we don't need a deal with Iran."</p>
 
+<canvas id="hbar" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function () {
+  var W = 560, H = 200;
+  var canvas = document.getElementById('hbar');
+  canvas.width = W;
+  canvas.height = H;
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+
+  var pad = { top: 20, right: 40, bottom: 40, left: 100 };
+  var plotW = W - pad.left - pad.right;
+  var plotH = H - pad.top - pad.bottom;
+
+  var data = [
+    { label: 'Nov 5-7', val: 6 },
+    { label: 'Nov 8-10', val: 10 },
+    { label: 'Nov 11-13', val: 21 },
+  ];
+
+  var maxVal = 25;
+  var barH = 32;
+  var gap = 14;
+  var startY = pad.top + 4;
+
+  rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+  rc.line(pad.left, H - pad.bottom, W - pad.right, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+  var xTicks = [0, 5, 10, 15, 20, 25];
+  xTicks.forEach(function (v) {
+    var x = pad.left + (v / maxVal) * plotW;
+    if (v > 0) {
+      rc.line(x, pad.top, x, H - pad.bottom, { stroke: 'rgba(0,0,0,0.06)', roughness: 0.3 });
+    }
+    ctx.font = '10px serif'; ctx.fillStyle = '#888'; ctx.textAlign = 'center';
+    ctx.fillText(v, x, H - pad.bottom + 16);
+  });
+
+  data.forEach(function (d, i) {
+    var y = startY + i * (barH + gap);
+    var w = (d.val / maxVal) * plotW;
+    var isFocal = i === data.length - 1;
+
+    rc.rectangle(pad.left, y, w, barH, {
+      fill: isFocal ? '#c33' : 'rgba(0,0,0,0.25)',
+      fillStyle: 'solid',
+      stroke: '#333',
+      strokeWidth: 1,
+      roughness: 0.8
+    });
+
+    ctx.font = '11px serif'; ctx.fillStyle = '#333'; ctx.textAlign = 'right';
+    ctx.fillText(d.label, pad.left - 8, y + barH / 2 + 4);
+
+    ctx.font = 'bold 11px serif'; ctx.fillStyle = '#333'; ctx.textAlign = 'left';
+    ctx.fillText(d.val, pad.left + w + 6, y + barH / 2 + 4);
+  });
+
+  ctx.font = '11px serif'; ctx.fillStyle = '#666'; ctx.textAlign = 'left';
+  ctx.fillText('Ships attacked near the Strait of Hormuz, by 3-day period', pad.left, H - 5);
+}());
+</script>
+
 <h2>Bahrain and the Fifth Fleet</h2>
 
 <p>Bahrain hosts the headquarters of the <b>U.S. Navy's Fifth Fleet</b>, which runs Washington's naval operations across the Persian Gulf. This was the first Iranian claim of an attack on American military assets in a Gulf country since early September. Diplomatic efforts mediated by Qatar and Pakistan are reportedly continuing despite the military escalation.</p>

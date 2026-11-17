@@ -84,6 +84,71 @@
 
 <p>The 55-seat majority gives Democrats a larger cushion than any Senate majority since 2009. With 55 seats, the caucus can absorb up to five defections on a party-line vote and still pass legislation. That is a meaningful shift from the razor-thin 51 and 52-seat majorities Democrats held in recent years, where a single objection by a moderate member could block legislation entirely.</p>
 
+<canvas id="margin-bar" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function () {
+  var W = 580, H = 210;
+  var canvas = document.getElementById('margin-bar');
+  canvas.width = W;
+  canvas.height = H;
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+
+  var pad = { top: 20, right: 20, bottom: 45, left: 55 };
+  var plotW = W - pad.left - pad.right;
+  var plotH = H - pad.top - pad.bottom;
+
+  rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+  rc.line(pad.left, H - pad.bottom, W - pad.right, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+  var data = [
+    { label: '51 (2021-23)', defections: 0 },
+    { label: '51 (2023-25)', defections: 0 },
+    { label: '52 (2025-27)', defections: 1 },
+    { label: '55 (2027-29)', defections: 4 }
+  ];
+
+  var maxDef = 5;
+  var n = data.length;
+  var barW = Math.floor(plotW / n) - 14;
+  var scale = plotH / maxDef;
+
+  data.forEach(function (d, i) {
+    var isFocal = i === n - 1;
+    var barH = Math.max(Math.round(d.defections * scale), 6);
+    var x = pad.left + i * (plotW / n) + 7;
+    var y = H - pad.bottom - barH;
+
+    rc.rectangle(x, y, barW, barH, {
+      stroke: '#333',
+      fill: isFocal ? 'rgba(34,85,170,0.45)' : 'rgba(0,0,0,0.15)',
+      fillStyle: 'solid',
+      roughness: 0.6
+    });
+
+    ctx.textAlign = 'center';
+    ctx.font = isFocal ? 'bold 11px serif' : '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.fillText(d.label, x + barW / 2, H - pad.bottom + 15);
+
+    ctx.font = '12px serif';
+    ctx.fillStyle = isFocal ? '#000' : '#555';
+    ctx.fillText(d.defections, x + barW / 2, y - 5);
+  });
+
+  var yTicks = [0, 1, 2, 3, 4, 5];
+  yTicks.forEach(function (v) {
+    var ty = H - pad.bottom - v * scale;
+    rc.line(pad.left - 4, ty, pad.left, ty, { stroke: '#333', roughness: 0.3 });
+    ctx.textAlign = 'right'; ctx.font = '10px serif'; ctx.fillStyle = '#666';
+    ctx.fillText(v, pad.left - 7, ty + 4);
+  });
+
+  ctx.font = '11px serif'; ctx.fillStyle = '#666'; ctx.textAlign = 'left';
+  ctx.fillText('Defections a Dem Senate majority can absorb on a party-line vote', pad.left, H - 8);
+}());
+</script>
+
 <h2>What comes next</h2>
 
 <p>Even with 55 seats, Democrats still fall short of the <b>60 votes needed to break a filibuster</b>. That means any significant legislation will require either Republican cooperation or a willingness to pursue budget reconciliation for provisions that qualify. Democratic leaders have not publicly discussed changing the filibuster threshold, though pressure from the left flank of the caucus to do so is likely to increase with a larger majority.</p>

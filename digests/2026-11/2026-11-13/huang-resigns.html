@@ -94,6 +94,70 @@
 
 <p>The FBI and the Commerce Department's Office of Export Enforcement are both investigating. Investigators are looking into whether a company connected to the suspected spy helped smuggle billions of dollars worth of restricted American chips into China. No criminal charges have been filed. Legal experts note that a personal relationship alone does not constitute a crime without evidence of information transfer.</p>
 
+<canvas id="hbar" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function () {
+  var W = 580, H = 220;
+  var canvas = document.getElementById('hbar');
+  canvas.width = W;
+  canvas.height = H;
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+
+  var pad = { top: 20, right: 40, bottom: 40, left: 160 };
+  var plotW = W - pad.left - pad.right;
+  var plotH = H - pad.top - pad.bottom;
+
+  var data = [
+    { label: 'Nvidia (NVDA)', val: 500 },
+    { label: 'AMD', val: 85 },
+    { label: 'Broadcom', val: 60 },
+    { label: 'Intel', val: 22 },
+  ];
+
+  var maxVal = 550;
+  var barH = 30;
+  var gap = 12;
+  var startY = pad.top + 4;
+
+  rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+  rc.line(pad.left, H - pad.bottom, W - pad.right, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+  var xTicks = [0, 100, 200, 300, 400, 500];
+  xTicks.forEach(function (v) {
+    var x = pad.left + (v / maxVal) * plotW;
+    if (v > 0) {
+      rc.line(x, pad.top, x, H - pad.bottom, { stroke: 'rgba(0,0,0,0.06)', roughness: 0.3 });
+    }
+    ctx.font = '10px serif'; ctx.fillStyle = '#888'; ctx.textAlign = 'center';
+    ctx.fillText('$' + v + 'B', x, H - pad.bottom + 16);
+  });
+
+  data.forEach(function (d, i) {
+    var y = startY + i * (barH + gap);
+    var w = (d.val / maxVal) * plotW;
+    var isFocal = i === 0;
+
+    rc.rectangle(pad.left, y, w, barH, {
+      fill: isFocal ? '#c33' : 'rgba(0,0,0,0.25)',
+      fillStyle: 'solid',
+      stroke: '#333',
+      strokeWidth: 1,
+      roughness: 0.8
+    });
+
+    ctx.font = '11px serif'; ctx.fillStyle = '#333'; ctx.textAlign = 'right';
+    ctx.fillText(d.label, pad.left - 8, y + barH / 2 + 4);
+
+    ctx.font = 'bold 11px serif'; ctx.fillStyle = '#333'; ctx.textAlign = 'left';
+    ctx.fillText('$' + d.val + 'B', pad.left + w + 6, y + barH / 2 + 4);
+  });
+
+  ctx.font = '11px serif'; ctx.fillStyle = '#666'; ctx.textAlign = 'left';
+  ctx.fillText('Market cap lost by major chip stocks since Nov 9 scandal', pad.left, H - 5);
+}());
+</script>
+
 <h2>What happens next</h2>
 
 <p>Congress has summoned Huang to testify. President Trump reportedly called Huang multiple times this week to encourage him to fight calls to step down. The board said Kress will lead the company through the earnings report and the ongoing investigation. Several defense contractors and national laboratories that use Nvidia hardware are informally reviewing their relationships with the company.</p>

@@ -76,6 +76,56 @@
 
 <p>RAF Mildenhall hosts the 100th Air Refueling Wing, whose KC-135 tankers extend the range of fighter and bomber aircraft across Europe and the Middle East. Without tanker support, strike packages flying from U.K. bases lose significant reach. <strong>Dispersing tankers reduces their vulnerability</strong> but also complicates mission planning and signals to adversaries that the U.S. is adjusting its posture.</p>
 
+<canvas id="escalation-timeline" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function () {
+  var W = 620, H = 160;
+  var canvas = document.getElementById('escalation-timeline');
+  canvas.width = W;
+  canvas.height = H;
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+
+  var y = 80;
+  rc.line(30, y, W - 15, y, { stroke: '#333', roughness: 0.5 });
+
+  var events = [
+    { x: 75,  a: ['Hormuz', 'mines'],          b: 'Nov 5',  above: true },
+    { x: 195, a: ['U.S. strikes', 'on Iran'],   b: 'Nov 7',  above: false },
+    { x: 315, a: ['Iran threatens', 'Europe'],   b: 'Nov 8',  above: true },
+    { x: 435, a: ['Lakenheath', 'dispersal'],    b: 'Nov 9',  above: false },
+    { x: 555, a: ['Mildenhall', 'evacuated'],    b: 'Nov 10', above: true },
+  ];
+
+  events.forEach(function (e, idx) {
+    var isLast = idx === events.length - 1;
+    rc.circle(e.x, y, 10, {
+      stroke: '#333',
+      fill: isLast ? 'rgba(180,0,0,0.5)' : 'rgba(0,0,0,0.12)',
+      fillStyle: 'solid',
+      roughness: 0.8
+    });
+    ctx.textAlign = 'center';
+    if (e.above) {
+      ctx.font = '11px serif'; ctx.fillStyle = '#333';
+      ctx.fillText(e.a[0], e.x, y - 33);
+      ctx.fillText(e.a[1], e.x, y - 21);
+      ctx.font = '10px serif'; ctx.fillStyle = '#888';
+      ctx.fillText(e.b, e.x, y - 9);
+    } else {
+      ctx.font = '10px serif'; ctx.fillStyle = '#888';
+      ctx.fillText(e.b, e.x, y + 15);
+      ctx.font = '11px serif'; ctx.fillStyle = '#333';
+      ctx.fillText(e.a[0], e.x, y + 28);
+      ctx.fillText(e.a[1], e.x, y + 40);
+    }
+  });
+
+  ctx.font = '11px serif'; ctx.fillStyle = '#666'; ctx.textAlign = 'left';
+  ctx.fillText('Escalation timeline: Iran crisis and U.K. base evacuations', 30, H - 8);
+}());
+</script>
+
 <h2>What happens next</h2>
 
 <p>The Pentagon said it is conducting a <strong>continuous threat assessment</strong> across all U.S. installations in Europe and the Middle East and would not confirm or deny any additional precautionary movements. British officials expressed concern about Iranian threats targeting infrastructure on U.K. soil and said domestic security services had been briefed. The evacuations are likely to remain in place until the intelligence community assesses the specific threat has passed or been neutralized.</p>

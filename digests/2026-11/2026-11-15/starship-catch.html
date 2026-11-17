@@ -110,6 +110,60 @@
 })();
 </script>
 
+<canvas id="chart2" width="600" height="240" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function() {
+  var canvas = document.getElementById('chart2');
+  var W = 600, H = 240;
+  canvas.width = W; canvas.height = H;
+  var rc = rough.canvas(canvas);
+  var ctx = canvas.getContext('2d');
+
+  var events = [
+    { label: 'F1: Explosion', sub: 'Apr 2023', hi: false },
+    { label: 'F4: First splashdown', sub: 'Jun 2024', hi: false },
+    { label: 'F5: Booster catch', sub: 'Oct 2024', hi: false },
+    { label: 'F12: First payload', sub: 'Jul 2026', hi: false },
+    { label: 'F15: Ship catch', sub: 'Nov 2026', hi: true }
+  ];
+
+  var padL = 150, padR = 30;
+  var lineX = padL;
+  var n = events.length;
+  var yStart = 30;
+  var yEnd = 210;
+  var ySpan = yEnd - yStart;
+
+  rc.line(lineX, yStart - 5, lineX, yEnd + 5, { stroke: '#333', roughness: 0.6 });
+
+  events.forEach(function(ev, i) {
+    var y = yStart + (i / (n - 1)) * ySpan;
+    var diam = ev.hi ? 16 : 10;
+    var fillC = ev.hi ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.15)';
+    rc.circle(lineX, y, diam, {
+      fill: fillC,
+      fillStyle: 'solid',
+      stroke: '#333',
+      roughness: 0.7
+    });
+
+    var textX = lineX + 20;
+    ctx.font = ev.hi ? 'bold 11px serif' : 'bold 11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'left';
+    ctx.fillText(ev.label, textX, y - 3);
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#666';
+    ctx.fillText(ev.sub, textX, y + 11);
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Key Starship milestones, 2023-2026', padL, H - 8);
+})();
+</script>
+
 <h2>The road to Flight 15</h2>
 
 <p>The first three Starship tests in 2023 and early 2024 ended in explosions before reaching orbit. SpaceX made rapid modifications after each failure, introducing a new venting system and replacing the original launch mount with a water-cooled flame deflector. <b>Flight 4 in June 2024</b> was the first to survive re-entry and reach a controlled splashdown. Flight 5 in October 2024 caught the booster for the first time, drawing widespread attention. Each subsequent flight extended the mission duration and added objectives.</p>

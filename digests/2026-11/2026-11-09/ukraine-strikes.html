@@ -28,6 +28,8 @@
 
 <canvas id="timeline" width="600" height="160" style="display:block; margin: 20px 0;"></canvas>
 
+<canvas id="droneChart" width="600" height="260" style="display:block; margin: 20px 0;"></canvas>
+
 <h2>What happens next</h2>
 
 <p>The Abu Dhabi talks on November 10-11 are the first direct U.S.-brokered negotiation in months. Expectations are low. Both sides went into the meeting having just attacked each other's infrastructure. The talks are trilateral: U.S., Russia, and Ukraine. Whether they produce anything depends on whether either side is willing to make concessions neither has signaled so far.</p>
@@ -85,6 +87,66 @@
   ctx.fillStyle = '#666';
   ctx.textAlign = 'left';
   ctx.fillText('Nov 9 overnight into Nov 10. Escalation before negotiation.', pad.left, H - 10);
+})();
+
+(function() {
+  const canvas = document.getElementById('droneChart');
+  const ctx = canvas.getContext('2d');
+  const rc = rough.canvas(canvas);
+
+  const W = 600, H = 260;
+  const pad = { top: 30, right: 30, bottom: 50, left: 50 };
+  const plotW = W - pad.left - pad.right;
+  const plotH = H - pad.top - pad.bottom;
+
+  // Russian drone attacks on Ukraine infrastructure (approximate monthly totals, 2026)
+  var months = ['Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov 1-9'];
+  var vals =   [120, 145, 180, 230, 280, 317];
+  var maxVal = 350;
+  var barW = 50;
+
+  // Axes
+  rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+  rc.line(pad.left, H - pad.bottom, W - pad.right, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+  // Y grid
+  for (var v = 100; v <= 300; v += 100) {
+    var gy = pad.top + (1 - v / maxVal) * plotH;
+    rc.line(pad.left, gy, W - pad.right, gy, { stroke: 'rgba(0,0,0,0.06)', roughness: 0.3 });
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'right';
+    ctx.fillText(String(v), pad.left - 8, gy + 4);
+  }
+
+  var step = plotW / months.length;
+  months.forEach(function(m, i) {
+    var cx = pad.left + step * i + step / 2;
+    var bh = (vals[i] / maxVal) * plotH;
+    var by = pad.top + plotH - bh;
+    var isLast = i === months.length - 1;
+
+    rc.rectangle(cx - barW / 2, by, barW, bh, {
+      fill: isLast ? 'rgba(0,0,0,0.7)' : 'rgba(0,0,0,0.4)',
+      fillStyle: 'solid',
+      stroke: isLast ? '#000' : '#555',
+      strokeWidth: 1,
+      roughness: 0.8,
+    });
+
+    ctx.font = '12px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'center';
+    ctx.fillText(String(vals[i]), cx, by - 6);
+
+    ctx.font = '11px serif';
+    ctx.fillText(m, cx, H - pad.bottom + 16);
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Largest single-night Russian drone launches against Ukraine, by month (2026).', pad.left, H - pad.bottom + 40);
 })();
 </script>
 

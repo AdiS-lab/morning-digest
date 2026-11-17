@@ -116,6 +116,67 @@
 })();
 </script>
 
+<canvas id="chart2" width="600" height="195" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function() {
+  var canvas = document.getElementById('chart2');
+  var W = 600, H = 195;
+  canvas.width = W; canvas.height = H;
+  var rc = rough.canvas(canvas);
+  var ctx = canvas.getContext('2d');
+
+  var cols = [10, 170, 290, 460];
+  var colW = [155, 115, 165, 130];
+  var headers = ['Action', 'Date', 'Actors', 'Result'];
+  var rows = [
+    ['JCPOA signed', 'Jul 2015', 'Iran, P5+1', 'Cap at 3.67%'],
+    ['U.S. exits JCPOA', 'May 2018', 'United States', 'Iran resumes enrichment'],
+    ['Enrichment hits 60%', '2023', 'Iran', 'Near weapons threshold'],
+    ['IAEA demands cap', 'Nov 14, 2026', 'IAEA board', 'Request 20% cap'],
+    ['Iran rejects demand', 'Nov 15, 2026', 'Iran', '60% continues']
+  ];
+
+  var rowH = 28;
+  var startY = 15;
+
+  ctx.font = 'bold 11px serif';
+  ctx.fillStyle = '#333';
+  headers.forEach(function(h, i) {
+    ctx.fillText(h, cols[i], startY + 12);
+  });
+
+  rc.line(10, startY + 18, W - 10, startY + 18, { stroke: '#333', roughness: 0.5 });
+
+  rows.forEach(function(row, ri) {
+    var y = startY + 22 + (ri + 1) * rowH;
+    var isLast = ri === rows.length - 1;
+
+    if (isLast) {
+      rc.rectangle(5, y - rowH + 8, W - 15, rowH - 2, {
+        fill: 'rgba(0,0,0,0.07)',
+        fillStyle: 'solid',
+        stroke: 'rgba(0,0,0,0.3)',
+        roughness: 0.5
+      });
+    }
+
+    ctx.font = isLast ? 'bold 11px serif' : '11px serif';
+    ctx.fillStyle = '#333';
+    row.forEach(function(cell, ci) {
+      ctx.fillText(cell, cols[ci], y);
+    });
+
+    if (ri < rows.length - 1) {
+      rc.line(10, y + 8, W - 10, y + 8, { stroke: 'rgba(0,0,0,0.1)', roughness: 0.4 });
+    }
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.fillText('Key milestones in Iran nuclear diplomacy, 2015-2026', 10, H - 6);
+})();
+</script>
+
 <h2>Stockpile and timeline concerns</h2>
 
 <p>The IAEA's most recent quarterly report estimated Iran holds approximately <b>580 kg of uranium enriched to 60 percent</b>. Experts have said this stockpile, if further enriched to 90 percent, could yield enough fissile material for several nuclear devices within a few months. Iran denies seeking a nuclear weapon and says its program is entirely for civilian and research purposes.</p>

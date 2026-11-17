@@ -27,6 +27,11 @@ and close associates, starting when they take control of both chambers in early 
 chairs, and launches investigations. Some produce results. Some are political theater. All of them
 consume enormous amounts of the administration's time and attention.</p>
 
+<h2>Congressional subpoena power</h2>
+
+<canvas id="subpoenas" width="600" height="220" style="display:block; margin: 20px 0;"></canvas>
+<p>Approximate number of congressional subpoenas issued per midterm cycle</p>
+
 <h2>What's different this time</h2>
 
 <p>Democrats control both chambers. In 2018 they only had the House. Having the Senate means
@@ -86,6 +91,66 @@ judicial appointments. The <a href="alito.html">Alito situation</a> is directly 
       ctx.fillText(c.winner, colX[2], y);
       ctx.fillText(c.investigation, colX[3], y);
     });
+  })();
+
+  // Subpoena power - horizontal bar
+  (function() {
+    const canvas = document.getElementById('subpoenas');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+
+    const W = 600, H = 220;
+    const pad = { top: 20, right: 30, bottom: 40, left: 160 };
+
+    const cycles = [
+      { label: '1995-96 (Clinton/GOP)',   count: 1052 },
+      { label: '2007-08 (Bush/Dems)',     count: 600 },
+      { label: '2011-12 (Obama/GOP)',     count: 544 },
+      { label: '2019-20 (Trump/Dems)',    count: 780 },
+      { label: '2027-28 (Trump/Dems)?',   count: null },
+    ];
+
+    const maxCount = 1200;
+    const barH = 26;
+    const gap = 10;
+
+    rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+    cycles.forEach((c, i) => {
+      const y = pad.top + i * (barH + gap);
+
+      if (c.count !== null) {
+        const barW = (c.count / maxCount) * (W - pad.left - pad.right);
+
+        rc.rectangle(pad.left, y, barW, barH, {
+          fill: 'rgba(0,0,0,0.5)',
+          fillStyle: 'solid',
+          stroke: '#333',
+          strokeWidth: 1,
+          roughness: 1,
+        });
+
+        ctx.font = '12px serif';
+        ctx.fillStyle = '#333';
+        ctx.textAlign = 'left';
+        ctx.fillText(c.count, pad.left + barW + 6, y + barH - 7);
+      } else {
+        ctx.font = '12px serif';
+        ctx.fillStyle = '#999';
+        ctx.textAlign = 'left';
+        ctx.fillText('TBD (both chambers)', pad.left + 6, y + barH - 7);
+      }
+
+      ctx.font = '11px serif';
+      ctx.fillStyle = '#333';
+      ctx.textAlign = 'right';
+      ctx.fillText(c.label, pad.left - 6, y + barH - 7);
+    });
+
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#666';
+    ctx.textAlign = 'left';
+    ctx.fillText('Congressional subpoenas issued in first post-midterm cycle', pad.left, H - pad.bottom + 20);
   })();
 </script>
 
