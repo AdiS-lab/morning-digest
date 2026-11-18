@@ -382,6 +382,38 @@
       ]
     },
     {
+      "date": "2026-11-18",
+      "file": "2026-11/2026-11-18.html",
+      "summary": "Iran widens Gulf attacks, striking Kuwait's Ali Al Salem Air Base after the U.S. hit an IRGC missile site on Qeshm Island. Trump lands in Shenzhen as Xi meets him at the airport. Trilateral with Putin set for Thursday. Western intelligence says Putin plans to fight through winter. Ethiopia and Eritrea mass troops along their shared border. WHO demands unobstructed aid access to Gaza for its fourth winter of war.",
+      "stories": [
+        {
+          "headline": "Iran strikes U.S. base in Kuwait. U.S. had hit an IRGC missile site a day earlier.",
+          "file": "2026-11/2026-11-18/iran-kuwait.html",
+          "tags": ["iran", "middle-east", "military", "kuwait", "bahrain", "strait-of-hormuz"]
+        },
+        {
+          "headline": "Trump lands in Shenzhen. Xi meets him at the airport. Trilateral with Putin is Thursday.",
+          "file": "2026-11/2026-11-18/shenzhen-summit.html",
+          "tags": ["us-politics", "china", "russia", "diplomacy", "nuclear", "apec", "iran"]
+        },
+        {
+          "headline": "Western intelligence: Putin plans to fight through winter",
+          "file": "2026-11/2026-11-18/putin-winter.html",
+          "tags": ["russia", "ukraine", "war", "diplomacy", "ceasefire"]
+        },
+        {
+          "headline": "Ethiopia and Eritrea mass troops along border as war fears grow",
+          "file": "2026-11/2026-11-18/ethiopia-eritrea.html",
+          "tags": ["africa", "ethiopia", "eritrea", "military", "tigray"]
+        },
+        {
+          "headline": "WHO demands unobstructed aid access to Gaza for its fourth winter of war",
+          "file": "2026-11/2026-11-18/gaza-winter.html",
+          "tags": ["israel", "gaza", "middle-east", "humanitarian", "who"]
+        }
+      ]
+    },
+    {
       "date": "2026-11-15",
       "file": "2026-11/2026-11-15.html",
       "summary": "Zelensky reveals U.S. raised Donbas-for-NATO idea. SpaceX catches Starship upper stage for the first time. Two more tankers hit mines in Hormuz. UPS and Copa planes collide at Miami airport. Iran rejects IAEA uranium enrichment halt.",

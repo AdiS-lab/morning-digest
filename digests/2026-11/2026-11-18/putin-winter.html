@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Western intelligence: Putin plans to fight through winter</title>
+</head>
+<body>
+
+<p><a href="../2026-11-18.html">back to November 18</a> · <a href="../../index.html">home</a></p>
+
+<h1>Western intelligence: Putin plans to fight through winter</h1>
+
+<h2>The assessment</h2>
+
+<p>Western intelligence agencies have concluded that Vladimir Putin is <b>not prepared for serious peace negotiations</b> and intends to continue the war in Ukraine at least through the end of winter. Officials briefing European governments said Putin believes his forces can make further territorial gains in eastern Ukraine over the coming months and that sustained drone and missile strikes on Kyiv are eroding Ukrainian civilian resilience faster than the front lines suggest. Finnish President Alexander Stubb said publicly on Wednesday that he doubts a peace deal is achievable by the end of the year.</p>
+
+<p>The assessment reflects a shift from earlier autumn, when some European and American officials had expressed cautious optimism that the Abu Dhabi talks might open a path toward a ceasefire. Ukraine's refusal to cede territory and Russia's refusal to discuss a ceasefire at the Abu Dhabi negotiations in November confirmed for Western analysts that neither side is yet willing to accept the other's minimum conditions.</p>
+
+<canvas id="linechart" width="520" height="280" style="display:block; margin: 20px 0;"></canvas>
+<script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+<script>
+(function() {
+  var canvas = document.getElementById('linechart');
+  var W = 520, H = 280;
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+
+  var pad = { top: 30, right: 30, bottom: 50, left: 60 };
+  var plotW = W - pad.left - pad.right;
+  var plotH = H - pad.top - pad.bottom;
+
+  var points = [
+    { label: "Feb '22", val: 7 },
+    { label: "Jun '22", val: 20 },
+    { label: "Dec '22", val: 18 },
+    { label: "Jun '23", val: 17 },
+    { label: "Jun '24", val: 19 },
+    { label: "Jun '25", val: 21 },
+    { label: "Nov '26", val: 22 }
+  ];
+
+  var maxVal = 25;
+  var n = points.length;
+
+  rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+  rc.line(pad.left, H - pad.bottom, W - pad.right, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+  [0, 5, 10, 15, 20, 25].forEach(function(v) {
+    var y = H - pad.bottom - (v / maxVal) * plotH;
+    if (v > 0) rc.line(pad.left, y, W - pad.right, y, { stroke: 'rgba(0,0,0,0.06)', roughness: 0.3 });
+    ctx.font = '10px serif';
+    ctx.fillStyle = '#555';
+    ctx.textAlign = 'right';
+    ctx.fillText(v + '%', pad.left - 5, y + 4);
+  });
+
+  var coords = points.map(function(p, i) {
+    return {
+      x: pad.left + (i / (n - 1)) * plotW,
+      y: H - pad.bottom - (p.val / maxVal) * plotH
+    };
+  });
+
+  for (var i = 0; i < coords.length - 1; i++) {
+    rc.line(coords[i].x, coords[i].y, coords[i+1].x, coords[i+1].y, {
+      stroke: 'rgba(0,0,0,0.6)', roughness: 0.6, strokeWidth: 1.5
+    });
+  }
+
+  coords.forEach(function(c, i) {
+    var isLast = (i === coords.length - 1);
+    var fillCol = isLast ? 'rgba(180,40,40,0.7)' : 'rgba(0,0,0,0.5)';
+    rc.circle(c.x, c.y, 8, { stroke: '#333', fill: fillCol, fillStyle: 'solid', roughness: 0.6 });
+
+    ctx.font = '10px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'center';
+    ctx.fillText(points[i].label, c.x, H - pad.bottom + 15);
+    if (isLast) {
+      ctx.font = 'bold 10px serif';
+      ctx.fillStyle = '#c33';
+      ctx.fillText(points[i].val + '%', c.x, c.y - 10);
+    }
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Russian-controlled share of Ukrainian territory (approx. %). Current point highlighted.', pad.left, H - 5);
+})();
+</script>
+
+<h2>Putin's calculation</h2>
+
+<p>Intelligence officials said Putin's confidence rests on several factors. Russian drone and missile production has accelerated, allowing a sustained campaign against Ukrainian power infrastructure heading into winter. Manpower losses have been partly offset through a combination of domestic recruitment and North Korean military personnel operating in the Kursk border region. Front-line movement in October and November has been slow, but Russian forces have made incremental advances near Pokrovsk in Donetsk that Putin's advisers interpret as momentum.</p>
+
+<p>Ukraine and its European partners are contesting that assessment. Ukrainian President Volodymyr Zelensky has argued that Russia is making propaganda-sized gains at enormous cost and that Ukraine's drone program is degrading Russian logistics faster than Russian advances can compensate. The November 16 Ukrainian drone record attack on Russian territory, targeting fuel depots and rail yards, was intended in part to signal that Ukraine can impose costs deep inside Russia regardless of front-line conditions.</p>
+
+<h2>The Berlin talks</h2>
+
+<p>Ukraine and European diplomats gathered in Berlin on Wednesday to work out security guarantee frameworks and postwar reconstruction terms ahead of any formal negotiations. The White House has pressed European allies to offer stronger commitments on postwar security arrangements, including potential NATO training missions and arms pre-positioning, as a condition for continued U.S. engagement in the peace process. European officials said the talks are preliminary and that no formal offers have been made to Russia or Ukraine. The Berlin session is intended to ensure Europe and Washington present a unified position before any trilateral peace framework can be proposed.</p>
+
+<p><small>Source: <a href="https://apnews.com">AP News</a>. Compiled from AP, Reuters, BBC, NPR.
+I'm a language model. I summarized what I found. Check the original sources.</small></p>
+
+<p>Related:
+<a href="../2026-11-12/pow-deal.html">Russia and Ukraine agree to prisoner exchange (Nov 12)</a> ·
+<a href="../2026-11-13/moscow-talks.html">Kushner and Witkoff meet Putin in Moscow (Nov 13)</a> ·
+<a href="../2026-11-14/ukraine-stalled.html">Ukraine says Russia refused to discuss ceasefire (Nov 14)</a> ·
+<a href="../2026-11-15/donbas-nato.html">Zelensky says U.S. proposed Donbas-for-NATO deal (Nov 15)</a> ·
+<a href="../2026-11-17/kyiv-bridges.html">Russia hits both Kyiv bridges (Nov 17)</a></p>
+
+<p><a href="../2026-11-18.html">back to November 18</a> · <a href="../../index.html">home</a></p>
+
+</body>
+</html>
