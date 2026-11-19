@@ -414,6 +414,38 @@
       ]
     },
     {
+      "date": "2026-11-19",
+      "file": "2026-11/2026-11-19.html",
+      "summary": "The Shenzhen trilateral ends with a joint statement on strategic stability and no concrete commitments on Iran or Ukraine. Ukraine hits the Kerch Bridge for a third time in four days. Hegseth flies to Caracas and signs a military partnership with Venezuela. The ICJ rules Myanmar committed genocide against the Rohingya. Denmark's parliament approves an Arctic security pact with the U.S. and Greenland.",
+      "stories": [
+        {
+          "headline": "Trump, Xi, and Putin conclude Shenzhen summit with joint statement. No Iran or Ukraine commitments.",
+          "file": "2026-11/2026-11-19/shenzhen-declaration.html",
+          "tags": ["us-politics", "china", "russia", "diplomacy", "nuclear", "apec", "iran", "ukraine"]
+        },
+        {
+          "headline": "Ukraine strikes Kerch Bridge for third time in four days. Rail traffic halted.",
+          "file": "2026-11/2026-11-19/kerch-bridge.html",
+          "tags": ["russia", "ukraine", "war", "military", "infrastructure", "crimea"]
+        },
+        {
+          "headline": "Hegseth in Caracas. U.S. and Venezuela sign military partnership.",
+          "file": "2026-11/2026-11-19/hegseth-venezuela.html",
+          "tags": ["us-politics", "venezuela", "military", "south-america", "counter-narcotics"]
+        },
+        {
+          "headline": "ICJ rules Myanmar committed genocide against the Rohingya",
+          "file": "2026-11/2026-11-19/icj-rohingya.html",
+          "tags": ["myanmar", "rohingya", "icj", "international-law", "genocide", "asia"]
+        },
+        {
+          "headline": "Denmark approves Arctic security pact with U.S. and Greenland",
+          "file": "2026-11/2026-11-19/denmark-arctic.html",
+          "tags": ["denmark", "greenland", "us-politics", "arctic", "military", "nato"]
+        }
+      ]
+    },
+    {
       "date": "2026-11-15",
       "file": "2026-11/2026-11-15.html",
       "summary": "Zelensky reveals U.S. raised Donbas-for-NATO idea. SpaceX catches Starship upper stage for the first time. Two more tankers hit mines in Hormuz. UPS and Copa planes collide at Miami airport. Iran rejects IAEA uranium enrichment halt.",
