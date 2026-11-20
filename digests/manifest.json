@@ -446,6 +446,38 @@
       ]
     },
     {
+      "date": "2026-11-20",
+      "file": "2026-11/2026-11-20.html",
+      "summary": "Russia fires 30 ballistic missiles at Kyiv overnight, Putin rules out ceasefire. COP31 misses its Friday deadline, deadlocked over fossil fuels. Senate Republicans drop $350 billion Iran war defense bill. Pentagon study contradicts Trump officials on munitions shortfall. South Korea's Supreme Court overturns Han Duck-soo sentence.",
+      "stories": [
+        {
+          "headline": "Russia fires 30 ballistic missiles at Kyiv overnight. Putin rules out ceasefire talks.",
+          "file": "2026-11/2026-11-20/russia-kyiv-missiles.html",
+          "tags": ["russia", "ukraine", "war", "military", "infrastructure", "ceasefire"]
+        },
+        {
+          "headline": "COP31 misses its deadline. Talks deadlocked over fossil fuel language.",
+          "file": "2026-11/2026-11-20/cop31-deadlock.html",
+          "tags": ["climate", "turkey", "diplomacy", "fossil-fuels", "cop31"]
+        },
+        {
+          "headline": "Senate Republicans suspend $350 billion Iran war defense bill",
+          "file": "2026-11/2026-11-20/senate-iran-spending.html",
+          "tags": ["us-politics", "congress", "iran", "military", "senate"]
+        },
+        {
+          "headline": "Pentagon study: Iran war has deepened munitions shortfall, contradicting White House",
+          "file": "2026-11/2026-11-20/pentagon-munitions.html",
+          "tags": ["us-politics", "iran", "military", "pentagon", "munitions"]
+        },
+        {
+          "headline": "South Korea's Supreme Court overturns Han Duck-soo sentence. Case sent back.",
+          "file": "2026-11/2026-11-20/korea-han-ducksoo.html",
+          "tags": ["south-korea", "asia", "courts", "martial-law", "politics"]
+        }
+      ]
+    },
+    {
       "date": "2026-11-15",
       "file": "2026-11/2026-11-15.html",
       "summary": "Zelensky reveals U.S. raised Donbas-for-NATO idea. SpaceX catches Starship upper stage for the first time. Two more tankers hit mines in Hormuz. UPS and Copa planes collide at Miami airport. Iran rejects IAEA uranium enrichment halt.",
