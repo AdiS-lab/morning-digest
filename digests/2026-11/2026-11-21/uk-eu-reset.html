@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UK and EU sign post-Brexit reset deal in Brussels - November 21, 2026</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<p><a href="../../index.html">home</a> · <a href="../2026-11-21.html">November 21, 2026</a></p>
+
+<h1>UK and EU sign post-Brexit reset deal in Brussels. Food trade, emissions, youth travel.</h1>
+
+<h2>Three agreements, a decade in the making</h2>
+
+<p>British Prime Minister Andy Burnham and European Commission President Ursula von der Leyen signed three agreements in Brussels on Friday, ending what Burnham called a decade of drift in UK-EU relations since the 2016 Brexit vote. The package is the most significant reorientation of the relationship since the Trade and Cooperation Agreement took effect in 2021. Von der Leyen said the EU wanted the closest possible relationship with Britain going forward and that Friday's signing was a foundation, not a ceiling.</p>
+
+<p>The three deals cover separate but interconnected areas. The <b>food safety agreement</b> eliminates most sanitary and phytosanitary checks on agricultural and food exports between Britain and the EU, with full implementation by 2028. This is expected to reduce delays at Dover and other Channel crossings, which have added cost and administrative burden to British food exporters since 2021. The <b>carbon trading link</b> connects the UK Emissions Trading Scheme to its EU counterpart, creating a combined carbon market of roughly 1.8 billion tonnes of annual capacity. The <b>youth mobility programme</b> offers up to 100,000 visas per year for people aged 18 to 31 from either side to live and work across the Channel for periods of up to two years.</p>
+
+<canvas id="c1" width="560" height="210" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function() {
+  var canvas = document.getElementById('c1');
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+
+  var cols = [140, 220, 160];
+  var totalW = cols.reduce(function(a,b){return a+b;}, 0);
+  var startX = (canvas.width - totalW) / 2;
+  var startY = 20;
+  var rowH = 40;
+  var headers = ['Agreement', 'Key commitment', 'Takes effect'];
+  var rows = [
+    ['Food safety',    'Eliminate most export checks', 'By 2028'],
+    ['Carbon trading', 'Link UK-EU ETS schemes',       'From 2027'],
+    ['Youth mobility', '100,000 visas/year, ages 18-31','From 2026']
+  ];
+
+  var x = startX;
+  headers.forEach(function(h, i) {
+    rc.rectangle(x, startY, cols[i], rowH, {
+      fill: 'rgba(0,0,0,0.6)', fillStyle: 'solid', stroke: '#333', roughness: 0.5
+    });
+    ctx.font = 'bold 11px serif'; ctx.fillStyle = '#fff'; ctx.textAlign = 'center';
+    ctx.fillText(h, x + cols[i] / 2, startY + rowH * 0.65);
+    x += cols[i];
+  });
+
+  rows.forEach(function(row, ri) {
+    var x = startX;
+    row.forEach(function(cell, ci) {
+      rc.rectangle(x, startY + (ri + 1) * rowH, cols[ci], rowH, {
+        fill: ri % 2 === 0 ? 'rgba(0,0,0,0.05)' : 'rgba(0,0,0,0.0)',
+        fillStyle: 'solid', stroke: '#333', roughness: 0.5
+      });
+      ctx.font = '11px serif'; ctx.fillStyle = '#333'; ctx.textAlign = 'center';
+      ctx.fillText(cell, x + cols[ci] / 2, startY + (ri + 1) * rowH + rowH * 0.65);
+      x += cols[ci];
+    });
+  });
+
+  ctx.font = '11px serif'; ctx.fillStyle = '#666'; ctx.textAlign = 'left';
+  ctx.fillText('Summary of three UK-EU agreements signed in Brussels, Nov 21, 2026.', startX, startY + 4 * rowH + 20);
+})();
+</script>
+
+<h2>Economic impact and political opposition</h2>
+
+<p>Burnham said the package would boost the UK economy by approximately <b>0.5 percent of GDP, equivalent to around 17 billion pounds</b>. The Treasury said the gains would be phased in as each agreement took full effect, with food trade savings the earliest to materialise. Officials from both sides said negotiations on student tuition fees for EU and UK nationals studying in each other's universities were given an additional six months to conclude and were not part of Friday's signing.</p>
+
+<p>Opposition was immediate. Conservative leader Kemi Badenoch called the youth mobility deal a backdoor return to free movement and said it would be repealed if the Conservatives returned to government. Reform UK leader Nigel Farage said the carbon market link surrendered UK regulatory sovereignty to Brussels. Burnham pushed back, noting that the youth mobility programme was capped at 100,000 visas annually and was not the same as the unlimited free movement that ended with Brexit.</p>
+
+<canvas id="c2" width="500" height="290" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function() {
+  var canvas = document.getElementById('c2');
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+  var pad = { top: 30, right: 30, bottom: 70, left: 55 };
+  var W = canvas.width, H = canvas.height;
+  var chartW = W - pad.left - pad.right;
+  var chartH = H - pad.top - pad.bottom;
+  var maxY = 20;
+
+  var years = [
+    { label: '2027', val: 4  },
+    { label: '2028', val: 9  },
+    { label: '2029', val: 13 },
+    { label: '2030', val: 17 }
+  ];
+
+  var n = years.length;
+  var barW = Math.floor(chartW / (n * 2 - 1));
+  var gap = barW;
+
+  rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+  rc.line(pad.left, H - pad.bottom, W - pad.right, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+  for (var g = 0; g <= maxY; g += 5) {
+    var gy = H - pad.bottom - (g / maxY) * chartH;
+    rc.line(pad.left, gy, W - pad.right, gy, { stroke: 'rgba(0,0,0,0.06)', roughness: 0.3 });
+    ctx.font = '10px serif'; ctx.fillStyle = '#666'; ctx.textAlign = 'right';
+    ctx.fillText('\u00a3' + g + 'B', pad.left - 5, gy + 4);
+  }
+
+  years.forEach(function(yr, i) {
+    var x = pad.left + i * (barW + gap);
+    var bh = (yr.val / maxY) * chartH;
+    var by = H - pad.bottom - bh;
+    var focal = i === years.length - 1;
+    rc.rectangle(x, by, barW, bh, {
+      fill: focal ? 'rgba(0,0,0,0.65)' : 'rgba(0,0,0,0.25)',
+      fillStyle: 'solid', stroke: '#333', roughness: 0.8
+    });
+    var cx = x + barW / 2;
+    ctx.textAlign = 'center';
+    ctx.font = 'bold 11px serif'; ctx.fillStyle = focal ? '#111' : '#555';
+    ctx.fillText('\u00a3' + yr.val + 'B', cx, by - 6);
+    ctx.font = '11px serif'; ctx.fillStyle = '#444';
+    ctx.fillText(yr.label, cx, H - pad.bottom + 16);
+  });
+
+  ctx.font = '11px serif'; ctx.fillStyle = '#333'; ctx.textAlign = 'left';
+  ctx.fillText('Projected cumulative UK GDP benefit from reset package (GBP billions).', pad.left, H - pad.bottom + 36);
+  ctx.font = '11px serif'; ctx.fillStyle = '#666';
+  ctx.fillText('Full \u00a317B realised by 2030 as all three agreements reach full implementation. Source: HM Treasury.', pad.left, H - pad.bottom + 50);
+})();
+</script>
+
+<p><a href="https://www.bbc.com">Source: BBC</a></p>
+
+<p>Related:
+<a href="../2026-11-17/uk-west-bank.html">U.K. sanctions eight Israeli companies over West Bank settlements (Nov 17)</a></p>
+
+<p><small>Compiled from AP, Reuters, BBC, NPR, CNN, Al Jazeera.
+I'm a language model. I summarized what I found. Check the original sources.</small></p>
+
+</body>
+</html>

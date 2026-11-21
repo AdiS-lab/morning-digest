@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>COP31 enters second day of overtime. No deal in sight on fossil fuels or climate finance. - November 21, 2026</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<p><a href="../../index.html">home</a> · <a href="../2026-11-21.html">November 21, 2026</a></p>
+
+<h1>COP31 enters second day of overtime. No deal in sight on fossil fuels or climate finance.</h1>
+
+<h2>A revised draft that pleased almost no one</h2>
+
+<p>Climate negotiations at COP31 in Antalya pushed into a second day of overtime on Saturday with no agreement in sight. A revised draft text circulated overnight <b>dropped all references to fossil fuels</b> and removed a $120 billion annual adaptation finance target for developing nations. The European Union's climate envoy Wopke Hoekstra said no compromise had been reached on either issue. Small island states called the draft unacceptable and threatened to walk out, with Tuvalu's lead negotiator telling reporters that accepting the text would be a death sentence for low-lying nations.</p>
+
+<p>The host country Turkey, which opened the conference two weeks ago, struck several bilateral clean energy deals on the sidelines and was under pressure from the EU and the G77 bloc to broker a final text before the weekend concluded. Negotiators from nearly 200 countries remained in the building. A new informal contact group was convened at 2 a.m. Saturday to work through the sticking points, but sources close to the talks said positions had not moved significantly since Thursday.</p>
+
+<canvas id="c1" width="600" height="300" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function() {
+  var canvas = document.getElementById('c1');
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+  var pad = { top: 30, right: 30, bottom: 50, left: 55 };
+  var W = canvas.width, H = canvas.height;
+  var chartW = W - pad.left - pad.right;
+  var chartH = H - pad.top - pad.bottom;
+
+  var points = [
+    { year: '2021', val: 1.10 },
+    { year: '2022', val: 1.20 },
+    { year: '2023', val: 1.40 },
+    { year: '2024', val: 1.36 },
+    { year: '2025', val: 1.44 },
+    { year: '2026', val: 1.52 }
+  ];
+
+  var minY = 1.0, maxY = 1.6;
+  var n = points.length;
+
+  rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+  rc.line(pad.left, H - pad.bottom, W - pad.right, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+  var threshY = H - pad.bottom - ((1.5 - minY) / (maxY - minY)) * chartH;
+  rc.line(pad.left, threshY, W - pad.right, threshY, { stroke: '#c33', roughness: 0.4, strokeWidth: 1.5 });
+  ctx.font = 'bold 10px serif'; ctx.fillStyle = '#c33'; ctx.textAlign = 'right';
+  ctx.fillText('1.5\u00b0C threshold', pad.left - 4, threshY + 4);
+
+  for (var g = 1.0; g <= 1.6; g = Math.round((g + 0.1) * 10) / 10) {
+    var gy = H - pad.bottom - ((g - minY) / (maxY - minY)) * chartH;
+    rc.line(pad.left, gy, W - pad.right, gy, { stroke: 'rgba(0,0,0,0.06)', roughness: 0.3 });
+    ctx.font = '10px serif'; ctx.fillStyle = '#666'; ctx.textAlign = 'right';
+    ctx.fillText(g.toFixed(1), pad.left - 6, gy + 4);
+  }
+
+  var coords = points.map(function(p, i) {
+    return {
+      x: pad.left + (i / (n - 1)) * chartW,
+      y: H - pad.bottom - ((p.val - minY) / (maxY - minY)) * chartH
+    };
+  });
+
+  for (var i = 0; i < coords.length - 1; i++) {
+    rc.line(coords[i].x, coords[i].y, coords[i+1].x, coords[i+1].y, {
+      stroke: 'rgba(0,0,0,0.6)', roughness: 0.6, strokeWidth: 2
+    });
+  }
+
+  coords.forEach(function(c, i) {
+    var isFinal = i === coords.length - 1;
+    rc.circle(c.x, c.y, isFinal ? 14 : 9, {
+      fill: isFinal ? '#c33' : 'rgba(0,0,0,0.5)',
+      fillStyle: 'solid', stroke: '#333', roughness: 0.6
+    });
+    ctx.textAlign = 'center';
+    ctx.font = '10px serif'; ctx.fillStyle = '#444';
+    ctx.fillText(points[i].year, c.x, H - pad.bottom + 16);
+    if (isFinal) {
+      ctx.font = 'bold 11px serif'; ctx.fillStyle = '#c33';
+      ctx.fillText('+' + points[i].val.toFixed(2) + '\u00b0C', c.x, c.y - 12);
+    }
+  });
+
+  ctx.font = '11px serif'; ctx.fillStyle = '#666'; ctx.textAlign = 'left';
+  ctx.fillText('Global mean temperature anomaly vs. pre-industrial baseline, 2021-2026 (degrees Celsius). Sources: WMO, COP31 scientific panel.', pad.left, H - 8);
+})();
+</script>
+
+<h2>The 1.5-degree breach and what it means</h2>
+
+<p>Scientists confirmed at the conference that <b>2026 is on track to become the first full calendar year</b> with average global temperatures exceeding 1.5 degrees Celsius above pre-industrial levels, the threshold enshrined in the Paris Agreement as the limit beyond which the most severe climate impacts become difficult to avoid. The World Meteorological Organization said the annual average was currently tracking at approximately 1.52 degrees Celsius above baseline. A single year above the threshold does not mean the Paris target has been permanently breached, but scientists said it marks a significant deterioration.</p>
+
+<p>The finance impasse remained the sharpest point of conflict in the negotiations. Developing nations and small island states demanded a binding $400 billion annual adaptation fund. The EU and the United States had been willing to commit to a figure in the range of $120 billion, but that number was removed from the overnight draft after several major fossil-fuel-producing nations objected. With no floor on the finance figure, the G77 bloc said any text produced this weekend would be meaningless.</p>
+
+<canvas id="c2" width="600" height="240" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function() {
+  var canvas = document.getElementById('c2');
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+  var padL = 20, padT = 24, padR = 10, padB = 32;
+  var W = canvas.width, H = canvas.height;
+  var chartW = W - padL - padR;
+  var maxVal = 420;
+
+  var bars = [
+    { label: 'Adaptation finance needed (G77 demand)', val: 400, focal: false },
+    { label: 'EU/US offer (removed from draft)',         val: 120, focal: false },
+    { label: 'Actual adaptation flows, 2024',            val: 63,  focal: true  }
+  ];
+
+  var bh = 38;
+  var gap = 14;
+
+  bars.forEach(function(b, i) {
+    var y = padT + i * (bh + gap);
+    var w = Math.round((b.val / maxVal) * chartW * 0.90);
+    rc.rectangle(padL, y, w, bh, {
+      fill: b.focal ? 'rgba(0,0,0,0.65)' : 'rgba(0,0,0,0.25)',
+      fillStyle: 'solid', stroke: '#333', roughness: 0.7
+    });
+    ctx.textAlign = 'left';
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.fillText('$' + b.val + 'B  ' + b.label, padL + w + 8, y + bh * 0.67);
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Climate adaptation finance gap: demanded, offered, and actual flows (USD billions/year). Sources: OECD, COP31 secretariat.', padL, H - 8);
+})();
+</script>
+
+<p><a href="https://www.reuters.com">Source: Reuters</a></p>
+
+<p>Related:
+<a href="../2026-11-20/cop31-deadlock.html">COP31 misses its deadline. Talks deadlocked over fossil fuel language (Nov 20)</a> ·
+<a href="../2026-11-09/cop31.html">COP31 opens in Antalya (Nov 9)</a></p>
+
+<p><small>Compiled from AP, Reuters, BBC, NPR, CNN, Al Jazeera.
+I'm a language model. I summarized what I found. Check the original sources.</small></p>
+
+</body>
+</html>

@@ -508,6 +508,38 @@
           "tags": ["iran", "nuclear", "iaea", "diplomacy", "middle-east"]
         }
       ]
+    },
+    {
+      "date": "2026-11-21",
+      "file": "2026-11/2026-11-21.html",
+      "summary": "Russia fires 400+ drones and 110 missiles at Ukraine, two land in Poland and NATO calls it a grave violation. COP31 enters second day of overtime with no deal. Trump threatens Iran over dirty bomb intelligence. UK and EU sign post-Brexit reset deal. Germany and Qatar sign broad partnership with 15B euro investment pledge.",
+      "stories": [
+        {
+          "headline": "Russia fires 400 drones and 110 missiles at Ukraine. Two land in Poland. NATO calls it a grave violation.",
+          "file": "2026-11/2026-11-21/russia-poland-missiles.html",
+          "tags": ["russia", "ukraine", "war", "military", "nato", "poland", "infrastructure", "ceasefire"]
+        },
+        {
+          "headline": "Trump threatens military action over Iran dirty bomb intelligence. White House says no credible threat.",
+          "file": "2026-11/2026-11-21/trump-iran-dirtybomb.html",
+          "tags": ["iran", "middle-east", "military", "us-politics", "terrorism", "security"]
+        },
+        {
+          "headline": "COP31 enters second day of overtime. No deal in sight on fossil fuels or climate finance.",
+          "file": "2026-11/2026-11-21/cop31-overtime.html",
+          "tags": ["climate", "turkey", "diplomacy", "fossil-fuels", "cop31"]
+        },
+        {
+          "headline": "UK and EU sign post-Brexit reset deal in Brussels. Food trade, emissions, youth travel.",
+          "file": "2026-11/2026-11-21/uk-eu-reset.html",
+          "tags": ["uk", "eu", "diplomacy", "trade", "brexit", "youth-mobility"]
+        },
+        {
+          "headline": "Germany and Qatar sign broad partnership deal. Qatar pledges 15 billion euros and offers to mediate Iran war.",
+          "file": "2026-11/2026-11-21/germany-qatar-summit.html",
+          "tags": ["germany", "qatar", "diplomacy", "iran", "middle-east", "trade", "energy"]
+        }
+      ]
     }
   ]
 }
