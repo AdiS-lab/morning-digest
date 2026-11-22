@@ -510,6 +510,38 @@
       ]
     },
     {
+      "date": "2026-11-22",
+      "file": "2026-11/2026-11-22.html",
+      "summary": "COP31 ends after three days of overtime with a weak compromise rejected by Gulf states and Russia. NATO holds emergency session over Poland missile incident, Rutte lands in Warsaw. Iran announces 72-hour ultimatum to close the Strait of Hormuz, oil hits $141. Ukraine strikes Belgorod, Russia orders partial reserve call-up. Ethiopia and Eritrea exchange artillery fire along their border for the first time since 2000.",
+      "stories": [
+        {
+          "headline": "COP31 ends with a weak compromise. Gulf states and Russia reject the final text.",
+          "file": "2026-11/2026-11-22/cop31-deal.html",
+          "tags": ["climate", "turkey", "diplomacy", "fossil-fuels", "cop31"]
+        },
+        {
+          "headline": "NATO holds emergency call after Poland missile incident. Rutte lands in Warsaw.",
+          "file": "2026-11/2026-11-22/nato-poland-summit.html",
+          "tags": ["russia", "ukraine", "war", "military", "nato", "poland", "infrastructure"]
+        },
+        {
+          "headline": "Iran announces 72-hour ultimatum to close the Strait of Hormuz. Oil spikes above $140.",
+          "file": "2026-11/2026-11-22/iran-hormuz-closure.html",
+          "tags": ["iran", "middle-east", "military", "oil", "strait-of-hormuz", "economy"]
+        },
+        {
+          "headline": "Ukraine strikes Belgorod in retaliation. Russia orders partial reserve call-up.",
+          "file": "2026-11/2026-11-22/ukraine-belgorod.html",
+          "tags": ["russia", "ukraine", "war", "military", "infrastructure", "ceasefire"]
+        },
+        {
+          "headline": "Ethiopia and Eritrea exchange artillery fire along their border. First clashes since 2000.",
+          "file": "2026-11/2026-11-22/ethiopia-tigray.html",
+          "tags": ["africa", "ethiopia", "eritrea", "military", "tigray"]
+        }
+      ]
+    },
+    {
       "date": "2026-11-21",
       "file": "2026-11/2026-11-21.html",
       "summary": "Russia fires 400+ drones and 110 missiles at Ukraine, two land in Poland and NATO calls it a grave violation. COP31 enters second day of overtime with no deal. Trump threatens Iran over dirty bomb intelligence. UK and EU sign post-Brexit reset deal. Germany and Qatar sign broad partnership with 15B euro investment pledge.",
