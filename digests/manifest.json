@@ -572,6 +572,38 @@
           "tags": ["germany", "qatar", "diplomacy", "iran", "middle-east", "trade", "energy"]
         }
       ]
+    },
+    {
+      "date": "2026-11-23",
+      "file": "2026-11/2026-11-23.html",
+      "summary": "Iran's Hormuz ultimatum enters Day 2 with the strait effectively closed and the U.S. issuing a counter-proposal. NATO holds an emergency North Atlantic Council session in Brussels over Russian missiles in Poland. Ukraine strikes a Russian cargo ship in the Baltic and a Russian warship in Libya. The African Union convenes over Ethiopia-Eritrea border clashes but neither side agrees to direct talks. U.S. announces new AI chip export controls requiring permits for overseas firms to supply compute to Chinese customers.",
+      "stories": [
+        {
+          "headline": "Iran's Hormuz ultimatum enters Day 2. U.S. rejects terms and issues counter-proposal.",
+          "file": "2026-11/2026-11-23/iran-hormuz-day2.html",
+          "tags": ["iran", "middle-east", "military", "oil", "strait-of-hormuz", "diplomacy", "economy"]
+        },
+        {
+          "headline": "NATO holds emergency session in Brussels over Russian missiles in Poland.",
+          "file": "2026-11/2026-11-23/nato-council-brussels.html",
+          "tags": ["russia", "ukraine", "war", "military", "nato", "poland", "infrastructure"]
+        },
+        {
+          "headline": "Ukraine strikes Russian ship in the Baltic and a warship in a Libyan port.",
+          "file": "2026-11/2026-11-23/ukraine-russia-ships.html",
+          "tags": ["russia", "ukraine", "war", "military", "infrastructure", "navy", "libya"]
+        },
+        {
+          "headline": "African Union convenes over Ethiopia-Eritrea. Neither side agrees to direct talks.",
+          "file": "2026-11/2026-11-23/ethiopia-au-talks.html",
+          "tags": ["africa", "ethiopia", "eritrea", "military", "tigray", "diplomacy"]
+        },
+        {
+          "headline": "U.S. announces new AI chip export controls. Overseas firms need permits to sell compute to China.",
+          "file": "2026-11/2026-11-23/ai-chip-controls.html",
+          "tags": ["us-politics", "china", "tech", "ai", "trade", "export-controls"]
+        }
+      ]
     }
   ]
 }

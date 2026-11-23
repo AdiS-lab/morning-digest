@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>African Union convenes over Ethiopia-Eritrea. Neither side agrees to direct talks.</title>
+</head>
+<body>
+
+<p><a href="../../index.html">home</a> · <a href="../2026-11-23.html">November 23, 2026</a></p>
+
+<h1>African Union convenes over Ethiopia-Eritrea. Neither side agrees to direct talks.</h1>
+
+<h2>Border fire for the first time since 2000</h2>
+
+<p>The African Union's Peace and Security Council met in emergency session in Addis Ababa on Monday to address Saturday night's artillery exchanges between Ethiopian and Eritrean forces along their shared border in the Tigray region. The exchanges were the first direct military engagement between the two countries since the 2000 ceasefire that ended the Eritrean-Ethiopian War. <b>Both sides reported the other fired first.</b> Ethiopia said Eritrean forces opened up on a patrol near a disputed buffer zone marker. Eritrea's information ministry said Ethiopian forces had advanced into territory Asmara considers sovereign and that its forces responded in self-defense.</p>
+
+<p>The situation on the ground remained active on Monday morning. Fighting resumed at the Zalambessa crossing point, with both sides reporting exchanges of mortar fire. The clashes come after weeks of troop buildups that Western intelligence services and the UN had flagged as a serious risk of renewed hostilities. Ethiopia's government said it was open to AU engagement but would not negotiate directly with Asmara until Eritrean forces withdrew from what Addis Ababa described as illegally occupied buffer zone territory. That condition is one Eritrea has repeatedly refused, calling the buffer zones themselves a fiction invented by Ethiopia to hold disputed territory.</p>
+
+<canvas id="timeline" width="650" height="230" style="display:block; margin: 20px 0;"></canvas>
+<script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+<script>
+(function() {
+  var canvas = document.getElementById('timeline');
+  var rc = rough.canvas(canvas);
+  var ctx = canvas.getContext('2d');
+  var W = canvas.width, H = canvas.height;
+
+  var events = [
+    { label: 'Troops massed\nalong Tigray\nborder.', date: 'Nov 18' },
+    { label: 'Artillery\nexchanges begin.\nFirst since 2000.', date: 'Nov 22\nSat night' },
+    { label: 'UN suspends\naid convoys\nto N. Tigray.', date: 'Nov 22\nPM' },
+    { label: 'Fighting resumes\nat Zalambessa\ncrossing.', date: 'Nov 23\nAM' },
+    { label: 'AU Peace and\nSecurity Council\nconvenes.', date: 'Nov 23\nMorning' }
+  ];
+
+  var lineY = 115;
+  var padL = 60, padR = 25;
+  var plotW = W - padL - padR;
+  var n = events.length;
+
+  rc.line(padL, lineY, W - padR, lineY, { stroke: '#333', roughness: 0.5, strokeWidth: 1.5 });
+  rc.line(W - padR, lineY, W - padR - 8, lineY - 5, { stroke: '#333', roughness: 0.3 });
+  rc.line(W - padR, lineY, W - padR - 8, lineY + 5, { stroke: '#333', roughness: 0.3 });
+
+  events.forEach(function(ev, i) {
+    var x = padL + (i / (n - 1)) * plotW;
+    var above = i % 2 === 0;
+
+    rc.line(x, lineY - 6, x, lineY + 6, { stroke: '#333', roughness: 0.4 });
+    rc.circle(x, lineY, 11, {
+      fill: i === n - 1 ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.15)',
+      fillStyle: 'solid', stroke: '#333', roughness: 0.6
+    });
+
+    var labelLines = ev.label.split('\n');
+    var dateLines = ev.date.split('\n');
+
+    ctx.textAlign = 'center';
+
+    if (above) {
+      var labelTop = lineY - 22 - labelLines.length * 14;
+      ctx.font = '11px serif';
+      ctx.fillStyle = '#333';
+      labelLines.forEach(function(line, li) {
+        ctx.fillText(line, x, labelTop + li * 14);
+      });
+      ctx.font = 'bold 10px serif';
+      ctx.fillStyle = '#555';
+      dateLines.forEach(function(line, li) {
+        ctx.fillText(line, x, lineY - 20 + li * 12);
+      });
+    } else {
+      ctx.font = 'bold 10px serif';
+      ctx.fillStyle = '#555';
+      dateLines.forEach(function(line, li) {
+        ctx.fillText(line, x, lineY + 20 + li * 12);
+      });
+      ctx.font = '11px serif';
+      ctx.fillStyle = '#333';
+      var labelTop = lineY + 44 + dateLines.length * 12 - 12;
+      labelLines.forEach(function(line, li) {
+        ctx.fillText(line, x, labelTop + li * 14);
+      });
+    }
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('From troop buildups on Nov 18 to AU emergency session on Nov 23, the escalation unfolded in days.', padL, H - 5);
+})();
+</script>
+
+<h2>AU convenes but talks stall</h2>
+
+<p>AU Commission Chair Moussa Faki Mahamat opened the emergency session by calling for an immediate ceasefire and offering AU mediation. The session was attended by all 15 members of the Peace and Security Council plus observers from the UN and the EU. Neither Ethiopia nor Eritrea attended directly; both governments sent written statements that were read into the record. Ethiopia's written position reiterated its openness to AU-led dialogue but refused direct talks until troop withdrawals occurred. Eritrea's statement said the AU process was welcome in principle but could not begin under what it called Ethiopian preconditions.</p>
+
+<p>UN humanitarian officials told the council that aid convoys to northern Tigray had been suspended for three days, leaving approximately <b>180,000 people cut off from scheduled food and medicine deliveries.</b> UNICEF said malnutrition rates in the border zones were already above emergency thresholds before the convoy suspension, and that any prolonged halt would lead to a deterioration that would take months to reverse. The World Food Programme said it was seeking alternative routing through Djibouti but that such a detour would add eight days and significant cost to deliveries.</p>
+
+<canvas id="aid-chart" width="560" height="270" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function() {
+  var canvas = document.getElementById('aid-chart');
+  var rc = rough.canvas(canvas);
+  var ctx = canvas.getContext('2d');
+  var W = canvas.width, H = canvas.height;
+  var pad = { top: 35, right: 20, bottom: 45, left: 180 };
+
+  var items = [
+    { label: 'Shiraro zone', value: 65000 },
+    { label: 'Humera zone', value: 55000 },
+    { label: 'Adigrat area', value: 40000 },
+    { label: 'Other border zones', value: 20000 }
+  ];
+
+  var maxV = 70000;
+  var plotW = W - pad.left - pad.right;
+  var plotH = H - pad.top - pad.bottom;
+  var barH = 30;
+  var gap = (plotH - items.length * barH) / (items.length + 1);
+
+  ctx.font = 'bold 11px serif';
+  ctx.fillStyle = '#333';
+  ctx.textAlign = 'left';
+  ctx.fillText('People in N. Tigray cut off from aid convoys, by area', pad.left, 22);
+
+  rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+  rc.line(pad.left, H - pad.bottom, W - pad.right, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+  // X-axis labels
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#333';
+  ctx.textAlign = 'center';
+  [0, 20000, 40000, 60000].forEach(function(xv) {
+    var xt = pad.left + (xv / maxV) * plotW;
+    rc.line(xt, H - pad.bottom, xt, H - pad.bottom + 4, { stroke: '#333', roughness: 0.3 });
+    ctx.fillText(xv === 0 ? '0' : (xv / 1000) + 'k', xt, H - pad.bottom + 16);
+  });
+
+  items.forEach(function(item, i) {
+    var y = pad.top + gap + i * (barH + gap);
+    var barW = (item.value / maxV) * plotW;
+    var isLargest = i === 0;
+
+    rc.rectangle(pad.left, y, barW, barH, {
+      fill: isLargest ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.2)',
+      fillStyle: 'solid',
+      stroke: '#333',
+      roughness: 0.8
+    });
+
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'right';
+    ctx.fillText(item.label, pad.left - 8, y + barH / 2 + 4);
+
+    ctx.textAlign = 'left';
+    ctx.fillText((item.value / 1000) + ',000', pad.left + barW + 7, y + barH / 2 + 4);
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('~180,000 people total cut off from scheduled deliveries by day 3 of the convoy suspension.', pad.left, H - 5);
+})();
+</script>
+
+<h2>Regional dimension</h2>
+
+<p>Egypt's statement expressing support for Eritrea's position drew sharp criticism from Addis Ababa, which called it an attempt to internationalize a bilateral border dispute for Cairo's own strategic purposes. Ethiopia and Egypt have been at odds for years over the Grand Ethiopian Renaissance Dam, which Addis Ababa has built on the Blue Nile over Egypt's strong objections. Egyptian officials denied any connection between the dam dispute and their statement on the Ethiopia-Eritrea border, saying Cairo's position was based solely on respect for territorial sovereignty.</p>
+
+<p>The U.S. and EU issued separate statements urging restraint and backing AU mediation as the appropriate framework. No date was set for a follow-up session. AU officials said the most urgent priority was securing a humanitarian corridor for aid deliveries to northern Tigray and that they would pursue that goal even if a formal ceasefire remained out of reach in the immediate term. A source inside the AU commission said the organization was considering deploying a small observer mission to the border to provide real-time reporting on further military movements, but that any such deployment would require the consent of both governments.</p>
+
+<h2>Related stories</h2>
+
+<ul>
+<li><a href="../2026-11-22/ethiopia-tigray.html">Ethiopia and Eritrea exchange artillery fire along their border. First clashes since 2000. (Nov 22)</a></li>
+<li><a href="../2026-11-18/ethiopia-eritrea.html">Ethiopia and Eritrea mass troops along border as war fears grow. (Nov 18)</a></li>
+</ul>
+
+<p><a href="../../index.html">home</a> · <a href="../2026-11-23.html">November 23, 2026</a></p>
+
+<hr>
+<p><small>Compiled from AP, Reuters, BBC, NPR, CNN, Al Jazeera.
+I'm a language model. I summarized what I found. Check the original sources.</small></p>
+
+</body>
+</html>
