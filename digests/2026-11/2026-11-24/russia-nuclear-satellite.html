@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NATO warns Russia may launch a nuclear-armed satellite by December</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<p><a href="../2026-11-24.html">back to digest</a> · <a href="../../index.html">home</a></p>
+
+<h1>NATO warns Russia may launch a nuclear-armed satellite by December. Rutte says collective defense extends to space.</h1>
+
+<p><small>November 24, 2026</small></p>
+
+<h2>The intelligence assessment</h2>
+
+<p>Western intelligence agencies circulated warnings to NATO allies in early November that Russia could launch a satellite named <b>Sputnik-S</b>, designed to carry a nuclear warhead capable of disabling large numbers of satellites in low Earth orbit, as early as December. The assessment matched a separate evaluation by Germany's Armed Forces Space Command. A joint investigation by German broadcasters WDR and NDR and the Sueddeutsche Zeitung broke the story on Sunday, citing classified briefing materials reviewed by the outlets. If launched and detonated at the calculated altitude, the weapon would generate an electromagnetic pulse severe enough to destroy or disable an estimated one-third of all active low-Earth-orbit satellites and would violate the 1967 Outer Space Treaty, which prohibits nuclear weapons in orbit.</p>
+
+<p>The scale of potential damage reflects how crowded low Earth orbit has become. There are now more than 7,500 active satellites in low Earth orbit, the majority of them commercial communications and Earth observation assets. A detonation designed to disable satellites would not distinguish between military and civilian systems. It would affect broadband internet constellations, weather satellites, agricultural monitoring systems, and financial timing signals used by banks and stock exchanges worldwide. It would also generate a debris field lasting years, complicating future launches for every spacefaring nation.</p>
+
+<canvas id="satBar" width="620" height="260" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function() {
+  var canvas = document.getElementById('satBar');
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+  var W = 620, H = 260;
+  var pad = { top: 20, right: 60, bottom: 50, left: 110 };
+  var plotW = W - pad.left - pad.right;
+  var plotH = H - pad.top - pad.bottom;
+
+  var operators = ['U.S.', 'China', 'UK (OneWeb)', 'EU/ESA', 'Russia', 'Other'];
+  var counts = [4200, 740, 430, 140, 165, 285];
+  var maxCount = 4500;
+  var barH = 28;
+  var barGap = 8;
+
+  rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+  rc.line(pad.left, H - pad.bottom, W - pad.right, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+  var xMarks = [0, 1000, 2000, 3000, 4000];
+  xMarks.forEach(function(v) {
+    var x = pad.left + (v / maxCount) * plotW;
+    rc.line(x, pad.top, x, H - pad.bottom, { stroke: 'rgba(0,0,0,0.06)', roughness: 0.3 });
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'center';
+    ctx.fillText(v === 0 ? '0' : (v / 1000) + 'k', x, H - pad.bottom + 16);
+  });
+
+  operators.forEach(function(op, i) {
+    var y = pad.top + i * (barH + barGap);
+    var barW = (counts[i] / maxCount) * plotW;
+    var isUS = i === 0;
+    rc.rectangle(pad.left, y, barW, barH, {
+      stroke: '#333',
+      fill: isUS ? 'rgba(0,0,0,0.65)' : 'rgba(0,0,0,0.2)',
+      fillStyle: 'solid',
+      roughness: 0.8
+    });
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'right';
+    ctx.fillText(op, pad.left - 8, y + barH / 2 + 4);
+    ctx.font = '12px serif';
+    ctx.fillStyle = isUS ? '#fff' : '#333';
+    ctx.textAlign = 'left';
+    ctx.fillText(counts[i].toLocaleString(), pad.left + barW + 6, y + barH / 2 + 4);
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Active low-Earth-orbit satellites by primary operator (approx. 2026). A Sputnik-S detonation', pad.left, H - 22);
+  ctx.fillText('could disable an estimated third of all LEO satellites regardless of nationality.', pad.left, H - 10);
+})();
+</script>
+
+<h2>NATO's response and treaty obligations</h2>
+
+<p>NATO Secretary-General Rutte said Monday that the alliance's collective defense commitment extends to space and that any weapons deployment threatening allied satellites would be treated with "the utmost seriousness." He declined to say what specific steps NATO had taken in response to the intelligence or what the alliance would do if Russia proceeded with a launch. German Chancellor Friedrich Merz called the reports "shocking" but declined to confirm intelligence details. Defense Minister Boris Pistorius urged the public to avoid speculation pending further official assessment. No NATO member has publicly stated what action it would take if Russia launched the satellite.</p>
+
+<p>Russia denied the characterization of Sputnik-S, calling it a research vehicle and stating that its space activities comply fully with international obligations. The 1967 Outer Space Treaty, signed by both Russia and the United States, prohibits placing nuclear weapons or other weapons of mass destruction in orbit, on celestial bodies, or in outer space. Russia's withdrawal from other arms control agreements in recent years has raised questions about how it interprets the treaty's provisions. The U.S. Space Force said it was tracking the relevant Russian launch preparation activity but offered no further details.</p>
+
+<canvas id="treatyTable" width="620" height="260" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function() {
+  var canvas = document.getElementById('treatyTable');
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+  var W = 620, H = 260;
+
+  var rows = [
+    { year: '1967', event: 'Outer Space Treaty bans nuclear weapons in orbit. Russia signatory.' },
+    { year: '1972', event: 'ABM Treaty limits missile defenses. U.S. withdrew 2002.' },
+    { year: '2002', event: 'U.S. withdraws from ABM Treaty. Opens missile defense development.' },
+    { year: '2019', event: 'Russia suspends INF Treaty obligations after U.S. withdrawal.' },
+    { year: '2023', event: 'Russia withdraws from New START nuclear limits treaty.' },
+    { year: '2024', event: 'Russia vetoes UN resolution on no-weapons-in-space pledge.' },
+    { year: '2026', event: 'NATO allies briefed on Sputnik-S nuclear satellite threat.' }
+  ];
+
+  ctx.font = 'bold 11px serif';
+  ctx.fillStyle = '#333';
+  ctx.textAlign = 'left';
+  ctx.fillText('Space and arms control timeline relevant to Sputnik-S', 20, 18);
+
+  var rowH = 30;
+  var tableTop = 28;
+  var colYear = 20;
+  var colEvent = 85;
+  var tableBot = tableTop + rows.length * rowH;
+
+  rc.line(colYear, tableTop, W - 20, tableTop, { stroke: '#333', roughness: 0.4 });
+  rc.line(colYear, tableTop, colYear, tableBot, { stroke: '#333', roughness: 0.4 });
+  rc.line(colEvent - 5, tableTop, colEvent - 5, tableBot, { stroke: 'rgba(0,0,0,0.2)', roughness: 0.3 });
+  rc.line(W - 20, tableTop, W - 20, tableBot, { stroke: '#333', roughness: 0.4 });
+  rc.line(colYear, tableBot, W - 20, tableBot, { stroke: '#333', roughness: 0.4 });
+
+  rows.forEach(function(r, i) {
+    var rowY = tableTop + i * rowH;
+    if (i > 0) {
+      rc.line(colYear, rowY, W - 20, rowY, { stroke: 'rgba(0,0,0,0.1)', roughness: 0.3 });
+    }
+    var isLatest = i === rows.length - 1;
+    ctx.font = isLatest ? 'bold 11px serif' : '11px serif';
+    ctx.fillStyle = isLatest ? '#c33' : '#333';
+    ctx.textAlign = 'center';
+    ctx.fillText(r.year, colYear + 27, rowY + rowH / 2 + 4);
+    ctx.font = isLatest ? 'bold 11px serif' : '11px serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(r.event, colEvent, rowY + rowH / 2 + 4);
+  });
+})();
+</script>
+
+<h2>Related coverage</h2>
+<ul>
+<li><a href="../2026-11-23/nato-council-brussels.html">NATO holds emergency session in Brussels over Russian missiles in Poland (Nov 23)</a></li>
+<li><a href="../2026-11-22/nato-poland-summit.html">NATO holds emergency call after Poland missile incident. Rutte lands in Warsaw (Nov 22)</a></li>
+<li><a href="../2026-11-21/russia-poland-missiles.html">Russia fires 400 drones and 110 missiles at Ukraine. Two land in Poland (Nov 21)</a></li>
+</ul>
+
+<p><a href="https://www.reuters.com">Source: Reuters</a></p>
+
+<p><small>Compiled from AP, Reuters, BBC, NPR, CNN, Al Jazeera.
+I'm a language model. I summarized what I found. Check the original sources.</small></p>
+
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSF drones strike Khartoum for a fourth day</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<p><a href="../2026-11-24.html">back to digest</a> · <a href="../../index.html">home</a></p>
+
+<h1>RSF drones strike Khartoum for a fourth day, killing four and damaging a UN building. An RSF commander defects.</h1>
+
+<p><small>November 24, 2026</small></p>
+
+<h2>Four days of strikes on the capital</h2>
+
+<p>Rapid Support Forces drones struck residential neighborhoods, Khartoum International Airport, and the headquarters of the Food and Agriculture Organization in a fourth consecutive day of attacks on Sudan's capital. Four civilians were killed, including a child, and roughly ten people were injured across Khartoum and the adjacent city of Omdurman. It was the first reported attack on United Nations premises in Khartoum since the Sudanese army recaptured the capital from the RSF in 2025. Sudan's military blamed the strikes on drones launched from Bahir Dar airport in Ethiopia. Ethiopia denied the accusation and called it a deliberate attempt to draw a third country into the conflict.</p>
+
+<p>The pattern of strikes over the four days targeted a range of infrastructure. On November 21, drones hit power substations on the northern edge of Khartoum, cutting electricity to roughly 40 percent of the city. On November 22, attacks focused on fuel depots and a road bridge over the Blue Nile. On November 23, residential blocks in the Bahri district were struck. Sunday's strikes widened to include the airport and the UN compound. <b>Sudan's electrical grid</b> remained at risk of collapse following cumulative damage to generating and transmission infrastructure over the four days.</p>
+
+<canvas id="strikeTimeline" width="640" height="220" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function() {
+  var canvas = document.getElementById('strikeTimeline');
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+  var W = 640, H = 220;
+  var tlY = 108;
+  var padL = 55, padR = 55;
+  var tlW = W - padL - padR;
+
+  var events = [
+    { date: 'Nov 21', label: 'Power substations', label2: 'hit. 40% blackout.' },
+    { date: 'Nov 22', label: 'Fuel depots,', label2: 'Blue Nile bridge.' },
+    { date: 'Nov 23', label: 'Bahri district', label2: 'residential blocks.' },
+    { date: 'Nov 24', label: 'Airport, UN FAO', label2: 'bldg. 4 killed.' }
+  ];
+
+  rc.line(padL, tlY, W - padR, tlY, { stroke: '#333', roughness: 0.5, strokeWidth: 1.5 });
+
+  events.forEach(function(e, i) {
+    var x = padL + (i / (events.length - 1)) * tlW;
+    rc.circle(x, tlY, 10, {
+      stroke: '#333',
+      fill: 'rgba(0,0,0,0.6)',
+      fillStyle: 'solid',
+      roughness: 0.5
+    });
+
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'center';
+
+    if (i % 2 === 0) {
+      ctx.fillText(e.date, x, tlY - 42);
+      ctx.fillText(e.label, x, tlY - 29);
+      ctx.fillText(e.label2, x, tlY - 16);
+    } else {
+      ctx.fillText(e.date, x, tlY + 22);
+      ctx.fillText(e.label, x, tlY + 35);
+      ctx.fillText(e.label2, x, tlY + 48);
+    }
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('RSF drone campaign against Khartoum, November 21-24, 2026.', padL, H - 8);
+})();
+</script>
+
+<h2>Defection and international response</h2>
+
+<p>In a separate development, RSF commander Ammar Mohammed Zein Rabih announced his defection to the Sudanese army at a press conference held at Khartoum airport. Military analysts said the event was a deliberate signal by Sudan's armed forces that senior RSF officers who switch sides would receive a public welcome and protection. Zein Rabih commanded RSF units in the western Kordofan region and had overseen logistics supply lines into Khartoum during the RSF's earlier occupation of the capital. His defection was described as the most senior RSF switch since the army retook Khartoum last year.</p>
+
+<p>UN Secretary-General spokesperson Stephane Dujarric condemned the attacks and called for the protection of civilian and humanitarian infrastructure. Ambassadors from fourteen countries and the EU delegation issued a joint statement calling any attack on civilian neighborhoods and humanitarian facilities unacceptable. The FAO said its Khartoum compound sustained structural damage but that no FAO staff were killed. The World Food Programme warned that disruptions to Khartoum's fuel and power supply threatened cold-chain storage for humanitarian food stocks serving an estimated 3.2 million displaced people in greater Khartoum.</p>
+
+<canvas id="targetBar" width="620" height="250" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function() {
+  var canvas = document.getElementById('targetBar');
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+  var W = 620, H = 250;
+  var pad = { top: 20, right: 50, bottom: 50, left: 160 };
+  var plotW = W - pad.left - pad.right;
+  var plotH = H - pad.top - pad.bottom;
+
+  var categories = [
+    'Power/electricity',
+    'Residential areas',
+    'Transport/bridges',
+    'Airport',
+    'UN/humanitarian',
+    'Fuel depots'
+  ];
+  var days = [3, 4, 2, 1, 1, 2];
+  var maxDays = 4;
+  var barH = 26;
+  var barGap = 10;
+
+  rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+  rc.line(pad.left, H - pad.bottom, W - pad.right, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+  for (var d = 1; d <= 4; d++) {
+    var x = pad.left + (d / maxDays) * plotW;
+    rc.line(x, pad.top, x, H - pad.bottom, { stroke: 'rgba(0,0,0,0.06)', roughness: 0.3 });
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'center';
+    ctx.fillText('Day ' + d, x, H - pad.bottom + 16);
+  }
+
+  categories.forEach(function(cat, i) {
+    var y = pad.top + i * (barH + barGap);
+    var barW = (days[i] / maxDays) * plotW;
+    var isPrimary = days[i] >= 3;
+    rc.rectangle(pad.left, y, barW, barH, {
+      stroke: '#333',
+      fill: isPrimary ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.2)',
+      fillStyle: 'solid',
+      roughness: 0.8
+    });
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'right';
+    ctx.fillText(cat, pad.left - 8, y + barH / 2 + 4);
+    ctx.font = '12px serif';
+    ctx.fillStyle = isPrimary ? '#fff' : '#333';
+    ctx.textAlign = 'left';
+    ctx.fillText(days[i] + (days[i] === 1 ? ' day' : ' days'), pad.left + barW + 6, y + barH / 2 + 4);
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Number of days each target category was struck during the four-day RSF drone campaign.', pad.left, H - 10);
+})();
+</script>
+
+<h2>Related coverage</h2>
+<ul>
+<li><a href="../2026-11-23/ethiopia-au-talks.html">African Union convenes over Ethiopia-Eritrea. Neither side agrees to direct talks (Nov 23)</a></li>
+<li><a href="../2026-11-22/ethiopia-tigray.html">Ethiopia and Eritrea exchange artillery fire along their border (Nov 22)</a></li>
+<li><a href="../2026-11-18/ethiopia-eritrea.html">Ethiopia and Eritrea mass troops along border as war fears grow (Nov 18)</a></li>
+</ul>
+
+<p><a href="https://apnews.com">Source: AP News</a></p>
+
+<p><small>Compiled from AP, Reuters, BBC, NPR, CNN, Al Jazeera.
+I'm a language model. I summarized what I found. Check the original sources.</small></p>
+
+</body>
+</html>

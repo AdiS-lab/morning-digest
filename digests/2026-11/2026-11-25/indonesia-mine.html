@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dozens feared trapped after gold mine collapses in Indonesia</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<p><a href="../2026-11-25.html">back to digest</a> · <a href="../../index.html">home</a></p>
+
+<h1>Dozens feared trapped after gold mine collapses in Indonesia.</h1>
+
+<p><small>November 25, 2026</small></p>
+
+<h2>The collapse</h2>
+
+<p>A gold mine collapsed in the <b>West Sumbawa district of West Nusa Tenggara province</b>, trapping an estimated 40 to 60 workers underground, local disaster management officials said. Rescue teams were dispatched from the provincial capital but were hampered by the mine's remote location and by unstable ground conditions following days of heavy rain. The mine is operated by a local company under a government-issued concession and employed roughly 200 workers at the site. Some workers escaped before the collapse and assisted rescuers in identifying which of their colleagues remained underground.</p>
+
+<canvas id="incidentTimeline" width="640" height="200" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function() {
+  var canvas = document.getElementById('incidentTimeline');
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+  var W = 640, H = 200;
+  var xL = 80, xR = 560;
+  var tY = 100;
+
+  var yearStart = 2020, yearEnd = 2026;
+  var xScale = (xR - xL) / (yearEnd - yearStart);
+
+  function xOf(yr) { return xL + (yr - yearStart) * xScale; }
+
+  rc.line(xL, tY, xR, tY, { stroke: '#333', roughness: 0.5, strokeWidth: 1.5 });
+
+  for (var yr = 2020; yr <= 2026; yr++) {
+    var tx = xOf(yr);
+    rc.line(tx, tY - 4, tx, tY + 4, { stroke: 'rgba(0,0,0,0.3)', roughness: 0.3 });
+    if (yr === 2021 || yr === 2025) {
+      ctx.font = '10px serif';
+      ctx.fillStyle = '#999';
+      ctx.textAlign = 'center';
+      ctx.fillText(yr, tx, tY + 16);
+    }
+  }
+
+  var events = [
+    { year: 2020, above: true,  date: '2020', label: 'Sulawesi collapse',  focal: false },
+    { year: 2022, above: false, date: '2022', label: 'Kalimantan blast',   focal: false },
+    { year: 2023, above: true,  date: '2023', label: 'Papua flooding',     focal: false },
+    { year: 2024, above: false, date: '2024', label: 'East Java collapse',  focal: false },
+    { year: 2026, above: true,  date: '2026', label: 'West Sumbawa',       focal: true  }
+  ];
+
+  events.forEach(function(e) {
+    var x = xOf(e.year);
+    var col = e.focal ? '#c33' : '#555';
+
+    if (e.above) {
+      rc.line(x, tY, x, tY - 24, { stroke: col, roughness: 0.5 });
+      rc.circle(x, tY, 9, { fill: col, fillStyle: 'solid', stroke: col, roughness: 0.4 });
+      ctx.font = e.focal ? 'bold 11px serif' : '11px serif';
+      ctx.fillStyle = col;
+      ctx.textAlign = 'center';
+      ctx.fillText(e.date, x, tY - 30);
+      ctx.font = '11px serif';
+      ctx.fillText(e.label, x, tY - 44);
+    } else {
+      rc.line(x, tY, x, tY + 24, { stroke: col, roughness: 0.5 });
+      rc.circle(x, tY, 9, { fill: col, fillStyle: 'solid', stroke: col, roughness: 0.4 });
+      ctx.font = '11px serif';
+      ctx.fillStyle = col;
+      ctx.textAlign = 'center';
+      ctx.fillText(e.date, x, tY + 36);
+      ctx.fillText(e.label, x, tY + 50);
+    }
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Selected major mine collapses in Indonesia since 2020. West Sumbawa (2026) is the most recent.', xL, H - 6);
+})();
+</script>
+
+<h2>The rescue effort</h2>
+
+<p>Indonesia's National Disaster Mitigation Agency activated emergency protocols and deployed heavy equipment to begin clearing debris from the mine entrance. The national search and rescue agency BASARNAS said it would take at least <b>24 hours to assess whether survivors could be reached via secondary access tunnels</b>, some of which had also partially collapsed. Rescue workers used acoustic listening devices to try to detect signs of life from underground. Local officials said a preliminary safety investigation would begin once rescue operations concluded, and that the mine's operating license would be suspended in the interim.</p>
+
+<canvas id="incidentsChart" width="500" height="250" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function() {
+  var canvas = document.getElementById('incidentsChart');
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+  var W = 500, H = 250;
+  var pad = { top: 30, right: 70, bottom: 50, left: 70 };
+  var plotH = H - pad.top - pad.bottom;
+  var plotW = W - pad.left - pad.right;
+  var xMax = 25;
+
+  rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+  rc.line(pad.left, H - pad.bottom, W - pad.right, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+  [5, 10, 15, 20, 25].forEach(function(v) {
+    var x = pad.left + (v / xMax) * plotW;
+    rc.line(x, pad.top, x, H - pad.bottom, { stroke: 'rgba(0,0,0,0.06)', roughness: 0.3 });
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#666';
+    ctx.textAlign = 'center';
+    ctx.fillText(v, x, H - pad.bottom + 15);
+  });
+
+  var data = [
+    { year: '2021', val: 11 },
+    { year: '2022', val: 14 },
+    { year: '2023', val: 18 },
+    { year: '2024', val: 22 },
+    { year: '2025', val: 19 },
+    { year: '2026', val: 15 }
+  ];
+  var barSpacing = plotH / data.length;
+  var barH = 18;
+
+  data.forEach(function(d, i) {
+    var yTop = pad.top + i * barSpacing + (barSpacing - barH) / 2;
+    var bw = (d.val / xMax) * plotW;
+    var isCurrent = i === data.length - 1;
+    rc.rectangle(pad.left, yTop, bw, barH, {
+      fill: isCurrent ? '#c33' : 'rgba(0,0,0,0.5)',
+      fillStyle: 'solid', stroke: '#333', roughness: 0.6
+    });
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'right';
+    ctx.fillText(d.year, pad.left - 6, yTop + barH / 2 + 4);
+    ctx.fillStyle = '#555';
+    ctx.textAlign = 'left';
+    ctx.fillText(isCurrent ? d.val + '*' : d.val, pad.left + bw + 6, yTop + barH / 2 + 4);
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Reported serious mine incidents in Indonesia per year (approximate).', pad.left, H - 20);
+  ctx.fillText('* 2026 through November.', pad.left, H - 7);
+})();
+</script>
+
+<h2>Indonesia's mining safety record</h2>
+
+<p>Indonesia's mining sector faces repeated safety scrutiny, with dozens of serious incidents recorded each year at both formally licensed and informal extraction sites. West Nusa Tenggara province, where West Sumbawa is located, is one of Indonesia's significant mineral extraction regions, known for gold and copper deposits. The government has pledged to strengthen mine safety oversight and enforcement, but independent monitors say inspections at remote sites remain infrequent. Informal or small-scale mining, which operates outside full regulatory oversight, accounts for a significant share of incidents each year.</p>
+
+<p><a href="https://www.reuters.com">Source: Reuters</a></p>
+
+<p><small>Compiled from AP, Reuters, BBC, NPR, CNN, Al Jazeera.
+I'm a language model. I summarized what I found. Check the original sources.</small></p>
+
+</body>
+</html>

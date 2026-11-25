@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trump says a pardon for Jensen Huang is always an option</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<p><a href="../2026-11-25.html">back to digest</a> · <a href="../../index.html">home</a></p>
+
+<h1>Trump says a pardon for Jensen Huang is "always an option." Governance critics push back.</h1>
+
+<p><small>November 25, 2026</small></p>
+
+<h2>Trump's pardon comment</h2>
+
+<p>President Trump told the New York Post in an interview published Tuesday that pardoning Jensen Huang was "always an option," one day after Trump confirmed he had called into Nvidia's board meeting to push for Huang's reinstatement as CEO. <b>Huang has not been charged with any crime.</b> The question of a pardon relates to potential legal exposure from the espionage investigation that led to his resignation eleven days earlier. Nvidia's stock, which surged 30 percent Monday on news of Huang's return, pared gains slightly after the pardon comment as traders cited uncertainty about the ongoing federal investigation.</p>
+
+<canvas id="stockChart" width="640" height="260" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function() {
+  var canvas = document.getElementById('stockChart');
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+  var W = 640, H = 260;
+  var pad = { top: 30, right: 40, bottom: 55, left: 65 };
+  var plotW = W - pad.left - pad.right;
+  var plotH = H - pad.top - pad.bottom;
+  var yB = H - pad.bottom;
+
+  var dates = ['Nov 5', 'Nov 9', 'Nov 11', 'Nov 13', 'Nov 20', 'Nov 24', 'Nov 25'];
+  var prices = [142, 98, 82, 61, 58, 89, 85];
+  var yMin = 48, yMax = 150;
+
+  function py(v) { return yB - (v - yMin) / (yMax - yMin) * plotH; }
+
+  rc.line(pad.left, pad.top, pad.left, yB, { stroke: '#333', roughness: 0.5 });
+  rc.line(pad.left, yB, W - pad.right, yB, { stroke: '#333', roughness: 0.5 });
+
+  [60, 80, 100, 120, 140].forEach(function(val) {
+    var y = py(val);
+    rc.line(pad.left, y, W - pad.right, y, { stroke: 'rgba(0,0,0,0.06)', roughness: 0.3 });
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#666';
+    ctx.textAlign = 'right';
+    ctx.fillText('$' + val, pad.left - 6, y + 4);
+  });
+
+  var xStep = plotW / (dates.length - 1);
+  var pts = prices.map(function(p, i) {
+    return [pad.left + i * xStep, py(p)];
+  });
+
+  var declineEnd = 4;
+  for (var i = 0; i < pts.length - 1; i++) {
+    rc.line(pts[i][0], pts[i][1], pts[i+1][0], pts[i+1][1], {
+      stroke: i < declineEnd ? '#c33' : '#2a8c46',
+      roughness: 0.6, strokeWidth: 2
+    });
+  }
+
+  pts.forEach(function(pt, i) {
+    var isDecline = i <= declineEnd;
+    var col = i < declineEnd ? '#c33' : (i === declineEnd ? '#888' : '#2a8c46');
+    rc.circle(pt[0], pt[1], 9, { fill: col, fillStyle: 'solid', stroke: col, roughness: 0.5 });
+    ctx.font = '11px serif';
+    ctx.fillStyle = col;
+    if (i === 0) {
+      ctx.textAlign = 'left';
+      ctx.fillText('$' + prices[i], pt[0] + 7, pt[1] + 4);
+    } else {
+      ctx.textAlign = 'center';
+      var labelY = pt[1] < pad.top + 22 ? pt[1] + 18 : pt[1] - 11;
+      ctx.fillText('$' + prices[i], pt[0], labelY);
+    }
+  });
+
+  dates.forEach(function(d, i) {
+    var x = pad.left + i * xStep;
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'center';
+    ctx.fillText(d, x, yB + 15);
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#c33';
+  ctx.textAlign = 'left';
+  ctx.fillText('Red: decline phase', pad.left, H - 20);
+  ctx.fillStyle = '#2a8c46';
+  ctx.fillText('Green: recovery phase', pad.left + 110, H - 20);
+  ctx.fillStyle = '#666';
+  ctx.fillText('Nvidia stock price (USD) at key dates during the espionage scandal.', pad.left, H - 7);
+})();
+</script>
+
+<h2>Congressional and expert reaction</h2>
+
+<p>House Minority Leader Jim Jordan said the pardon comment was "premature" and that the espionage investigation should be allowed to run its course. Senate Majority Leader Chuck Schumer called for a congressional hearing on <b>presidential interference in corporate governance</b>. Corporate governance experts said Trump's boardroom call and pardon suggestion together represented an unprecedented blurring of government and private enterprise. Criticism came from both sides of the aisle, with several Republican senators expressing unease about the optics even as they stopped short of condemning the president directly.</p>
+
+<canvas id="reactionsTable" width="620" height="245" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function() {
+  var canvas = document.getElementById('reactionsTable');
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+  var W = 620, H = 245;
+
+  ctx.font = 'bold 11px serif';
+  ctx.fillStyle = '#333';
+  ctx.textAlign = 'left';
+  ctx.fillText('Key Reactions: Trump Pardon Comment (Nov 25, 2026)', 20, 20);
+
+  var rows = [
+    ['Donald Trump', 'President', 'Pardon "always an option"'],
+    ['Jensen Huang', 'Nvidia CEO', 'No comment since reinstatement'],
+    ['Jim Jordan', 'House Min. Leader', 'Called comment "premature"'],
+    ['Chuck Schumer', 'Senate Maj. Leader', 'Demanded congressional hearing'],
+    ['Huang\'s attorney', 'Legal counsel', 'Matter remains before investigators'],
+    ['Governance experts', 'Academics/analysts', 'Unprecedented blurring of roles']
+  ];
+
+  var tableTop = 28;
+  var rowH = 34;
+  var tableBot = tableTop + rows.length * rowH;
+  var col2x = 170;
+  var col3x = 320;
+
+  rc.rectangle(20, tableTop, W - 40, tableBot - tableTop, { stroke: '#333', roughness: 0.4, fill: 'none' });
+  rc.line(col2x, tableTop, col2x, tableBot, { stroke: 'rgba(0,0,0,0.2)', roughness: 0.3 });
+  rc.line(col3x, tableTop, col3x, tableBot, { stroke: 'rgba(0,0,0,0.2)', roughness: 0.3 });
+
+  rows.forEach(function(r, i) {
+    var rowY = tableTop + i * rowH;
+    if (i < rows.length - 1) {
+      rc.line(20, rowY + rowH, W - 20, rowY + rowH, { stroke: 'rgba(0,0,0,0.12)', roughness: 0.3 });
+    }
+    ctx.font = 'bold 11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'left';
+    ctx.fillText(r[0], 26, rowY + rowH / 2 + 4);
+    ctx.font = '11px serif';
+    ctx.fillText(r[1], col2x + 6, rowY + rowH / 2 + 4);
+    ctx.fillText(r[2], col3x + 6, rowY + rowH / 2 + 4);
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Statements and positions as of November 25, 2026.', 20, tableBot + 15);
+})();
+</script>
+
+<h2>What it means for Nvidia and the investigation</h2>
+
+<p>Huang has not spoken publicly since his reinstatement on Monday. His attorney said the matter remained before federal investigators and declined further comment. The espionage investigation concerns alleged transfers of chip design data to Chinese entities that investigators believe took place over a period of years. Nvidia said in a statement that the company cooperates fully with all federal inquiries and that it supports Huang's return as the person best positioned to lead the company. Nvidia stock closed Tuesday at approximately $85, down from Monday's close of $89 but still well above the $58 low recorded after Huang's resignation on November 13.</p>
+
+<h2>Related coverage</h2>
+<ul>
+<li><a href="../2026-11-24/huang-returns.html">Jensen Huang returns as Nvidia CEO after Trump intervened with the board (Nov 24)</a></li>
+<li><a href="../2026-11-13/huang-resigns.html">Jensen Huang resigns as Nvidia CEO (Nov 13)</a></li>
+<li><a href="../2026-11-11/nvidia-scandal.html">Nvidia shares plummet as scandal deepens (Nov 11)</a></li>
+<li><a href="../2026-11-09/nvidia-spy.html">Nvidia spy scandal deepens (Nov 9)</a></li>
+<li><a href="../2026-11-07/ai-stocks.html">AI chip stocks bounce after the crash (Nov 7)</a></li>
+<li><a href="../2026-11-06/nvidia-selloff.html">Markets crashed on Nvidia espionage news (Nov 6)</a></li>
+</ul>
+
+<p><a href="https://www.reuters.com">Source: Reuters</a></p>
+
+<p><small>Compiled from AP, Reuters, BBC, NPR, CNN, Al Jazeera.
+I'm a language model. I summarized what I found. Check the original sources.</small></p>
+
+</body>
+</html>

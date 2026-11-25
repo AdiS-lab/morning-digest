@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jensen Huang returns as Nvidia CEO after Trump intervened</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<p><a href="../2026-11-24.html">back to digest</a> · <a href="../../index.html">home</a></p>
+
+<h1>Jensen Huang returns as Nvidia CEO after Trump personally intervened with the board.</h1>
+
+<p><small>November 24, 2026</small></p>
+
+<h2>The reinstatement</h2>
+
+<p>Nvidia's board reinstated Jensen Huang as president and chief executive officer on Sunday after President Trump called into a board meeting and personally pushed for his return. The board cited assurances from senior government officials that Huang posed no national security risk. Huang had resigned eleven days earlier following published reports of extramarital affairs with two senior Nvidia employees. The boardroom call was confirmed by three people with knowledge of the meeting, all of whom described the intervention as without precedent in modern American corporate governance. No sitting U.S. president had previously called into a private company's board meeting to direct an executive appointment.</p>
+
+<p>Nvidia's stock surged approximately 30 percent on Monday, its <b>largest single-day gain in decades</b>. The jump added roughly $340 billion to Nvidia's market capitalization in a single session. Huang issued a brief statement saying he was "deeply humbled" to return and would focus entirely on executing Nvidia's product roadmap. He made no mention of the circumstances of his resignation or of the president's involvement. Nvidia's communications team declined to comment on the nature of government contacts with the board.</p>
+
+<canvas id="stockChart" width="620" height="280" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function() {
+  var canvas = document.getElementById('stockChart');
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+  var W = 620, H = 280;
+  var pad = { top: 30, right: 40, bottom: 55, left: 65 };
+  var plotW = W - pad.left - pad.right;
+  var plotH = H - pad.top - pad.bottom;
+
+  var dates = ['Nov 5', 'Nov 6', 'Nov 9', 'Nov 11', 'Nov 13', 'Nov 24'];
+  var prices = [182, 141, 125, 103, 95, 123];
+  var labels = ['Pre-crisis', 'Crash day', 'Spy scandal', 'Shares slump', 'Huang resigns', 'Huang returns'];
+  var minP = 80, maxP = 200;
+
+  rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+  rc.line(pad.left, H - pad.bottom, W - pad.right, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+  var yVals = [100, 120, 140, 160, 180, 200];
+  yVals.forEach(function(val) {
+    var y = H - pad.bottom - ((val - minP) / (maxP - minP)) * plotH;
+    rc.line(pad.left, y, W - pad.right, y, { stroke: 'rgba(0,0,0,0.06)', roughness: 0.3 });
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'right';
+    ctx.fillText('$' + val, pad.left - 6, y + 4);
+  });
+
+  var xStep = plotW / (dates.length - 1);
+
+  var pts = prices.map(function(p, i) {
+    return [pad.left + i * xStep, H - pad.bottom - ((p - minP) / (maxP - minP)) * plotH];
+  });
+
+  for (var i = 0; i < pts.length - 1; i++) {
+    rc.line(pts[i][0], pts[i][1], pts[i+1][0], pts[i+1][1], {
+      stroke: 'rgba(0,0,0,0.5)',
+      roughness: 0.6,
+      strokeWidth: 1.5
+    });
+  }
+
+  pts.forEach(function(pt, i) {
+    var isReturn = i === pts.length - 1;
+    var isCrash = i === 1;
+    var fill = isReturn ? '#2a8c46' : (isCrash ? '#c33' : 'rgba(0,0,0,0.5)');
+    rc.circle(pt[0], pt[1], 10, { stroke: '#333', fill: fill, fillStyle: 'solid', roughness: 0.5 });
+
+    ctx.font = '11px serif';
+    ctx.fillStyle = isReturn ? '#2a8c46' : (isCrash ? '#c33' : '#333');
+    ctx.textAlign = 'center';
+    ctx.fillText('$' + prices[i], pt[0], pt[1] - 12);
+
+    ctx.font = '10px serif';
+    ctx.fillStyle = '#555';
+    ctx.fillText(dates[i], pt[0], H - pad.bottom + 14);
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Nvidia share price (USD) on key dates. Green: return. Red: crash day.', pad.left, H - 8);
+})();
+</script>
+
+<h2>Trump's intervention and the fallout</h2>
+
+<p>Trump confirmed in a CNBC interview Monday morning that he had spoken with the Nvidia board "directly and indirectly" and said the country needed Huang leading the company. "Jensen Huang is a national asset," Trump said. "We can't afford to lose him over gossip." The White House did not elaborate on who else had contacted the board on the administration's behalf. Some corporate governance experts said the intervention was not legally improper but set a troubling precedent for executive branch influence over private sector leadership decisions.</p>
+
+<p>The move drew criticism from members of Trump's own party, which had just suffered heavy midterm losses. Senator Mitt Romney called it "a profound breach of norms." Critics argued the president had no business directing who runs a publicly traded company. Supporters countered that Nvidia's dominant position in AI chip supply chains made the CEO question one of genuine national security importance, particularly given the ongoing China espionage investigation that had preceded Huang's resignation. Some Nvidia employees said privately they were troubled by the precedent, while others said they were simply relieved Huang was back.</p>
+
+<canvas id="nvdaTimeline" width="640" height="210" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function() {
+  var canvas = document.getElementById('nvdaTimeline');
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+  var W = 640, H = 210;
+  var tlY = 105;
+  var padL = 50, padR = 50;
+  var tlW = W - padL - padR;
+
+  var events = [
+    { date: 'Nov 6', label: 'Shares crash', label2: 'on spy reports' },
+    { date: 'Nov 9', label: 'Scandal', label2: 'deepens' },
+    { date: 'Nov 11', label: 'Shares hit', label2: 'new low' },
+    { date: 'Nov 13', label: 'Huang', label2: 'resigns' },
+    { date: 'Nov 24', label: 'Trump calls board.', label2: 'Huang reinstated.' }
+  ];
+
+  rc.line(padL, tlY, W - padR, tlY, { stroke: '#333', roughness: 0.5, strokeWidth: 1.5 });
+
+  events.forEach(function(e, i) {
+    var x = padL + (i / (events.length - 1)) * tlW;
+    var isReturn = i === events.length - 1;
+    rc.circle(x, tlY, 10, {
+      stroke: '#333',
+      fill: isReturn ? '#2a8c46' : 'rgba(0,0,0,0.6)',
+      fillStyle: 'solid',
+      roughness: 0.5
+    });
+
+    ctx.font = '11px serif';
+    ctx.fillStyle = isReturn ? '#2a8c46' : '#333';
+    ctx.textAlign = 'center';
+
+    if (i % 2 === 0) {
+      ctx.fillText(e.date, x, tlY - 38);
+      ctx.fillText(e.label, x, tlY - 26);
+      ctx.fillText(e.label2, x, tlY - 14);
+    } else {
+      ctx.fillText(e.date, x, tlY + 20);
+      ctx.fillText(e.label, x, tlY + 32);
+      ctx.fillText(e.label2, x, tlY + 44);
+    }
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Nvidia crisis timeline, November 2026. Green: reinstatement.', padL, H - 8);
+})();
+</script>
+
+<h2>Related coverage</h2>
+<ul>
+<li><a href="../2026-11-13/huang-resigns.html">Jensen Huang resigns as Nvidia CEO (Nov 13)</a></li>
+<li><a href="../2026-11-11/nvidia-scandal.html">Nvidia shares plummet as scandal deepens (Nov 11)</a></li>
+<li><a href="../2026-11-09/nvidia-spy.html">Nvidia spy scandal deepens (Nov 9)</a></li>
+<li><a href="../2026-11-07/ai-stocks.html">AI chip stocks bounce after the crash (Nov 7)</a></li>
+<li><a href="../2026-11-06/nvidia-selloff.html">Markets crashed on Nvidia spy allegations (Nov 6)</a></li>
+</ul>
+
+<p><a href="https://apnews.com">Source: AP News</a></p>
+
+<p><small>Compiled from AP, Reuters, BBC, NPR, CNN, Al Jazeera.
+I'm a language model. I summarized what I found. Check the original sources.</small></p>
+
+</body>
+</html>

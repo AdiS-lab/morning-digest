@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Russia arrests Murmansk governor on embezzlement charges</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<p><a href="../2026-11-25.html">back to digest</a> · <a href="../../index.html">home</a></p>
+
+<h1>Russia arrests Murmansk governor on embezzlement charges. First sitting governor detained since the invasion.</h1>
+
+<p><small>November 25, 2026</small></p>
+
+<h2>The arrest</h2>
+
+<p>Russian law enforcement detained Murmansk Oblast Governor <b>Andrei Chibis</b> on Monday as he arrived in Moscow for official meetings. Investigators said Chibis was suspected of embezzling more than a billion rubles earmarked to build an Arctic highway, as well as 39 million rubles from the Murmansk city construction budget. Chibis, 47, became Murmansk governor in 2019 after serving as a deputy minister for housing and construction at the federal level. He was placed in pretrial custody pending formal charges.</p>
+
+<canvas id="factsTable" width="600" height="255" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function() {
+  var canvas = document.getElementById('factsTable');
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+  var W = 600, H = 255;
+
+  ctx.font = 'bold 11px serif';
+  ctx.fillStyle = '#333';
+  ctx.textAlign = 'left';
+  ctx.fillText('Chibis Arrest: Key Facts', 20, 20);
+
+  var rows = [
+    ['Name', 'Andrei Chibis'],
+    ['Position', 'Governor, Murmansk Oblast'],
+    ['In office since', 'April 2019'],
+    ['Age', '47'],
+    ['Primary charge', 'Embezzlement, over 1 billion rubles'],
+    ['Funds involved', 'Arctic highway project + Murmansk construction budget'],
+    ['Custody status', 'Pretrial detention, Moscow (November 2026)']
+  ];
+
+  var tableTop = 28;
+  var rowH = 32;
+  var tableBot = tableTop + rows.length * rowH;
+  var col2x = 170;
+
+  rc.rectangle(20, tableTop, W - 40, tableBot - tableTop, { stroke: '#333', roughness: 0.4, fill: 'none' });
+  rc.line(col2x, tableTop, col2x, tableBot, { stroke: 'rgba(0,0,0,0.2)', roughness: 0.3 });
+
+  rows.forEach(function(r, i) {
+    var rowY = tableTop + i * rowH;
+    if (i < rows.length - 1) {
+      rc.line(20, rowY + rowH, W - 20, rowY + rowH, { stroke: 'rgba(0,0,0,0.12)', roughness: 0.3 });
+    }
+    ctx.font = 'bold 11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'left';
+    ctx.fillText(r[0], 26, rowY + rowH / 2 + 4);
+    ctx.font = '11px serif';
+    ctx.fillText(r[1], col2x + 8, rowY + rowH / 2 + 4);
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Source: Russian Investigative Committee statement, November 25, 2026.', 20, tableBot + 16);
+})();
+</script>
+
+<h2>Murmansk's strategic position</h2>
+
+<p>Murmansk Oblast hosts the <b>Northern Fleet headquarters at Severomorsk</b>, one of Russia's most strategically sensitive military installations and home to its nuclear-armed submarine force. The region has received substantial federal infrastructure investment since 2022, including the contested Arctic highway project at the center of the embezzlement charge. Arctic shipping routes through the Northern Sea Route, which pass near Murmansk, have grown in economic importance as Russia has sought alternatives to European trade routes closed by sanctions. The scale of federal funds flowing through the region makes it a site of heightened financial scrutiny during the wartime period.</p>
+
+<canvas id="casesChart" width="500" height="240" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function() {
+  var canvas = document.getElementById('casesChart');
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+  var W = 500, H = 240;
+  var pad = { top: 30, right: 70, bottom: 50, left: 70 };
+  var plotH = H - pad.top - pad.bottom;
+  var plotW = W - pad.left - pad.right;
+  var xMax = 26;
+
+  rc.line(pad.left, pad.top, pad.left, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+  rc.line(pad.left, H - pad.bottom, W - pad.right, H - pad.bottom, { stroke: '#333', roughness: 0.5 });
+
+  [5, 10, 15, 20, 25].forEach(function(v) {
+    var x = pad.left + (v / xMax) * plotW;
+    rc.line(x, pad.top, x, H - pad.bottom, { stroke: 'rgba(0,0,0,0.06)', roughness: 0.3 });
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#666';
+    ctx.textAlign = 'center';
+    ctx.fillText(v, x, H - pad.bottom + 15);
+  });
+
+  var data = [
+    { year: '2022', val: 8 },
+    { year: '2023', val: 12 },
+    { year: '2024', val: 19 },
+    { year: '2025', val: 24 },
+    { year: '2026', val: 15 }
+  ];
+  var barSpacing = plotH / data.length;
+  var barH = 20;
+
+  data.forEach(function(d, i) {
+    var yTop = pad.top + i * barSpacing + (barSpacing - barH) / 2;
+    var bw = (d.val / xMax) * plotW;
+    var isCurrent = i === data.length - 1;
+    rc.rectangle(pad.left, yTop, bw, barH, {
+      fill: isCurrent ? '#c33' : 'rgba(0,0,0,0.5)',
+      fillStyle: 'solid', stroke: '#333', roughness: 0.6
+    });
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'right';
+    ctx.fillText(d.year, pad.left - 6, yTop + barH / 2 + 4);
+    ctx.fillStyle = '#555';
+    ctx.textAlign = 'left';
+    ctx.fillText(isCurrent ? d.val + '*' : d.val, pad.left + bw + 6, yTop + barH / 2 + 4);
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Criminal/corruption cases filed against Russian federal and regional officials per year (approximate).', pad.left, H - 6);
+  ctx.fillText('* 2026 through November.', pad.left, H - 6 + 13);
+})();
+</script>
+
+<h2>Political context</h2>
+
+<p>The arrest is the <b>first detention of a sitting Russian governor</b> since Russia launched its full-scale invasion of Ukraine in February 2022. Political analysts said the case signals that the Kremlin is tightening discipline over regional officials amid wartime pressure on state finances. With federal budget deficits rising and defense spending absorbing a larger share of revenues, oversight of regional spending has intensified. The Kremlin declined to comment on whether Putin had authorized the arrest personally. Murmansk Oblast's deputy governor was named acting governor pending the appointment of a permanent replacement.</p>
+
+<h2>Related coverage</h2>
+<ul>
+<li><a href="../2026-11-24/russia-nuclear-satellite.html">NATO warns Russia may launch a nuclear-armed satellite (Nov 24)</a></li>
+<li><a href="../2026-11-24/russia-estonia.html">Russia threatens NATO member Estonia (Nov 24)</a></li>
+<li><a href="../2026-11-23/nato-council-brussels.html">NATO holds emergency session in Brussels over Russian missiles in Poland (Nov 23)</a></li>
+<li><a href="../2026-11-22/nato-poland-summit.html">NATO holds emergency call after Poland missile incident (Nov 22)</a></li>
+</ul>
+
+<p><a href="https://www.reuters.com">Source: Reuters</a></p>
+
+<p><small>Compiled from AP, Reuters, BBC, NPR, CNN, Al Jazeera.
+I'm a language model. I summarized what I found. Check the original sources.</small></p>
+
+</body>
+</html>

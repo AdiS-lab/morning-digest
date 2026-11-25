@@ -604,6 +604,70 @@
           "tags": ["us-politics", "china", "tech", "ai", "trade", "export-controls"]
         }
       ]
+    },
+    {
+      "date": "2026-11-24",
+      "file": "2026-11/2026-11-24.html",
+      "summary": "Iran orders Hormuz closed further day by day and sets seven conditions, as Qatar seeks a last-ditch deal. Russia threatens NATO member Estonia with open war over border closure. Trump reinstates Jensen Huang as Nvidia CEO after personally calling the board. RSF drones strike Khartoum for a fourth day, killing four and damaging a UN building. NATO warns Russia may launch a nuclear-armed satellite by December.",
+      "stories": [
+        {
+          "headline": "Iran orders Hormuz closed further day by day. Sets seven conditions. Qatar seeks a last-ditch deal.",
+          "file": "2026-11/2026-11-24/hormuz-day3.html",
+          "tags": ["iran", "middle-east", "military", "oil", "strait-of-hormuz", "diplomacy", "economy"]
+        },
+        {
+          "headline": "Russia threatens NATO member Estonia with open war over border closure and alleged drone support for Ukraine.",
+          "file": "2026-11/2026-11-24/russia-estonia.html",
+          "tags": ["russia", "ukraine", "war", "military", "nato", "estonia", "baltic"]
+        },
+        {
+          "headline": "Jensen Huang returns as Nvidia CEO after Trump personally intervened with the board.",
+          "file": "2026-11/2026-11-24/huang-returns.html",
+          "tags": ["tech", "nvidia", "markets", "us-politics", "china"]
+        },
+        {
+          "headline": "RSF drones strike Khartoum for a fourth day, killing four and damaging a UN building. An RSF commander defects.",
+          "file": "2026-11/2026-11-24/sudan-khartoum.html",
+          "tags": ["africa", "sudan", "military", "humanitarian", "rsf"]
+        },
+        {
+          "headline": "NATO warns Russia may launch a nuclear-armed satellite by December. Rutte says collective defense extends to space.",
+          "file": "2026-11/2026-11-24/russia-nuclear-satellite.html",
+          "tags": ["russia", "military", "nuclear", "nato", "space"]
+        }
+      ]
+    },
+    {
+      "date": "2026-11-25",
+      "file": "2026-11/2026-11-25.html",
+      "summary": "Iran's Hormuz blockade enters Day 4 as two more tankers hit mines and Saudi air defenses intercept drones over Ras Tanura. Ukraine strikes two Russian oil refineries in Samara Oblast, cutting Russia's crude processing 45 percent for the month, and Putin vows retaliation despite Trump requests to stop. Russia arrests Murmansk Governor Andrei Chibis on embezzlement charges, the first sitting governor detained since the full-scale invasion. Dozens are feared trapped after a gold mine collapses in Indonesia. Trump says a pardon for Jensen Huang is always an option.",
+      "stories": [
+        {
+          "headline": "Iran's Hormuz blockade enters Day 4. Two tankers hit mines. Saudi Arabia intercepts drones over Ras Tanura.",
+          "file": "2026-11/2026-11-25/hormuz-day4.html",
+          "tags": ["iran", "middle-east", "military", "oil", "strait-of-hormuz", "diplomacy", "economy", "saudi-arabia"]
+        },
+        {
+          "headline": "Ukraine strikes two Russian oil refineries. Putin vows retaliation despite Trump requests to stop.",
+          "file": "2026-11/2026-11-25/ukraine-refineries.html",
+          "tags": ["russia", "ukraine", "war", "military", "infrastructure", "energy", "ceasefire"]
+        },
+        {
+          "headline": "Russia arrests Murmansk governor on embezzlement charges. First sitting governor detained since invasion.",
+          "file": "2026-11/2026-11-25/russia-chibis.html",
+          "tags": ["russia", "corruption", "arctic", "military", "governance"]
+        },
+        {
+          "headline": "Dozens feared trapped after gold mine collapses in Indonesia.",
+          "file": "2026-11/2026-11-25/indonesia-mine.html",
+          "tags": ["indonesia", "asia", "disaster", "mining"]
+        },
+        {
+          "headline": "Trump says a pardon for Jensen Huang is always an option. Governance critics push back.",
+          "file": "2026-11/2026-11-25/trump-huang-pardon.html",
+          "tags": ["us-politics", "tech", "nvidia", "markets", "china", "espionage"]
+        }
+      ]
     }
   ]
 }

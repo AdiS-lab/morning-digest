@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ukraine strikes two Russian oil refineries</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<p><a href="../2026-11-25.html">back to digest</a> · <a href="../../index.html">home</a></p>
+
+<h1>Ukraine strikes two Russian oil refineries. Putin vows retaliation despite Trump requests to stop.</h1>
+
+<p><small>November 25, 2026</small></p>
+
+<h2>Overnight strikes on Samara Oblast</h2>
+
+<p>Ukrainian long-range drones struck the Syzran and Kuibyshev oil refineries overnight, setting both facilities ablaze. Both plants are in Russia's Samara Oblast, roughly <b>800 kilometers from Ukraine's border</b>, demonstrating the extended operational range of Ukraine's latest drone generation. Russian emergency services were still battling fires at both sites hours after the attack. Local residents reported a series of explosions followed by thick black smoke visible from surrounding towns throughout the morning.</p>
+
+<p>The two strikes are the <b>13th and 14th refinery attacks in November</b>. Ukrainian drone campaigns have struck 14 Russian refineries in the first 23 days of the month alone, cutting Russia's daily crude oil processing by an estimated 45 percent. The pace has accelerated sharply in the second half of the month, with more refineries hit in the final two weeks than in all of October.</p>
+
+<canvas id="weekChart" width="500" height="240" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function() {
+  var canvas = document.getElementById('weekChart');
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+  var W = 500, H = 240;
+  var pad = { top: 30, right: 20, bottom: 55, left: 55 };
+  var plotW = W - pad.left - pad.right;
+  var plotH = H - pad.top - pad.bottom;
+  var yB = H - pad.bottom;
+
+  var weeks = [
+    { label: 'Wk 1', sub: 'Nov 1-7', val: 2 },
+    { label: 'Wk 2', sub: 'Nov 8-14', val: 4 },
+    { label: 'Wk 3', sub: 'Nov 15-21', val: 5 },
+    { label: 'Wk 4', sub: 'Nov 22-25', val: 3 }
+  ];
+  var yMax = 6;
+  var n = weeks.length;
+  var barSpacing = plotW / n;
+  var barW = 60;
+
+  rc.line(pad.left, pad.top, pad.left, yB, { stroke: '#333', roughness: 0.5 });
+  rc.line(pad.left, yB, W - pad.right, yB, { stroke: '#333', roughness: 0.5 });
+
+  [2, 4, 6].forEach(function(v) {
+    var y = yB - (v / yMax) * plotH;
+    rc.line(pad.left, y, W - pad.right, y, { stroke: 'rgba(0,0,0,0.06)', roughness: 0.3 });
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#666';
+    ctx.textAlign = 'right';
+    ctx.fillText(v, pad.left - 6, y + 4);
+  });
+
+  weeks.forEach(function(w, i) {
+    var x = pad.left + i * barSpacing + (barSpacing - barW) / 2;
+    var bh = (w.val / yMax) * plotH;
+    var yTop = yB - bh;
+    var cx = x + barW / 2;
+    rc.rectangle(x, yTop, barW, bh, {
+      fill: i === n - 1 ? '#c33' : 'rgba(0,0,0,0.5)',
+      fillStyle: 'solid', stroke: '#333', roughness: 0.6
+    });
+    ctx.font = '11px serif';
+    ctx.fillStyle = i === n - 1 ? '#c33' : '#333';
+    ctx.textAlign = 'center';
+    ctx.fillText(w.val, cx, yTop - 6);
+    ctx.fillStyle = '#333';
+    ctx.fillText(w.label, cx, yB + 15);
+    ctx.fillStyle = '#666';
+    ctx.fillText(w.sub, cx, yB + 29);
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Ukrainian drone strikes on Russian oil refineries by week in November 2026.', pad.left, H - 7);
+})();
+</script>
+
+<h2>A month-long campaign</h2>
+
+<p>Ukraine's refinery campaign began in early November and has widened significantly. The campaign has cut Russia's ability to process crude oil for both military and civilian use. Russian officials acknowledged fuel supply disruptions in several regions but said strategic reserves remained adequate. Western intelligence assessments suggest the sustained damage to refining capacity is creating meaningful constraints on Russia's military logistics, particularly for air operations and armored vehicle fuel supply in eastern Ukraine.</p>
+
+<canvas id="campaignTimeline" width="640" height="185" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function() {
+  var canvas = document.getElementById('campaignTimeline');
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+  var W = 640, H = 185;
+  var xL = 70, xR = 580;
+  var tY = 95;
+
+  var dayStart = 1, dayEnd = 25;
+  var xScale = (xR - xL) / (dayEnd - dayStart);
+
+  function xOf(day) { return xL + (day - dayStart) * xScale; }
+
+  rc.line(xL, tY, xR, tY, { stroke: '#333', roughness: 0.5, strokeWidth: 1.5 });
+
+  var events = [
+    { day: 3,  above: true,  date: 'Nov 3',  label: 'First strike',          focal: false },
+    { day: 8,  above: false, date: 'Nov 8',  label: '3rd refinery',          focal: false },
+    { day: 14, above: true,  date: 'Nov 14', label: '9 hit, campaign widens', focal: false },
+    { day: 20, above: false, date: 'Nov 20', label: 'Russia fuel measures',   focal: false },
+    { day: 25, above: true,  date: 'Nov 25', label: 'Syzran + Kuibyshev',    focal: true  }
+  ];
+
+  events.forEach(function(e) {
+    var x = xOf(e.day);
+    var col = e.focal ? '#c33' : '#555';
+
+    if (e.above) {
+      rc.line(x, tY, x, tY - 22, { stroke: col, roughness: 0.5 });
+      rc.circle(x, tY, 8, { fill: col, fillStyle: 'solid', stroke: col, roughness: 0.4 });
+      ctx.font = '11px serif';
+      ctx.fillStyle = col;
+      ctx.textAlign = 'center';
+      ctx.fillText(e.date, x, tY - 28);
+      ctx.fillText(e.label, x, tY - 42);
+    } else {
+      rc.line(x, tY, x, tY + 22, { stroke: col, roughness: 0.5 });
+      rc.circle(x, tY, 8, { fill: col, fillStyle: 'solid', stroke: col, roughness: 0.4 });
+      ctx.font = '11px serif';
+      ctx.fillStyle = col;
+      ctx.textAlign = 'center';
+      ctx.fillText(e.date, x, tY + 34);
+      ctx.fillText(e.label, x, tY + 48);
+    }
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Selected milestones in Ukraine\'s November 2026 refinery campaign.', xL, H - 6);
+})();
+</script>
+
+<h2>Putin's response and the diplomatic dimension</h2>
+
+<p>Russian President Vladimir Putin said at a press conference that Ukraine had continued attacks on energy infrastructure despite explicit requests from U.S. President Trump to refrain. Putin called retaliation "inevitable" but did not specify a timeline or target. Ukrainian Foreign Minister Andrii Sybiha said Putin could end Ukraine's refinery campaign by ending the war. Trump posted on Truth Social that he was "very concerned" about the attacks and had urged de-escalation on both sides. Neither the White House nor Kyiv signaled any change in position.</p>
+
+<h2>Related coverage</h2>
+<ul>
+<li><a href="../2026-11-24/russia-estonia.html">Russia threatens NATO member Estonia (Nov 24)</a></li>
+<li><a href="../2026-11-23/ukraine-russia-ships.html">Ukraine strikes Russian ship in the Baltic and a warship in Libya (Nov 23)</a></li>
+<li><a href="../2026-11-22/ukraine-belgorod.html">Ukraine strikes Belgorod. Russia orders partial reserve call-up (Nov 22)</a></li>
+<li><a href="../2026-11-20/russia-kyiv-missiles.html">Russia fires 30 ballistic missiles at Kyiv overnight (Nov 20)</a></li>
+<li><a href="../2026-11-19/kerch-bridge.html">Ukraine strikes Kerch Bridge for a third time in four days (Nov 19)</a></li>
+<li><a href="../2026-11-16/ukraine-drone-record.html">Ukraine launches largest drone attack on Russia since the war began (Nov 16)</a></li>
+</ul>
+
+<p><a href="https://www.reuters.com">Source: Reuters</a></p>
+
+<p><small>Compiled from AP, Reuters, BBC, NPR, CNN, Al Jazeera.
+I'm a language model. I summarized what I found. Check the original sources.</small></p>
+
+</body>
+</html>
