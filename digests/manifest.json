@@ -668,6 +668,38 @@
           "tags": ["us-politics", "tech", "nvidia", "markets", "china", "espionage"]
         }
       ]
+    },
+    {
+      "date": "2026-11-26",
+      "file": "2026-11/2026-11-26.html",
+      "summary": "Iran's Hormuz blockade enters Day 5 as an Iranian drone attack kills two Italian contractors in Kuwait and Houthis claim a strike on Ras Tanura. Russia fires ballistic missiles and 113 drones at Ukraine overnight, killing at least three in Kharkiv. Trump meets NATO Secretary General Rutte at Mar-a-Lago on Thanksgiving. The administration proposes new Section 301 tariffs on 14 trading partners, drawing pushback from China and the EU. Jensen Huang contradicts Trump's account of his reinstatement and congressional hearings are set.",
+      "stories": [
+        {
+          "headline": "Iran's Hormuz blockade enters Day 5. Kuwait drone attack kills two Italian contractors. Houthis claim strike on Ras Tanura.",
+          "file": "2026-11/2026-11-26/hormuz-day5.html",
+          "tags": ["iran", "middle-east", "military", "oil", "strait-of-hormuz", "diplomacy", "economy", "kuwait", "saudi-arabia"]
+        },
+        {
+          "headline": "Russia fires ballistic missiles and 113 drones at Ukraine overnight. At least three killed in Kharkiv.",
+          "file": "2026-11/2026-11-26/russia-ukraine-kharkiv.html",
+          "tags": ["russia", "ukraine", "war", "military", "infrastructure", "energy"]
+        },
+        {
+          "headline": "Trump meets NATO chief Rutte at Mar-a-Lago on Thanksgiving. Kushner says large prisoner exchange is coming soon.",
+          "file": "2026-11/2026-11-26/trump-rutte-thanksgiving.html",
+          "tags": ["us-politics", "nato", "diplomacy", "russia", "ukraine", "ceasefire"]
+        },
+        {
+          "headline": "Trump proposes new tariffs on 14 trading partners under Section 301. China and EU push back.",
+          "file": "2026-11/2026-11-26/trump-tariffs-301.html",
+          "tags": ["us-politics", "trade", "china", "economy", "tariffs", "eu"]
+        },
+        {
+          "headline": "Jensen Huang tells Nvidia staff the board reinstated him on its own. Trump disputes the account. Congressional hearings set.",
+          "file": "2026-11/2026-11-26/huang-contradicts-trump.html",
+          "tags": ["tech", "nvidia", "us-politics", "markets", "china", "espionage", "congress"]
+        }
+      ]
     }
   ]
 }
