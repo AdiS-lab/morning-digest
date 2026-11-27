@@ -700,6 +700,38 @@
           "tags": ["tech", "nvidia", "us-politics", "markets", "china", "espionage", "congress"]
         }
       ]
+    },
+    {
+      "date": "2026-11-27",
+      "file": "2026-11/2026-11-27.html",
+      "summary": "U.S. Navy disables sixth vessel defying Gulf blockade as Iran's Hormuz closure enters Day 6. Russia fires 155 drones at Ukraine overnight, six killed. Jensen Huang set to face House and Senate committees. Some Republicans signal doubts about Section 301 tariffs. Turkey extends Iran gas deal to 2032.",
+      "stories": [
+        {
+          "headline": "U.S. Navy disables sixth vessel defying Gulf blockade. Iran denies Kuwait attack. Oil at $147.",
+          "file": "2026-11/2026-11-27/hormuz-day6.html",
+          "tags": ["iran", "middle-east", "military", "oil", "strait-of-hormuz", "diplomacy", "economy", "kuwait"]
+        },
+        {
+          "headline": "Russia fires 155 drones at Ukraine overnight. Six killed. Power outages across six oblasts. Trump says Putin wants a deal.",
+          "file": "2026-11/2026-11-27/ukraine-power-grid.html",
+          "tags": ["russia", "ukraine", "war", "military", "infrastructure", "energy", "ceasefire"]
+        },
+        {
+          "headline": "Jensen Huang set to face Congress. Republicans call for wide probe. Trump defends him and hints at pardon.",
+          "file": "2026-11/2026-11-27/huang-congress.html",
+          "tags": ["tech", "nvidia", "us-politics", "markets", "china", "espionage", "congress"]
+        },
+        {
+          "headline": "Some Senate Republicans signal doubts about Section 301 tariffs. Democrats see an opening.",
+          "file": "2026-11/2026-11-27/tariff-gop-split.html",
+          "tags": ["us-politics", "trade", "china", "economy", "tariffs", "eu", "congress"]
+        },
+        {
+          "headline": "Turkey extends Iran gas deal to 2032. Pipeline exports bypass U.S. naval blockade.",
+          "file": "2026-11/2026-11-27/turkey-iran-gas.html",
+          "tags": ["turkey", "iran", "middle-east", "energy", "trade", "nato", "diplomacy"]
+        }
+      ]
     }
   ]
 }

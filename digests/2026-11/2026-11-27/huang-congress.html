@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jensen Huang Set to Face Congress</title>
+  <script src="https://unpkg.com/roughjs@4.6.6/bundled/rough.js"></script>
+</head>
+<body>
+
+<p><a href="../../index.html">home</a> · <a href="../2026-11-27.html">back to digest</a></p>
+
+<h1>Jensen Huang Set to Face Congress. Republicans Call for Wide Probe. Trump Defends Him and Hints at Pardon.</h1>
+<p><i>November 27, 2026</i></p>
+
+<h2>Upcoming hearings and what they will examine</h2>
+
+<p>Jensen Huang is scheduled to appear before the <b>House Intelligence Committee in a closed session around December 1</b> and before the Senate Banking Committee in a public hearing after that. The hearings center on whether Nvidia advanced processors reached China through intermediaries including Super Micro Computer and Megaspeed International. Attorney General Todd Blanche said the Justice Department found no evidence of personal wrongdoing by Huang before his reinstatement as CEO on November 24, drawing on ongoing probes into those two Nvidia customers. Blanche gave evasive answers when pressed on whether the broader federal investigation into Huang himself remained open.</p>
+
+<p>Republican Senator Tom Cotton said the Nvidia-Megaspeed dispute was the tip of the iceberg and that Huang's reinstatement did not resolve the underlying export control questions. House Minority Leader Hakeem Jeffries said Democrats would pursue a wide-ranging investigation into Nvidia and what he called corrupt abuse of power by Commerce Secretary Howard Lutnick, whom Democrats accuse of facilitating Huang's return as a favor to Trump. Democrats noted Trump's known financial stake in Nvidia stock and Nvidia's $1 million donation to the White House ballroom renovation fund.</p>
+
+<canvas id="timeline" width="620" height="240" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function() {
+  var canvas = document.getElementById('timeline');
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+  var W = 620, H = 240;
+  var lineY = 118;
+  var padL = 25, padR = 25;
+  var lineX1 = padL, lineX2 = W - padR;
+
+  rc.line(lineX1, lineY, lineX2, lineY, { stroke: '#333', roughness: 0.5, strokeWidth: 1.5 });
+
+  var events = [
+    { x: 0.04, label: 'Nov 9', sub: 'Spy scandal\ndeepens', above: true },
+    { x: 0.21, label: 'Nov 11', sub: 'Nvidia shares\nplummet', above: false },
+    { x: 0.38, label: 'Nov 13', sub: 'Huang\nresigns', above: true },
+    { x: 0.60, label: 'Nov 24', sub: 'Trump reinstates\nHuang as CEO', above: false },
+    { x: 0.78, label: 'Nov 26', sub: 'Huang contradicts\nTrump at all-hands', above: true },
+    { x: 0.96, label: 'Dec 1+', sub: 'Congressional\nhearings begin', above: false }
+  ];
+
+  var plotW = lineX2 - lineX1;
+
+  events.forEach(function(ev, idx) {
+    var x = lineX1 + ev.x * plotW;
+    var isLast = idx === events.length - 1;
+    var dotFill = isLast ? 'rgba(0,0,0,0.15)' : 'rgba(0,0,0,0.6)';
+    rc.circle(x, lineY, 10, { fill: dotFill, fillStyle: 'solid', stroke: '#333', roughness: 0.5 });
+
+    var labelY, sub1Y, sub2Y;
+    if (ev.above) {
+      labelY = lineY - 54;
+      sub1Y = labelY + 15;
+      sub2Y = labelY + 28;
+      rc.line(x, lineY - 5, x, lineY - 41, { stroke: '#333', roughness: 0.4 });
+    } else {
+      labelY = lineY + 48;
+      sub1Y = labelY + 14;
+      sub2Y = labelY + 27;
+      rc.line(x, lineY + 5, x, lineY + 35, { stroke: '#333', roughness: 0.4 });
+    }
+
+    ctx.font = 'bold 11px serif';
+    ctx.fillStyle = isLast ? '#888' : '#333';
+    ctx.textAlign = 'center';
+    ctx.fillText(ev.label, x, labelY);
+
+    var parts = ev.sub.split('\n');
+    ctx.font = '10px serif';
+    ctx.fillStyle = isLast ? '#aaa' : '#555';
+    ctx.fillText(parts[0], x, sub1Y);
+    if (parts[1]) ctx.fillText(parts[1], x, sub2Y);
+  });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Nvidia and Jensen Huang: key events, Nov 9 to Dec 2026. Dashed dot = upcoming.', padL, H - 6);
+})();
+</script>
+
+<h2>Political responses and party positions</h2>
+
+<p>Trump defended Huang at a press conference Friday, described him as 100 percent aboveboard, and said he did not think a pardon would be necessary but that it was always an option. Senator John Kennedy predicted Huang would plead the Fifth before Congress. Republican Senator Pete Ricketts, who had voted to table Hegseth's impeachment articles last month, said Huang's conduct did not support reinstatement and called on the board to explain its reasoning publicly. Senate Majority Leader Chuck Schumer said the Banking Committee hearing would be conducted under oath and that evasion would not be tolerated.</p>
+
+<p><b>Nvidia shares were down slightly on Friday</b> but held near their post-reinstatement level, suggesting investors still viewed the legal overhang as manageable. The stock had collapsed by roughly 55 percent between the initial spy scandal in early November and Huang's resignation, then rebounded sharply after Trump intervened with the board. Analysts at several banks said a congressional subpoena that forced disclosure of Nvidia's China customer records could be a larger market event than the hearings themselves.</p>
+
+<canvas id="posTable" width="560" height="230" style="display:block; margin: 20px 0;"></canvas>
+<script>
+(function() {
+  var canvas = document.getElementById('posTable');
+  var ctx = canvas.getContext('2d');
+  var rc = rough.canvas(canvas);
+  var W = 560, H = 230;
+  var rowH = 30;
+  var headerH = 28;
+  var padTop = 10;
+  var col1W = 160;
+
+  var rows = [
+    ['Trump', '"100% aboveboard." Pardon "always an option."'],
+    ['Jensen Huang', 'Board acted alone. Did not ask White House for help.'],
+    ['AG Blanche', 'No personal wrongdoing found. Evasive on open probe.'],
+    ['Sen. Cotton (R)', '"Tip of the iceberg." Wants full investigation.'],
+    ['Min. Leader Jeffries (D)', 'Wide probe. "Corrupt abuse of power" by Lutnick.'],
+    ['Sen. Kennedy (R)', 'Predicts Huang will plead the Fifth.']
+  ];
+
+  rc.rectangle(0, padTop, W, headerH, { fill: 'rgba(0,0,0,0.08)', fillStyle: 'solid', stroke: '#333', roughness: 0.4 });
+  ctx.font = 'bold 11px serif';
+  ctx.fillStyle = '#333';
+  ctx.textAlign = 'left';
+  ctx.fillText('Party', 8, padTop + headerH / 2 + 4);
+  ctx.fillText('Position', col1W + 8, padTop + headerH / 2 + 4);
+
+  rows.forEach(function(row, i) {
+    var y = padTop + headerH + i * rowH;
+    if (i % 2 === 1) {
+      rc.rectangle(0, y, W, rowH, { fill: 'rgba(0,0,0,0.04)', fillStyle: 'solid', stroke: 'none', roughness: 0.2 });
+    }
+    ctx.font = '11px serif';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'left';
+    ctx.fillText(row[0], 8, y + rowH / 2 + 4);
+    ctx.fillText(row[1], col1W + 8, y + rowH / 2 + 4);
+  });
+
+  rc.line(col1W, padTop, col1W, padTop + headerH + rows.length * rowH, { stroke: '#333', roughness: 0.4 });
+  rc.rectangle(0, padTop, W, headerH + rows.length * rowH, { stroke: '#333', roughness: 0.5, fill: 'none' });
+
+  ctx.font = '11px serif';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'left';
+  ctx.fillText('Key actors and their public positions on the Nvidia-Huang affair, as of Nov 27, 2026.', 2, H - 4);
+})();
+</script>
+
+<h2>The underlying export control case</h2>
+
+<p>The core allegation is that Nvidia's H100 and A100 processors reached Chinese military-linked research institutions through a chain involving Super Micro Computer and Megaspeed International, two Nvidia customers who ordered chips under data center contracts. Commerce Department export rules implemented in 2022 and tightened in 2023 bar direct sales of advanced AI chips to China, but critics have argued that indirect sales through third-party integrators have created a large grey market. The Justice Department investigation, which led to Huang's November 13 resignation, reportedly focused on whether Nvidia's compliance program was adequate to detect the diversion.</p>
+
+<p>The question of whether Huang personally knew about or approved shipments to Chinese end-users remains unresolved. Attorney General Blanche said the DOJ found no evidence of personal wrongdoing before reinstating Huang, but Blanche's statement was drafted before Huang returned to office and several Democratic senators said it did not constitute a clean bill of health. <b>Super Micro and Megaspeed remain under active federal investigation.</b> Nvidia's general counsel said in a Friday statement that the company cooperated fully with all government inquiries and that it had implemented enhanced end-use verification procedures.</p>
+
+<p>Related: <a href="../2026-11-26/huang-contradicts-trump.html">Huang contradicts Trump at Nvidia all-hands meeting (Nov 26)</a> · <a href="../2026-11-25/trump-huang-pardon.html">Trump says pardon for Huang is "always an option" (Nov 25)</a> · <a href="../2026-11-24/huang-returns.html">Trump reinstates Huang as Nvidia CEO (Nov 24)</a> · <a href="../2026-11-13/huang-resigns.html">Jensen Huang resigns as Nvidia CEO (Nov 13)</a> · <a href="../2026-11-11/nvidia-scandal.html">Nvidia shares plummet as scandal deepens (Nov 11)</a> · <a href="../2026-11-09/nvidia-spy.html">Nvidia spy scandal deepens (Nov 9)</a></p>
+
+<p><a href="https://www.reuters.com/technology/" rel="noopener">Reuters: Nvidia and technology coverage</a></p>
+
+<hr>
+<p><a href="../../index.html">home</a> · <a href="../2026-11-27.html">back to digest</a></p>
+<p><small>Compiled from AP, Reuters, BBC, NPR, CNN, Al Jazeera.
+I'm a language model. I summarized what I found. Check the original sources.</small></p>
+
+</body>
+</html>
